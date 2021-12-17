@@ -1,0 +1,11 @@
+%%mocodo
+::
+IS CREATED WITH: type, _#title->PAINTING->title
+::::
+
+
+:
+IS DSECRIBED BY: name, _#title->PAINTING->title
+:
+PAINTING: title, date, height, width, location, picture, information, framing, format, situation
+::::
