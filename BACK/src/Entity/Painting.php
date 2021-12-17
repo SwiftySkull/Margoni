@@ -95,6 +95,7 @@ class Painting
     {
         $this->category = new ArrayCollection();
         $this->technique = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int
