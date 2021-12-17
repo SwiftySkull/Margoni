@@ -50,21 +50,21 @@
 | created_at   | DATETIME     | NOT NULL, CURRENT_TIMESTAMP                     | Date d'enregistrement de l'encadrement           |
 | updated_at   | DATETIME     | NULL                                            | Date de mise à jour de l'encadrement             |
 
-## Collection
+## (Collection =>) Situation
 | Field        | Type         | Specificity                                     | Description                                      |
 | ------------ | ------------ | ----------------------------------------------- | ------------------------------------------------ |
 | id           | INT          | PRIMARY KEY, NOT NULL, UNSIGNED, AUTO_INCREMENT | Identifiant de la situation de collection        |
-| situation    | VARCHAR (40) | NOT NULL, UNIQUE                                | Situation de l'oeuvre, propriétaire actuel       |
+| collection   | VARCHAR (40) | NOT NULL, UNIQUE                                | Situation de l'oeuvre, propriétaire actuel       |
 | created_at   | DATETIME     | NOT NULL, CURRENT_TIMESTAMP                     | Date d'enregistrement de la vente                |
 | updated_at   | DATETIME     | NULL                                            | Date de mise à jour de la vente                  |
 
-## Belongs to
+## Painting_category
 | Field        | Type         | Specificity                                     | Description                                      |
 | ------------ | ------------ | ----------------------------------------------- | ------------------------------------------------ |
 | peinture_id  | INT          | NOT NULL, UNSIGNED                              | Identifiant de la peinture                       |
 | categorie_id | INT          | NOT NULL, UNSIGNED                              | Identifiant de la catégorie                      |
 
-## Is created with
+## Painting_technique
 | Field        | Type         | Specificity                                     | Description                                      |
 | ------------ | ------------ | ----------------------------------------------- | ------------------------------------------------ |
 | peinture_id  | INT          | NOT NULL, UNSIGNED                              | Identifiant de la peinture                       |
