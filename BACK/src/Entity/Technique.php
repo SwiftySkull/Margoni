@@ -1,0 +1,116 @@
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TechniqueRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+/**
+ * @ORM\Entity(repositoryClass=TechniqueRepository::class)
+ * @UniqueEntity("type")
+ */
+class Technique
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string", length=40)
+     */
+    private $type;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $uptadetAt;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Painting::class, mappedBy="technique")
+     */
+    private $paintings;
+
+    public function __construct()
+    {
+        $this->paintings = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUptadetAt(): ?\DateTimeInterface
+    {
+        return $this->uptadetAt;
+    }
+
+    public function setUptadetAt(?\DateTimeInterface $uptadetAt): self
+    {
+        $this->uptadetAt = $uptadetAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Painting[]
+     */
+    public function getPaintings(): Collection
+    {
+        return $this->paintings;
+    }
+
+    public function addPainting(Painting $painting): self
+    {
+        if (!$this->paintings->contains($painting)) {
+            $this->paintings[] = $painting;
+            $painting->addTechnique($this);
+        }
+
+        return $this;
+    }
+
+    public function removePainting(Painting $painting): self
+    {
+        if ($this->paintings->removeElement($painting)) {
+            $painting->removeTechnique($this);
+        }
+
+        return $this;
+    }
+}
