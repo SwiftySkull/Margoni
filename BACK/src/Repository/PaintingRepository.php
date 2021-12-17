@@ -19,6 +19,37 @@ class PaintingRepository extends ServiceEntityRepository
         parent::__construct($registry, Painting::class);
     }
 
+    // public function findAllCustom()
+    // {
+    //     $entityManager = $this->getEntityManager();
+
+    //     $query = $entityManager->createQuery(
+    //         'SELECT p, f, situation, size, t, c 
+    //         FROM App\Entity\Painting p
+    //         INNER JOIN p.frame f
+    //         INNER JOIN p.situation situation
+    //         INNER JOIN p.size size
+    //         INNER JOIN p.techniques t
+    //         INNER JOIN p.categories c'
+    //     );
+    
+    //     return $query->getResult();
+    // }
+
+    public function findAllCustom()
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.frame', 'f')
+            ->innerJoin('p.situation', 'situation')
+            ->innerJoin('p.size', 'size')
+            ->innerJoin('p.techniques', 't')
+            ->innerJoin('p.categories', 'c')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Painting[] Returns an array of Painting objects
     //  */

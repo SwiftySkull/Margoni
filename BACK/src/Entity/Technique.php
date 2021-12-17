@@ -37,7 +37,7 @@ class Technique
     private $uptadetAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Painting::class, mappedBy="technique")
+     * @ORM\ManyToMany(targetEntity=Painting::class, mappedBy="techniques")
      */
     private $paintings;
 
@@ -100,7 +100,7 @@ class Technique
     {
         if (!$this->paintings->contains($painting)) {
             $this->paintings[] = $painting;
-            $painting->addTechnique($this);
+            $painting->addTechniques($this);
         }
 
         return $this;
@@ -109,7 +109,7 @@ class Technique
     public function removePainting(Painting $painting): self
     {
         if ($this->paintings->removeElement($painting)) {
-            $painting->removeTechnique($this);
+            $painting->removeTechniques($this);
         }
 
         return $this;

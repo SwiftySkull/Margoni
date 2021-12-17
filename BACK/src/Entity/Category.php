@@ -37,7 +37,7 @@ class Category
     private $updatedAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Painting::class, mappedBy="category")
+     * @ORM\ManyToMany(targetEntity=Painting::class, mappedBy="categories")
      */
     private $paintings;
 
@@ -100,7 +100,7 @@ class Category
     {
         if (!$this->paintings->contains($painting)) {
             $this->paintings[] = $painting;
-            $painting->addCategory($this);
+            $painting->addCategories($this);
         }
 
         return $this;
@@ -109,7 +109,7 @@ class Category
     public function removePainting(Painting $painting): self
     {
         if ($this->paintings->removeElement($painting)) {
-            $painting->removeCategory($this);
+            $painting->removeCategories($this);
         }
 
         return $this;
