@@ -6,4 +6,44 @@
 
 {% block body %}
 
+<h1>Recherche par format</h1>
+
+<h2>Liste des formats</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Actions</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for size in sizes %}
+        <tr>
+        <th scope="row">{{ size.id }}</th>
+        <td><a href="{{ path('size_read', {id:size.id}) }}">{{ size.format }}</a></td>
+        <td>
+          <form action="{{ path('size_edit', {id:size.id}) }}" method="POST">
+            <input type="hidden" name="token" value="{{ csrf_token('add-edit-item') }}"/>
+            <button class="btn btn-warning">Modifier</button>
+          </form>
+        </td>
+        <td>
+          <form action="{{ path('size_delete', {id:size.id}) }}" onsubmit="return confirm('Supprimer le format ?')" method="POST">
+            <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
+            <input type="hidden" name="_method" value="DELETE"/>
+            <button class="btn btn-danger">Supprimer</button>
+          </form>
+        </td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<form action="{{ path('size_add') }}" method="POST">
+  <input type="hidden" name="token" value="{{ csrf_token('add-edit-item') }}"/>
+  <button class="btn btn-success">Ajouter un nouveau format</button>
+</form>
+
 {% endblock %}
