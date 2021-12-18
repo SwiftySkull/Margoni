@@ -32,7 +32,8 @@ class PaintingType extends AbstractType
             ])
             ->add('date', DateType::class, [
                 'label' => 'Date de la peinture',
-                'widget' => 'choice',
+                'widget' => 'text',
+                'help' => 'Au format Mois - Jour - Année',
             ])
             ->add('height', IntegerType::class, [
                 'label' => 'Hauteur de la peinture',
