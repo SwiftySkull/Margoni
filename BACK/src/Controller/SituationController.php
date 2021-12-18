@@ -55,7 +55,7 @@ class SituationController extends AbstractController
     public function read(Situation $situation = null, PaintingRepository $paintingRepository)
     {
         if (null === $situation) {
-            throw $this->createNotFoundException('Oups ! Type d\'encadrement non trouvé.');
+            throw $this->createNotFoundException('Oups ! Collection non trouvée.');
         }
 
         $paintings = $paintingRepository->findBySituation($situation);
@@ -86,7 +86,7 @@ class SituationController extends AbstractController
         }
 
         if (null === $situation) {
-            throw $this->createNotFoundException('Oups ! Type d\'encadrement non trouvé.');
+            throw $this->createNotFoundException('Oups ! Collection non trouvée.');
         }
 
         $form = $this->createForm(SituationType::class, $situation);
@@ -156,7 +156,7 @@ class SituationController extends AbstractController
     public function delete(Situation $situation = null, EntityManagerInterface $em, Request $request)
     {
         if (null === $situation) {
-            throw $this->createNotFoundException('Oups ! Type d\'encadrement non trouvé.');
+            throw $this->createNotFoundException('Oups ! Collection non trouvée.');
         }
         
         $submittedToken = $request->request->get('token');
@@ -170,5 +170,4 @@ class SituationController extends AbstractController
 
         return $this->redirectToRoute('situation_browse');
     }
-
 }
