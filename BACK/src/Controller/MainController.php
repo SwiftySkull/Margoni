@@ -83,8 +83,8 @@ class MainController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // $painting->setPicture($form->get('picture')->getData()->getPathName());
-            for ($i=0; $i < count($form->get('techniques')->getData()); $i++) {
-                $technique = $techniqueRepository->find($form->get('techniques')->getData()[$i]);
+            for ($i=0; $i < count($form->get('technique')->getData()); $i++) {
+                $technique = $techniqueRepository->find($form->get('technique')->getData()[$i]);
                 $painting->addTechniques($technique);
             }
 
