@@ -36,10 +36,10 @@ class PaintingType extends AbstractType
                 'help' => 'Au format Mois - Jour - Année',
             ])
             ->add('height', IntegerType::class, [
-                'label' => 'Hauteur de la peinture',
+                'label' => 'Hauteur de la peinture (en millimètre)',
             ])
             ->add('width', IntegerType::class, [
-                'label' => 'Largeur de la peinture',
+                'label' => 'Largeur de la peinture (en millimètre)',
             ])
             ->add('size', EntityType::class, [
                 'class' => Size::class,
