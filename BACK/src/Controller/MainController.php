@@ -108,4 +108,24 @@ class MainController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/paint/delete/{id<\d+>}", name="paint_delete", methods={"POST", "DELETE"})
+     */
+    public function delete(Painting $painting, Request $request, EntityManagerInterface $em)
+    {
+        $submittedToken = $request->request->get('token');
+        if (!$this->isCsrfTokenValid('delete-item', $submittedToken)) {
+            throw $this->createAccessDeniedException('Action non autorisée !!!');
+        }
+
+        if (null === $painting) {
+            throw $this->createNotFoundException('Oups ! Tableau non trouvé.'); 
+        }
+
+        $em->remove($painting);
+        $em->flush();
+
+        return $this->redirectToRoute('home');
+    }
 }
