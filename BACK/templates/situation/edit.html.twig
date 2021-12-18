@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ method }} d'un encadrement{% endblock %}
+{% block title %}{{ method }} d'une situation de collection{% endblock %}
 
-{% block frameActive %}active{% endblock %}
+{% block situationActive %}active{% endblock %}
 
 {% block body %}
 
-<h1>{{ method }} d'un encadrement</h1>
+<h1>{{ method }} d'une situation de collection</h1>
 
 {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
     {# Génère tous les champs du form #}
