@@ -14,33 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class SearchingController extends AbstractController
 {
-    /**
-     * @Route(
-     *      "/collection",
-     *      name="collection_browse",
-     *      methods={"GET"},
-     * )
-     */
-    public function collection(): Response
-    {
-        return $this->render('collection/browse.html.twig', [
-            
-        ]);
-    }
-
-    /**
-     * @Route(
-     *      "/frame",
-     *      name="frame_browse",
-     *      methods={"GET"},
-     * )
-     */
-    public function frame(): Response
-    {
-        return $this->render('frame/browse.html.twig', [
-            
-        ]);
-    }
 
     /**
      * @Route(

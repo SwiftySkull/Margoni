@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Frame;
-use App\Form\FrameType;
-use App\Repository\FrameRepository;
+use App\Entity\Situation;
+use App\Form\SituationType;
 use App\Repository\PaintingRepository;
+use App\Repository\SituationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,19 +13,19 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * Controller which handles all the frames research,
- * and also handles the add/edit/delete of the framing
+ * Controller which handles all the situations/collections research,
+ * and also handles the add/edit/delete of the situation/collection
  * 
- * Controlleur qui se charge de toutes les recherches par encadrement
- * ainsi que les ajout/modification/suppression des encadrements
+ * Controlleur qui se charge de toutes les recherches par collection
+ * ainsi que les ajout/modification/suppression des collections
  * 
- * @Route("/frame", name="frame_")
+ * @Route("/situation", name="situation_")
  */
-class FrameController extends AbstractController
+class SituationController extends AbstractController
 {
     /**
-     * Endpoint to show all the frames
-     * Route pour montrer tous les encadrements
+     * Endpoint to show all the situations/collections
+     * Route pour montrer toutes les collections
      * 
      * @Route(
      *      "/browse",
@@ -33,18 +33,18 @@ class FrameController extends AbstractController
      *      methods={"GET"},
      * )
      */
-    public function browse(FrameRepository $frameRepository): Response
+    public function browse(SituationRepository $situationRepository): Response
     {
-        $frames = $frameRepository->findAll();
+        $situations = $situationRepository->findAll();
 
-        return $this->render('frame/browse.html.twig', [
-            'frames' => $frames,
+        return $this->render('situation/browse.html.twig', [
+            'situations' => $situations,
         ]);
     }
 
     /**
-     * Endpoint to show all the paintings of one type of framing
-     * Route pour montrer toutes les peintures d'un type d'encadrement
+     * Endpoint to show all the paintings of one situation/collection
+     * Route pour montrer toutes les peintures d'une collection
      * 
      * @Route(
      *      "/read/{id<\d+>}",
@@ -52,25 +52,25 @@ class FrameController extends AbstractController
      *      methods={"GET"},
      * )
      */
-    public function read(Frame $frame = null, PaintingRepository $paintingRepository)
+    public function read(Situation $situation = null, PaintingRepository $paintingRepository)
     {
-        if (null === $frame) {
+        if (null === $situation) {
             throw $this->createNotFoundException('Oups ! Type d\'encadrement non trouvé.');
         }
 
-        $paintings = $paintingRepository->findByFrame($frame);
+        $paintings = $paintingRepository->findBySituation($situation);
 
         // dd($paintings);
 
-        return $this->render('frame/read.html.twig', [
+        return $this->render('situation/read.html.twig', [
             'paintings' => $paintings,
-            'frame' => $frame,
+            'situation' => $situation,
         ]);
     }
 
     /**
-     * Endpoint to update the name of a category
-     * Route pour modifier le nom d'une catégorie
+     * Endpoint to update the name of a situation/collection
+     * Route pour modifier le nom d'une collection
      * 
      * @Route(
      *      "/edit/{id<\d+>}",
@@ -78,18 +78,18 @@ class FrameController extends AbstractController
      *      methods={"GET", "POST"},
      * )
      */
-    public function edit(Frame $frame = null, EntityManagerInterface $em, Request $request)
+    public function edit(Situation $situation = null, EntityManagerInterface $em, Request $request)
     {
         $submittedToken = $request->request->get('token');
         if (!$this->isCsrfTokenValid('add-edit-item', $submittedToken)) {
             throw $this->createAccessDeniedException('Action non autorisée !!!');
         }
 
-        if (null === $frame) {
+        if (null === $situation) {
             throw $this->createNotFoundException('Oups ! Type d\'encadrement non trouvé.');
         }
 
-        $form = $this->createForm(FrameType::class, $frame);
+        $form = $this->createForm(SituationType::class, $situation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -97,19 +97,19 @@ class FrameController extends AbstractController
     
             $em->flush();
 
-            return $this->redirectToRoute('frame_browse');
+            return $this->redirectToRoute('situation_browse');
         }
 
-        return $this->render('frame/edit.html.twig', [
-            'frame' => $frame,
+        return $this->render('situation/edit.html.twig', [
+            'situation' => $situation,
             'form' => $form->createView(),
             'method' => 'Modification',
         ]);
     }
 
     /**
-     * Endpoint to add a new framing type
-     * Route pour ajouter un nouveau type d'encadrement
+     * Endpoint to add a new situation/collection
+     * Route pour ajouter une nouvelle collection
      * 
      * @Route(
      *      "/add",
@@ -125,27 +125,27 @@ class FrameController extends AbstractController
             throw $this->createAccessDeniedException('Action non autorisée !!!');
         }
 
-        $frame = new Frame();
+        $situation = new Situation();
     
-        $form = $this->createForm(FrameType::class, $frame);
+        $form = $this->createForm(SituationType::class, $situation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($frame);
+            $em->persist($situation);
             $em->flush();
 
-            return $this->redirectToRoute('frame_browse');
+            return $this->redirectToRoute('situation_browse');
         }
     
-        return $this->render('frame/edit.html.twig', [
+        return $this->render('situation/edit.html.twig', [
             'form' => $form->createView(),
             'method' => 'Création',
         ]);
     }
 
     /**
-     * Endpoint to delete a frame
-     * Route pour supprimer un type d'encadrement
+     * Endpoint to delete a situation/collection
+     * Route pour supprimer une collection
      * 
      * @Route(
      *      "/delete/{id<\d+>}",
@@ -153,9 +153,9 @@ class FrameController extends AbstractController
      *      methods={"POST", "DELETE"},
      * )
      */
-    public function delete(Frame $frame = null, EntityManagerInterface $em, Request $request)
+    public function delete(Situation $situation = null, EntityManagerInterface $em, Request $request)
     {
-        if (null === $frame) {
+        if (null === $situation) {
             throw $this->createNotFoundException('Oups ! Type d\'encadrement non trouvé.');
         }
         
@@ -165,9 +165,10 @@ class FrameController extends AbstractController
             throw $this->createAccessDeniedException('Action non autorisée !!!');
         }
 
-        $em->remove($frame);
+        $em->remove($situation);
         $em->flush();
 
-        return $this->redirectToRoute('frame_browse');
+        return $this->redirectToRoute('situation_browse');
     }
+
 }
