@@ -15,6 +15,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MainController extends AbstractController
 {
+    private $limitPage = 20;
+
     /**
      * Home page with all the paintigs, juste for a try
      * 
@@ -28,10 +30,78 @@ class MainController extends AbstractController
     {
         $paintings = $paintingRepository->findAllCustom();
 
-        shuffle($paintings);
+        $totalPages = round(count($paintingRepository->findAll())/$this->limitPage) + 1;
+        $page = 0;
+        $slice = $page * $this->limitPage;
+
+        // shuffle($paintings);
+
+        $pages = ['pageMin' => 1, 'pageMax' => 5];
 
         return $this->render('main/home.html.twig', [
             'paintings' => $paintings,
+            'pages' => $pages,
+            'slice' => $slice,
+            'totalPages' => $totalPages,
+            'limitPage' => $this->limitPage,
+            'previousPage' => 1,
+            'nextPage' => 6,
+        ]);
+    }
+
+    /**
+     * @Route("/page/{id<\d+>}", name="home_plus", methods={"GET"})
+     */
+    public function homePlus(PaintingRepository $paintingRepository, $id)
+    {
+        $paintings = $paintingRepository->findAllCustom();
+
+        $totalPages = round(count($paintingRepository->findAll())/$this->limitPage) + 1;
+
+        if ($totalPages <= $id) {
+            $id = $totalPages;
+        }
+
+        $pages = ['pageMin' => $id - 2, 'pageMax' => $id + 2];
+
+        if (3 > $id) {
+            $pages = ['pageMin' => 1, 'pageMax' => 5];
+        }
+        
+        if ($totalPages - 2 < $id) {
+            $pages = ['pageMin' => $totalPages - 4, 'pageMax' => $totalPages];
+        }
+    
+        if (0 == $id) {
+            $id = 1;
+        }
+
+        $page = $id - 1;
+        
+        $slice = $page * $this->limitPage;
+        
+        $previousPage = $id - 5;
+        if (5 >= $id) {
+            $previousPage = 1;
+        }
+
+        $nextPage = $id + 5;
+        if ($totalPages - 5 <= $id) {
+            $nextPage = $totalPages;
+        }
+
+        dump($totalPages);
+        dump($pages['pageMax']);
+        dump($pages['pageMax'] > $totalPages - 2);
+
+        return $this->render('main/home.html.twig', [
+            'paintings' => $paintings,
+            'pages' => $pages,
+            'slice' => $slice,
+            'totalPages' => $totalPages,
+            'limitPage' => $this->limitPage,
+            'previousPage' => $previousPage,
+            'nextPage' => $nextPage,
         ]);
     }
 

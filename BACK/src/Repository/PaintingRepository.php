@@ -37,11 +37,33 @@ class PaintingRepository extends ServiceEntityRepository
     // }
 
     /**
-     * TODO: Faire des requêtes pour avoir plusieurs pages et pas tout sur une seule TODO:
      * Return all the paintings with custom request to decrease the total number of requests
      * Retourne toutes les peintures avec une requête custom pour diminuer le nombre de requêtes totales
      */
     public function findAllCustom()
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT p, f, situation, size, t, c 
+            FROM App\Entity\Painting p
+            LEFT JOIN p.frame f
+            LEFT JOIN p.situation situation
+            LEFT JOIN p.size size
+            LEFT JOIN p.techniques t
+            LEFT JOIN p.categories c'
+
+        );
+
+        return $query->getResult();
+    }
+
+    /**
+     * TODO: Faire des requêtes pour avoir plusieurs pages et pas tout sur une seule TODO:
+     * Return all the paintings with custom request to decrease the total number of requests
+     * Retourne toutes les peintures avec une requête custom pour diminuer le nombre de requêtes totales
+     */
+    public function findAllLimited()
     {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.frame', 'f')
@@ -54,7 +76,7 @@ class PaintingRepository extends ServiceEntityRepository
             ->addSelect('t')
             ->innerJoin('p.categories', 'c')
             ->addSelect('c')
-            ->setMaxResults(15)
+            ->setMaxResults(5)
             ->getQuery()
             ->getResult()
         ;
