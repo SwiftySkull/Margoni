@@ -20,23 +20,14 @@
   </thead>
   <tbody>
     {% for category in categories %}
-        <tr>
-        <th scope="row">{{ category.id }}</th>
-        <td><a href="{{ path('category_read', {id:category.id}) }}">{{ category.name }}</a></td>
-        <td>
-          <form action="{{ path('category_edit', {id:category.id}) }}" method="POST">
-            <input type="hidden" name="token" value="{{ csrf_token('add-edit-item') }}"/>
-            <button class="btn btn-warning">Modifier</button>
-          </form>
-        </td>
-        <td>
-          <form action="{{ path('category_delete', {id:category.id}) }}" onsubmit="return confirm('Supprimer la catégorie ?')" method="POST">
-            <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
-            <input type="hidden" name="_method" value="DELETE"/>
-            <button class="btn btn-danger">Supprimer</button>
-          </form>
-        </td>
-        </tr>
+
+      {{ include('sample/_table.html.twig', {
+        'variable': category,
+        'var' : 'category',
+        'unique' : category.name,
+        })
+      }}
+
     {% endfor %}
   </tbody>
 </table>
@@ -44,4 +35,5 @@
   <input type="hidden" name="token" value="{{ csrf_token('add-edit-item') }}"/>
   <button class="btn btn-success">Ajouter une nouvelle catégorie</button>
 </form>
+
 {% endblock %}

@@ -71,6 +71,11 @@ class MainController extends AbstractController
      */
     public function edit(Painting $painting = null, $id, Request $request, EntityManagerInterface $em, TechniqueRepository $techniqueRepository, CategoryRepository $categoryRepository)
     {
+        $submittedToken = $request->request->get('token');
+        if (!$this->isCsrfTokenValid('add-edit-item', $submittedToken)) {
+            throw $this->createAccessDeniedException('Action non autorisée !!!');
+        }
+
         if (null === $painting) {
             throw $this->createNotFoundException('Oups ! Tableau non trouvé.'); 
         }
