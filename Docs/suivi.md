@@ -32,3 +32,4 @@ Mettre en place les templates qui vont avec, les sécurités token CSRF et les f
 
 FrameController + templates fait
 SituationController + templates fait
+SizeController + templates fait
