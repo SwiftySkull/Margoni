@@ -15,6 +15,6 @@
         <p>Localisation : {{ paint.location ?? 'Non précisée.' }}</p>
     </div>
     <img src="{{ paint.picture }}" style="height: 150px; width: 150px"/>
-    <p>Information : {{ paint.information ?? 'Pas d\'information complémentaire actuellement.' }}</p>
+    <p>Information : {{ paint.information|u.truncate(200, '[...]', false) ?? 'Pas d\'information complémentaire pour le moment.'}}</p>
     <hr>
 {% endfor %}
