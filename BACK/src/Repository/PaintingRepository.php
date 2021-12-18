@@ -89,7 +89,7 @@ class PaintingRepository extends ServiceEntityRepository
      * Return all the paintings of a specific type of framing
      * Retourne toutes les peintures d'un type d'encadrement
      *
-     * @param [entity] $category
+     * @param [entity] $frame
      */
     public function findByFrame($frame)
     {
@@ -110,6 +110,80 @@ class PaintingRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    /**
+     * Return all the paintings of a specific situation/collection
+     * Retourne toutes les peintures d'une collection
+     *
+     * @param [entity] $situation
+     */
+    public function findBySituation($situation)
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT p, f, situation, size, t, c 
+            FROM App\Entity\Painting p
+            INNER JOIN p.frame f
+            INNER JOIN p.situation situation
+            INNER JOIN p.size size
+            INNER JOIN p.techniques t
+            INNER JOIN p.categories c
+            WHERE situation = :situation'
+
+        )->setParameter('situation', $situation);
+
+        return $query->getResult();
+    }
+
+    /**
+     * Return all the paintings of a specific size
+     * Retourne toutes les peintures d'un format spécifique
+     *
+     * @param [entity] $size
+     */
+    public function findBySize($size)
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT p, f, situation, size, t, c 
+            FROM App\Entity\Painting p
+            INNER JOIN p.frame f
+            INNER JOIN p.situation situation
+            INNER JOIN p.size size
+            INNER JOIN p.techniques t
+            INNER JOIN p.categories c
+            WHERE size = :size'
+
+        )->setParameter('size', $size);
+
+        return $query->getResult();
+    }
+
+    /**
+     * Return all the paintings of a specific technique
+     * Retourne toutes les peintures d'une technique spécifique
+     *
+     * @param [entity] $technique
+     */
+    public function findByTechnique($technique)
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT p, f, situation, size, t, c 
+            FROM App\Entity\Painting p
+            INNER JOIN p.frame f
+            INNER JOIN p.situation situation
+            INNER JOIN p.size size
+            INNER JOIN p.techniques t
+            INNER JOIN p.categories c
+            WHERE t = :technique'
+
+        )->setParameter('technique', $technique);
+
+        return $query->getResult();
+    }
 
     // public function findByCategory($category)
     // {

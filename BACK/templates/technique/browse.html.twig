@@ -6,4 +6,42 @@
 
 {% block body %}
 
+<h1>Recherche par technique</h1>
+
+<h2>Liste des techniques</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Actions</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for technique in techniques %}
+        <tr>
+        <th scope="row">{{ technique.id }}</th>
+        <td><a href="{{ path('technique_read', {id:technique.id}) }}">{{ technique.type }}</a></td>
+        <td>
+          <form action="{{ path('technique_edit', {id:technique.id}) }}" method="POST">
+            <input type="hidden" name="token" value="{{ csrf_token('add-edit-item') }}"/>
+            <button class="btn btn-warning">Modifier</button>
+          </form>
+        </td>
+        <td>
+          <form action="{{ path('technique_delete', {id:technique.id}) }}" onsubmit="return confirm('Supprimer la technique ?')" method="POST">
+            <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
+            <input type="hidden" name="_method" value="DELETE"/>
+            <button class="btn btn-danger">Supprimer</button>
+          </form>
+        </td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<form action="{{ path('technique_add') }}" method="POST">
+  <input type="hidden" name="token" value="{{ csrf_token('add-edit-item') }}"/>
+  <button class="btn btn-success">Ajouter une nouvelle technique</button>
+</form>
 {% endblock %}

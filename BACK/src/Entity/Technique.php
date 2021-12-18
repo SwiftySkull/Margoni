@@ -39,7 +39,7 @@ class Technique
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $uptadetAt;
+    private $updatedAt;
 
     /**
      * @ORM\ManyToMany(targetEntity=Painting::class, mappedBy="techniques")
@@ -81,14 +81,14 @@ class Technique
         return $this;
     }
 
-    public function getUptadetAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->uptadetAt;
+        return $this->updatedAt;
     }
 
-    public function setUptadetAt(?\DateTimeInterface $uptadetAt): self
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
-        $this->uptadetAt = $uptadetAt;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
