@@ -9,8 +9,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ * Entity describing all the elements we need for a painting
+ * Entité qui décrit tous les éléments nécessaires pour une peinture
+ * 
  * @ORM\Entity(repositoryClass=PaintingRepository::class)
  * @UniqueEntity("title", "picture")
+ * 
+ * @ORM\HasLifecycleCallbacks()
  */
 class Painting
 {
@@ -84,17 +89,18 @@ class Painting
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="paintings")
      */
-    private $category;
+    private $categories;
 
     /**
      * @ORM\ManyToMany(targetEntity=Technique::class, inversedBy="paintings")
      */
-    private $technique;
+    private $techniques;
 
     public function __construct()
     {
-        $this->category = new ArrayCollection();
-        $this->technique = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->techniques = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -210,6 +216,16 @@ class Painting
         return $this;
     }
 
+    /**
+     * Function to update the updatedAt value automatically
+     * 
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updatedAt = new \DateTime();
+    }
+
     public function getFrame(): ?Frame
     {
         return $this->frame;
@@ -249,47 +265,47 @@ class Painting
     /**
      * @return Collection|Category[]
      */
-    public function getCategory(): Collection
+    public function getCategories(): Collection
     {
-        return $this->category;
+        return $this->categories;
     }
 
-    public function addCategory(Category $category): self
+    public function addCategories(Category $categories): self
     {
-        if (!$this->category->contains($category)) {
-            $this->category[] = $category;
+        if (!$this->categories->contains($categories)) {
+            $this->categories[] = $categories;
         }
 
         return $this;
     }
 
-    public function removeCategory(Category $category): self
+    public function removeCategories(Category $categories): self
     {
-        $this->category->removeElement($category);
+        $this->categories->removeElement($categories);
 
         return $this;
     }
 
     /**
-     * @return Collection|Technique[]
+     * @return Collection|Techniques[]
      */
     public function getTechnique(): Collection
     {
-        return $this->technique;
+        return $this->techniques;
     }
 
-    public function addTechnique(Technique $technique): self
+    public function addTechniques(Technique $techniques): self
     {
-        if (!$this->technique->contains($technique)) {
-            $this->technique[] = $technique;
+        if (!$this->techniques->contains($techniques)) {
+            $this->techniques[] = $techniques;
         }
 
         return $this;
     }
 
-    public function removeTechnique(Technique $technique): self
+    public function removeTechniques(Technique $techniques): self
     {
-        $this->technique->removeElement($technique);
+        $this->techniques->removeElement($techniques);
 
         return $this;
     }

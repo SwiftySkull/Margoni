@@ -9,8 +9,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ * Entity for the differents techniques used for the paintings
+ * Entité pour les différentes techniques utilisées pour les peintures
+ * 
  * @ORM\Entity(repositoryClass=TechniqueRepository::class)
  * @UniqueEntity("type")
+ * 
+ * @ORM\HasLifecycleCallbacks()
  */
 class Technique
 {
@@ -37,13 +42,14 @@ class Technique
     private $uptadetAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Painting::class, mappedBy="technique")
+     * @ORM\ManyToMany(targetEntity=Painting::class, mappedBy="techniques")
      */
     private $paintings;
 
     public function __construct()
     {
         $this->paintings = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -88,6 +94,16 @@ class Technique
     }
 
     /**
+     * Function to update the updatedAt value automatically
+     * 
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
      * @return Collection|Painting[]
      */
     public function getPaintings(): Collection
@@ -99,7 +115,7 @@ class Technique
     {
         if (!$this->paintings->contains($painting)) {
             $this->paintings[] = $painting;
-            $painting->addTechnique($this);
+            $painting->addTechniques($this);
         }
 
         return $this;
@@ -108,7 +124,7 @@ class Technique
     public function removePainting(Painting $painting): self
     {
         if ($this->paintings->removeElement($painting)) {
-            $painting->removeTechnique($this);
+            $painting->removeTechniques($this);
         }
 
         return $this;

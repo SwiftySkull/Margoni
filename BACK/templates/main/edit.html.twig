@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification{% endblock %}
+
+{% block body %}
+
+<h1>Modification d'une peinture</h1>
+
+{{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+    {# Génère tous les champs du form #}
+    {{ form_widget(form) }}
+
+    <button type="submit" class="btn btn-success">Enregistrer</button>
+
+{{ form_end(form) }}
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche par catégorie{% endblock %}
+
+{% block categoryActive %}active{% endblock %}
+
+{% block body %}
+
+<h1>Recherche par catégorie</h1>
+
+<h2>Liste des tableaux de la catégorie {{ category.name }}</h2>
+
+{# <ul>
+    {% for category in categories %}
+        <li><a href="{{ path('searching_category_read', {id:category.id}) }}">{{ category.name }}</a></li>
+    {% endfor %}
+</ul> #}
+
+{% for paint in paintings %}
+    <div>
+        <p><b><a href="{{ path('read_paint', {id:paint.id}) }}">{{ paint.title }}</a></b> peint en {{ paint.date is not same as null ? paint.date|date('d-m-Y') : 'Non précisée.' }} ({{ paint.size.format ?? 'Non précisé.' }})
+        {% if paint.height is not same as null and paint.width is not same as null %}
+            {{ paint.height }}x{{ paint.width }}
+        {% else %}
+            Non précisée
+        {% endif %}
+        </p>
+        {% for category in paint.categories %}
+            <span class="badge bg-primary">{{ category.name }}</span>
+        {% endfor %}
+        <p>Encadrement : {{ paint.frame.framing ?? 'Non précisé.' }}</p>
+        <p>Collection : {{ paint.situation.collection ?? 'Non précisée.' }}</p>
+        <p>Localisation : {{ paint.location ?? 'Non précisée.' }}</p>
+    </div>
+    <img src="{{ paint.picture }}" style="height: 150px; width: 150px"/>
+    <p>Information : {{ paint.information ?? 'Pas d\'information complémentaire actuellement.' }}</p>
+    <hr>
+{% endfor %}
+
+{% endblock %}

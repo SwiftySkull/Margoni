@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ painting.title }}{% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+    <h1>{{ painting.title }}</h1>
+    <img src="{{ painting.picture }}" />
+    <br>
+    <p><b>Date de création</b> : {{ painting.date is not same as null ? painting.date|date('d-m-Y') : 'Non précisée.' }}</p>
+    <p><b>Catégories de l'oeuvre</b> :</p>
+    <ul>
+        {% for category in painting.categories %}
+            <li>{{ category.name }}</li>
+        {% endfor %}
+    </ul>
+
+    <p><b>Techniques utilisées</b> :</p>
+    <ul>
+        {% for tech in painting.technique %}
+            <li>{{ tech.type }}</li>
+        {% endfor %}
+    </ul>
+    
+    {% if painting.height is not same as null and painting.width is not same as null %}
+        <p><b>Taille</b> : {{ painting.height }}x{{ painting.width }}</p>
+    {% else %}
+        <p><b>Taille</b> : Non précisée.</p>
+    {% endif %}
+    
+    <p><b>Format</b> : {{ painting.size.format ?? 'Non précisé.' }}</p>
+    <p><b>Encadrement</b> : {{ painting.frame.framing ?? 'Non précisé.' }}</p>
+    <p><b>Collection</b> : {{ painting.situation.collection ?? 'Non précisée.' }}</p>
+    <p><b>Localisation</b> : {{ painting.location ?? 'Non précisée.' }}</p>
+    <p><b>Information</b> : {{ painting.information ?? 'Pas d\'information complémentaire actuellement.' }}</p>
+    <a href="{{ path('paint_edit', {id:painting.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+</div>
+{% endblock %}

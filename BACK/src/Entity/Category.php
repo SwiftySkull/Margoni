@@ -9,8 +9,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ * Entity for the differents categories of the paintings
+ * Entité pour les différentes catégories des peintures
+ * 
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
  * @UniqueEntity("name")
+ * 
+ * @ORM\HasLifecycleCallbacks()
  */
 class Category
 {
@@ -37,13 +42,14 @@ class Category
     private $updatedAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Painting::class, mappedBy="category")
+     * @ORM\ManyToMany(targetEntity=Painting::class, mappedBy="categories")
      */
     private $paintings;
 
     public function __construct()
     {
         $this->paintings = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -88,6 +94,16 @@ class Category
     }
 
     /**
+     * Function to update the updatedAt value automatically
+     * 
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
      * @return Collection|Painting[]
      */
     public function getPaintings(): Collection
@@ -99,7 +115,7 @@ class Category
     {
         if (!$this->paintings->contains($painting)) {
             $this->paintings[] = $painting;
-            $painting->addCategory($this);
+            $painting->addCategories($this);
         }
 
         return $this;
@@ -108,7 +124,7 @@ class Category
     public function removePainting(Painting $painting): self
     {
         if ($this->paintings->removeElement($painting)) {
-            $painting->removeCategory($this);
+            $painting->removeCategories($this);
         }
 
         return $this;

@@ -9,8 +9,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ * Entity for the different status of the paintings, the collections, where they are
+ * Entité pour les différents status des peintures, les collections, où elles sont
+ * 
  * @ORM\Entity(repositoryClass=SituationRepository::class)
  * @UniqueEntity("collection")
+ * 
+ * @ORM\HasLifecycleCallbacks()
  */
 class Situation
 {
@@ -44,6 +49,7 @@ class Situation
     public function __construct()
     {
         $this->paintings = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -85,6 +91,16 @@ class Situation
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    /**
+     * Function to update the updatedAt value automatically
+     * 
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updatedAt = new \DateTime();
     }
 
     /**

@@ -19,6 +19,83 @@ class PaintingRepository extends ServiceEntityRepository
         parent::__construct($registry, Painting::class);
     }
 
+    // public function findAllCustom()
+    // {
+    //     $entityManager = $this->getEntityManager();
+
+    //     $query = $entityManager->createQuery(
+            // 'SELECT p, f, situation, size, t, c 
+            // FROM App\Entity\Painting p
+            // INNER JOIN p.frame f
+            // INNER JOIN p.situation situation
+            // INNER JOIN p.size size
+            // INNER JOIN p.techniques t
+            // INNER JOIN p.categories c'
+    //     );
+    
+    //     return $query->getResult();
+    // }
+
+    /**
+     * TODO: Faire des requêtes pour avoir plusieurs pages et pas tout sur une seule TODO:
+     * Return all the paintings with custom request to decrease the total number of requests
+     * Retourne toutes les peintures avec une requête custom pour diminuer le nombre de requêtes totales
+     */
+    public function findAllCustom()
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.frame', 'f')
+            ->addSelect('f')
+            ->innerJoin('p.situation', 'sit')
+            ->addSelect('sit')
+            ->innerJoin('p.size', 'size')
+            ->addSelect('size')
+            ->innerJoin('p.techniques', 't')
+            ->addSelect('t')
+            ->innerJoin('p.categories', 'c')
+            ->addSelect('c')
+            ->setMaxResults(15)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * Return all the paintings of a specific category
+     * Retourne toutes les peintures d'une catégorie spécifique
+     *
+     * @param [entity] $category
+     */
+    public function findByCategory($category)
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT p, f, situation, size, t, c 
+            FROM App\Entity\Painting p
+            INNER JOIN p.frame f
+            INNER JOIN p.situation situation
+            INNER JOIN p.size size
+            INNER JOIN p.techniques t
+            INNER JOIN p.categories c
+            WHERE c = :categ'
+
+        )->setParameter('categ', $category);
+
+        return $query->getResult();
+    }
+
+    // public function findByCategory($category)
+    // {
+    //     return $this->createQueryBuilder('p')
+    //         ->andWhere('p.category = :cat')
+    //         ->setParameter('cat', $category)
+    //         ->orderBy('p.id', 'ASC')
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
+
     // /**
     //  * @return Painting[] Returns an array of Painting objects
     //  */

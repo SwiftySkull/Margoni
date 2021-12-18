@@ -9,8 +9,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ * Entity for the differents types of framework of the paintings
+ * Entité pour les différents encadrements des peintures
+ * 
  * @ORM\Entity(repositoryClass=FrameRepository::class)
  * @UniqueEntity("framing")
+ * 
+ * @ORM\HasLifecycleCallbacks()
  */
 class Frame
 {
@@ -44,6 +49,7 @@ class Frame
     public function __construct()
     {
         $this->paintings = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -85,6 +91,16 @@ class Frame
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    /**
+     * Function to update the updatedAt value automatically
+     * 
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updatedAt = new \DateTime();
     }
 
     /**

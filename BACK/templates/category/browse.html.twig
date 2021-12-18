@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche par catégorie{% endblock %}
+
+{% block categoryActive %}active{% endblock %}
+
+{% block body %}
+
+<h1>Recherche par catégorie</h1>
+
+<h2>Liste des catégories</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Actions</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for category in categories %}
+        <tr>
+        <th scope="row">{{ category.id }}</th>
+        <td><a href="{{ path('category_read', {id:category.id}) }}">{{ category.name }}</a></td>
+        <td>
+          <form action="{{ path('category_edit', {id:category.id}) }}" method="POST">
+            <input type="hidden" name="token" value="{{ csrf_token('edit-item') }}"/>
+            <button class="btn btn-warning">Modifier</button>
+          </form>
+        </td>
+        <td>
+          <form action="{{ path('category_delete', {id:category.id}) }}" onsubmit="return confirm('Supprimer la catégorie ?')" method="POST">
+            <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
+            <input type="hidden" name="_method" value="DELETE"/>
+            <button class="btn btn-danger">Supprimer</button>
+          </form>
+        </td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<form action="{{ path('category_add') }}" method="POST">
+  <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
+  <button class="btn btn-success">Ajouter une nouvelle catégorie</button>
+</form>
+{% endblock %}
