@@ -60,8 +60,6 @@ class SituationController extends AbstractController
 
         $paintings = $paintingRepository->findBySituation($situation);
 
-        // dd($paintings);
-
         return $this->render('situation/read.html.twig', [
             'paintings' => $paintings,
             'situation' => $situation,

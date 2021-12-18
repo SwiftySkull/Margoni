@@ -73,11 +73,11 @@ class PaintingRepository extends ServiceEntityRepository
         $query = $entityManager->createQuery(
             'SELECT p, f, situation, size, t, c 
             FROM App\Entity\Painting p
-            INNER JOIN p.frame f
-            INNER JOIN p.situation situation
-            INNER JOIN p.size size
-            INNER JOIN p.techniques t
-            INNER JOIN p.categories c
+            LEFT JOIN p.frame f
+            LEFT JOIN p.situation situation
+            LEFT JOIN p.size size
+            LEFT JOIN p.techniques t
+            LEFT JOIN p.categories c
             WHERE c = :categ'
 
         )->setParameter('categ', $category);
@@ -98,11 +98,11 @@ class PaintingRepository extends ServiceEntityRepository
         $query = $entityManager->createQuery(
             'SELECT p, f, situation, size, t, c 
             FROM App\Entity\Painting p
-            INNER JOIN p.frame f
-            INNER JOIN p.situation situation
-            INNER JOIN p.size size
-            INNER JOIN p.techniques t
-            INNER JOIN p.categories c
+            LEFT JOIN p.frame f
+            LEFT JOIN p.situation situation
+            LEFT JOIN p.size size
+            LEFT JOIN p.techniques t
+            LEFT JOIN p.categories c
             WHERE f = :frame'
 
         )->setParameter('frame', $frame);
@@ -123,11 +123,11 @@ class PaintingRepository extends ServiceEntityRepository
         $query = $entityManager->createQuery(
             'SELECT p, f, situation, size, t, c 
             FROM App\Entity\Painting p
-            INNER JOIN p.frame f
-            INNER JOIN p.situation situation
-            INNER JOIN p.size size
-            INNER JOIN p.techniques t
-            INNER JOIN p.categories c
+            LEFT JOIN p.frame f
+            LEFT JOIN p.situation situation
+            LEFT JOIN p.size size
+            LEFT JOIN p.techniques t
+            LEFT JOIN p.categories c
             WHERE situation = :situation'
 
         )->setParameter('situation', $situation);
@@ -148,11 +148,11 @@ class PaintingRepository extends ServiceEntityRepository
         $query = $entityManager->createQuery(
             'SELECT p, f, situation, size, t, c 
             FROM App\Entity\Painting p
-            INNER JOIN p.frame f
-            INNER JOIN p.situation situation
-            INNER JOIN p.size size
-            INNER JOIN p.techniques t
-            INNER JOIN p.categories c
+            LEFT JOIN p.frame f
+            LEFT JOIN p.situation situation
+            LEFT JOIN p.size size
+            LEFT JOIN p.techniques t
+            LEFT JOIN p.categories c
             WHERE size = :size'
 
         )->setParameter('size', $size);
@@ -173,11 +173,11 @@ class PaintingRepository extends ServiceEntityRepository
         $query = $entityManager->createQuery(
             'SELECT p, f, situation, size, t, c 
             FROM App\Entity\Painting p
-            INNER JOIN p.frame f
-            INNER JOIN p.situation situation
-            INNER JOIN p.size size
-            INNER JOIN p.techniques t
-            INNER JOIN p.categories c
+            LEFT JOIN p.frame f
+            LEFT JOIN p.situation situation
+            LEFT JOIN p.size size
+            LEFT JOIN p.techniques t
+            LEFT JOIN p.categories c
             WHERE t = :technique'
 
         )->setParameter('technique', $technique);
