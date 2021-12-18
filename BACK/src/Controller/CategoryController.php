@@ -82,7 +82,7 @@ class CategoryController extends AbstractController
     public function edit(Category $category = null, EntityManagerInterface $em, Request $request)
     {
         $submittedToken = $request->request->get('token');
-        if (!$this->isCsrfTokenValid('edit-item', $submittedToken)) {
+        if (!$this->isCsrfTokenValid('add-edit-item', $submittedToken)) {
             throw $this->createAccessDeniedException('Action non autorisée !!!');
         }
 
@@ -120,7 +120,7 @@ class CategoryController extends AbstractController
     public function add(EntityManagerInterface $em, Request $request)
     {
         $submittedToken = $request->request->get('token');
-        if (!$this->isCsrfTokenValid('edit-item', $submittedToken)) {
+        if (!$this->isCsrfTokenValid('add-edit-item', $submittedToken)) {
             throw $this->createAccessDeniedException('Action non autorisée !!!');
         }
 

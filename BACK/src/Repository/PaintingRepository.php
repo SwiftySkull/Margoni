@@ -85,6 +85,32 @@ class PaintingRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    /**
+     * Return all the paintings of a specific type of framing
+     * Retourne toutes les peintures d'un type d'encadrement
+     *
+     * @param [entity] $category
+     */
+    public function findByFrame($frame)
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT p, f, situation, size, t, c 
+            FROM App\Entity\Painting p
+            INNER JOIN p.frame f
+            INNER JOIN p.situation situation
+            INNER JOIN p.size size
+            INNER JOIN p.techniques t
+            INNER JOIN p.categories c
+            WHERE f = :frame'
+
+        )->setParameter('frame', $frame);
+
+        return $query->getResult();
+    }
+
+
     // public function findByCategory($category)
     // {
     //     return $this->createQueryBuilder('p')

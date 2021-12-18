@@ -25,7 +25,7 @@
         <td><a href="{{ path('category_read', {id:category.id}) }}">{{ category.name }}</a></td>
         <td>
           <form action="{{ path('category_edit', {id:category.id}) }}" method="POST">
-            <input type="hidden" name="token" value="{{ csrf_token('edit-item') }}"/>
+            <input type="hidden" name="token" value="{{ csrf_token('add-edit-item') }}"/>
             <button class="btn btn-warning">Modifier</button>
           </form>
         </td>
@@ -41,7 +41,7 @@
   </tbody>
 </table>
 <form action="{{ path('category_add') }}" method="POST">
-  <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
+  <input type="hidden" name="token" value="{{ csrf_token('add-edit-item') }}"/>
   <button class="btn btn-success">Ajouter une nouvelle catégorie</button>
 </form>
 {% endblock %}

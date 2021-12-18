@@ -6,4 +6,43 @@
 
 {% block body %}
 
+<h1>Recherche par encadrement</h1>
+
+<h2>Liste des encadrements</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Actions</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for frame in frames %}
+        <tr>
+        <th scope="row">{{ frame.id }}</th>
+        <td><a href="{{ path('frame_read', {id:frame.id}) }}">{{ frame.framing }}</a></td>
+        <td>
+          <form action="{{ path('frame_edit', {id:frame.id}) }}" method="POST">
+            <input type="hidden" name="token" value="{{ csrf_token('add-edit-item') }}"/>
+            <button class="btn btn-warning">Modifier</button>
+          </form>
+        </td>
+        <td>
+          <form action="{{ path('frame_delete', {id:frame.id}) }}" onsubmit="return confirm('Supprimer l'encadrement ?')" method="POST">
+            <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
+            <input type="hidden" name="_method" value="DELETE"/>
+            <button class="btn btn-danger">Supprimer</button>
+          </form>
+        </td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<form action="{{ path('frame_add') }}" method="POST">
+  <input type="hidden" name="token" value="{{ csrf_token('add-edit-item') }}"/>
+  <button class="btn btn-success">Ajouter un nouveau type d'encadrement</button>
+</form>
 {% endblock %}
