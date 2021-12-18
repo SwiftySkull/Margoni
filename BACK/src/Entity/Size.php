@@ -9,8 +9,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ * Entity for the differents artistics formats of paintings
+ * Entité pour les différents formats artistiques des peintures
+ * 
  * @ORM\Entity(repositoryClass=SizeRepository::class)
  * @UniqueEntity("format")
+ * 
+ * @ORM\HasLifecycleCallbacks()
  */
 class Size
 {
@@ -86,6 +91,16 @@ class Size
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    /**
+     * Function to update the updatedAt value automatically
+     * 
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updatedAt = new \DateTime();
     }
 
     /**

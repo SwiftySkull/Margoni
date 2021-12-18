@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création d'une catégorie{% endblock %}
+
+{% block categoryActive %}active{% endblock %}
+
+{% block body %}
+
+<h1>Modification d'une catégorie</h1>
+
+{{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+    {# Génère tous les champs du form #}
+    {{ form_widget(form) }}
+
+    <input type="hidden" name="token" value="{{ csrf_token('edit-item') }}"/>
+    <button type="submit" class="btn btn-success">Enregistrer</button>
+
+{{ form_end(form) }}
+
+{% endblock %}

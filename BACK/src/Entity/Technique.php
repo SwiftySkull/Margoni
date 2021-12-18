@@ -9,8 +9,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ * Entity for the differents techniques used for the paintings
+ * Entité pour les différentes techniques utilisées pour les peintures
+ * 
  * @ORM\Entity(repositoryClass=TechniqueRepository::class)
  * @UniqueEntity("type")
+ * 
+ * @ORM\HasLifecycleCallbacks()
  */
 class Technique
 {
@@ -86,6 +91,16 @@ class Technique
         $this->uptadetAt = $uptadetAt;
 
         return $this;
+    }
+
+    /**
+     * Function to update the updatedAt value automatically
+     * 
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updatedAt = new \DateTime();
     }
 
     /**

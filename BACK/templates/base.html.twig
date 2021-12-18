@@ -5,11 +5,12 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
     <body>
 
         {# {{ include('_navbar.html.twig') }} #}
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light personnelleNavbar">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ path('home') }}">Margoni Project</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,30 +19,33 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                    <a class="nav-link {% block homeActive %}{% endblock %}" aria-current="page" href="{{ path('home') }}">Accueil</a>
+                        <a class="nav-link {% block homeActive %}{% endblock %}" aria-current="page" href="{{ path('home') }}">Accueil</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link {% block frameActive %}{% endblock %}" aria-current="page" href="{{ path('searching_frame') }}">Encadrements</a>
+                        <a class="nav-link {% block frameActive %}{% endblock %}" aria-current="page" href="{{ path('searching_frame_browse') }}">Encadrements</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link {% block collectionActive %}{% endblock %}" aria-current="page" href="{{ path('searching_collection') }}">Collection</a>
+                        <a class="nav-link {% block collectionActive %}{% endblock %}" aria-current="page" href="{{ path('searching_collection_browse') }}">Collection</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link {% block categoryActive %}{% endblock %}" aria-current="page" href="{{ path('searching_category') }}">Catégories</a>
+                        <a class="nav-link {% block categoryActive %}{% endblock %}" aria-current="page" href="{{ path('category_browse') }}">Catégories</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link {% block techniqueActive %}{% endblock %}" aria-current="page" href="{{ path('searching_technique') }}">Techniques</a>
+                        <a class="nav-link {% block techniqueActive %}{% endblock %}" aria-current="page" href="{{ path('searching_technique_browse') }}">Techniques</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link {% block sizeActive %}{% endblock %}" aria-current="page" href="{{ path('searching_size') }}">Format</a>
+                        <a class="nav-link {% block sizeActive %}{% endblock %}" aria-current="page" href="{{ path('searching_size_browse') }}">Format</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link {% block heightActive %}{% endblock %}" aria-current="page" href="{{ path('searching_height') }}">Taille</a>
+                        <a class="nav-link {% block heightActive %}{% endblock %}" aria-current="page" href="{{ path('searching_height_browse') }}">Taille</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-success ms-5" aria-current="page" href="#">Ajouter un tableau</a>
                     </li>
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
                 </form>
                 </div>
             </div>

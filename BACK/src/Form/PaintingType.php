@@ -2,11 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\Category;
+use App\Entity\Size;
 use App\Entity\Frame;
+use App\Entity\Category;
 use App\Entity\Painting;
 use App\Entity\Situation;
-use App\Entity\Size;
+use App\Entity\Technique;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -62,8 +63,6 @@ class PaintingType extends AbstractType
                     'mimeTypesMessage' => 'Le fichier n\'est pas au bon format (.png, .jpg, .jpeg)',
                 ]),
             ])
-            // ->add('createdAt')
-            // ->add('updatedAt')
             ->add('frame', EntityType::class, [
                 'class' => Frame::class,
                 'label' => 'Encadrement',
@@ -76,31 +75,22 @@ class PaintingType extends AbstractType
                 'choice_label' => 'collection',
                 'placeholder' => 'Le tableau se trouve actuellement...'
             ])
-            ->add('categories', ChoiceType::class, [
-                'label' => 'Ce qui décrit le tableau :',
-                'mapped' => false,
-                'multiple' => true,
-                'expanded' => true,
-                'choices' => [
-                    'Arbre' => 1,
-                    'Dessin de tissu' => 2,
-                    'Machines agricoles' => 3,
-                    'Champs' => 4,
-                    'Portrait' => 5,
-                ],
-            ])
-            ->add('techniques', ChoiceType::class, [
+            ->add('technique', EntityType::class, [
+                'class' => Technique::class,
                 'label' => 'Les techniques utilisées sont :',
-                'mapped' => false,
-                'multiple' => true,
+                'choice_label' => 'type',
                 'expanded' => true,
-                'choices' => [
-                    'Gouache' => 1,
-                    'Peinture à l\'huile' => 2,
-                    'Peinture à l\'eau' => 3,
-                    'Collage' => 4,
-                ],
+                'multiple' => true,
             ])
+            ->add('categories', EntityType::class, [
+                'class' => Category::class,
+                'label' => 'Ce qui décrit le tableau',
+                'choice_label' => 'name',
+                'expanded' => true,
+                'multiple' => true,
+            ])
+            // ->add('createdAt')
+            // ->add('updatedAt')
         ;
     }
 

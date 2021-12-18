@@ -5,26 +5,28 @@
 {% block homeActive %}active{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
 <div class="example-wrapper">
     <h1>Hello ! ✅</h1>
 
     {% for paint in paintings %}
         <div>
-            <p><b><a href="{{ path('read_paint', {id:paint.id}) }}">{{ paint.title }}</a></b> peint en {{ paint.date|date('Y') }} ({{ paint.size.format }}) {{ paint.height }}x{{ paint.width }}</p>
+            <p><b><a href="{{ path('read_paint', {id:paint.id}) }}">{{ paint.title }}</a></b> peint en {{ paint.date is not same as null ? paint.date|date('d-m-Y') : 'Non précisée.' }} ({{ paint.size.format ?? 'Non précisé.' }}) 
+            {% if paint.height is not same as null and paint.width is not same as null %}
+                {{ paint.height }}x{{ paint.width }}
+            {% else %}
+                Non précisée
+            {% endif %}
+            </p>
             {% for category in paint.categories %}
                 <span class="badge bg-primary">{{ category.name }}</span>
             {% endfor %}
-            <p>Encadrement : {{ paint.frame.framing }}</p>
-            <p>Collection : {{ paint.situation.collection }}</p>
-            <p>Localisation : {{ paint.location }}</p>
+            <p>Encadrement : {{ paint.frame.framing ?? 'Non précisé.' }}</p>
+            <p>Collection : {{ paint.situation.collection ?? 'Non précisée.' }}</p>
+            <p>Localisation : {{ paint.location ?? 'Non précisée.' }}</p>
         </div>
         <img src="{{ paint.picture }}" style="height: 150px; width: 150px"/>
-        <p>Information : {{ paint.information }}</p>
+        <p>Information : {{ paint.information ?? 'Pas d\'information complémentaire actuellement.' }}</p>
         <hr>
     {% endfor %}
 

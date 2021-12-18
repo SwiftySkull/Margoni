@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Category;
+use App\Repository\CategoryRepository;
+use App\Repository\PaintingRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/searching", name="searching_")
@@ -13,28 +16,14 @@ class SearchingController extends AbstractController
 {
     /**
      * @Route(
-     *      "/category",
-     *      name="category",
-     *      methods={"GET"},
-     * )
-     */
-    public function category(): Response
-    {
-        return $this->render('main/searching/category.html.twig', [
-            
-        ]);
-    }
-
-    /**
-     * @Route(
      *      "/collection",
-     *      name="collection",
+     *      name="collection_browse",
      *      methods={"GET"},
      * )
      */
     public function collection(): Response
     {
-        return $this->render('main/searching/collection.html.twig', [
+        return $this->render('collection/browse.html.twig', [
             
         ]);
     }
@@ -42,13 +31,13 @@ class SearchingController extends AbstractController
     /**
      * @Route(
      *      "/frame",
-     *      name="frame",
+     *      name="frame_browse",
      *      methods={"GET"},
      * )
      */
     public function frame(): Response
     {
-        return $this->render('main/searching/frame.html.twig', [
+        return $this->render('frame/browse.html.twig', [
             
         ]);
     }
@@ -56,13 +45,13 @@ class SearchingController extends AbstractController
     /**
      * @Route(
      *      "/height",
-     *      name="height",
+     *      name="height_browse",
      *      methods={"GET"},
      * )
      */
     public function height(): Response
     {
-        return $this->render('main/searching/height.html.twig', [
+        return $this->render('height/browse.html.twig', [
             
         ]);
     }
@@ -70,13 +59,13 @@ class SearchingController extends AbstractController
     /**
      * @Route(
      *      "/size",
-     *      name="size",
+     *      name="size_browse",
      *      methods={"GET"},
      * )
      */
     public function size(): Response
     {
-        return $this->render('main/searching/size.html.twig', [
+        return $this->render('size/browse.html.twig', [
             
         ]);
     }
@@ -84,13 +73,13 @@ class SearchingController extends AbstractController
     /**
      * @Route(
      *      "/technique",
-     *      name="technique",
+     *      name="technique_browse",
      *      methods={"GET"},
      * )
      */
     public function technique(): Response
     {
-        return $this->render('main/searching/technique.html.twig', [
+        return $this->render('technique/browse.html.twig', [
             
         ]);
     }

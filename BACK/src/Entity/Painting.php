@@ -9,8 +9,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ * Entity describing all the elements we need for a painting
+ * Entité qui décrit tous les éléments nécessaires pour une peinture
+ * 
  * @ORM\Entity(repositoryClass=PaintingRepository::class)
  * @UniqueEntity("title", "picture")
+ * 
+ * @ORM\HasLifecycleCallbacks()
  */
 class Painting
 {
@@ -209,6 +214,16 @@ class Painting
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    /**
+     * Function to update the updatedAt value automatically
+     * 
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updatedAt = new \DateTime();
     }
 
     public function getFrame(): ?Frame
