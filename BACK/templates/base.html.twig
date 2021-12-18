@@ -8,9 +8,52 @@
     </head>
     <body>
 
-        {% block navbar %}{% endblock %}
-    
-        {% block body %}{% endblock %}
+        {# {{ include('_navbar.html.twig') }} #}
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ path('home') }}">Margoni Project</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                    <a class="nav-link {% block homeActive %}{% endblock %}" aria-current="page" href="{{ path('home') }}">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link {% block frameActive %}{% endblock %}" aria-current="page" href="{{ path('searching_frame') }}">Encadrements</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link {% block collectionActive %}{% endblock %}" aria-current="page" href="{{ path('searching_collection') }}">Collection</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link {% block categoryActive %}{% endblock %}" aria-current="page" href="{{ path('searching_category') }}">Catégories</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link {% block techniqueActive %}{% endblock %}" aria-current="page" href="{{ path('searching_technique') }}">Techniques</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link {% block sizeActive %}{% endblock %}" aria-current="page" href="{{ path('searching_size') }}">Format</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link {% block heightActive %}{% endblock %}" aria-current="page" href="{{ path('searching_height') }}">Taille</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="col">
+                <div class="row">
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div>
     
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </body>
