@@ -73,16 +73,19 @@ class Painting
 
     /**
      * @ORM\ManyToOne(targetEntity=Frame::class, inversedBy="paintings")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $frame;
 
     /**
      * @ORM\ManyToOne(targetEntity=Size::class, inversedBy="paintings")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $size;
 
     /**
      * @ORM\ManyToOne(targetEntity=Situation::class, inversedBy="paintings")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $situation;
 
