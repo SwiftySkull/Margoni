@@ -60,8 +60,6 @@ class SizeController extends AbstractController
 
         $paintings = $paintingRepository->findBySize($size);
 
-        // dd($paintings);
-
         return $this->render('size/read.html.twig', [
             'paintings' => $paintings,
             'size' => $size,

@@ -34,6 +34,14 @@
     <p><b>Collection</b> : {{ painting.situation.collection ?? 'Non précisée.' }}</p>
     <p><b>Localisation</b> : {{ painting.location ?? 'Non précisée.' }}</p>
     <p><b>Information</b> : {{ painting.information ?? 'Pas d\'information complémentaire actuellement.' }}</p>
-    <a href="{{ path('paint_edit', {id:painting.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+    <form action="{{ path('paint_edit', {id:painting.id}) }}" method="POST">
+        <input type="hidden" name="token" value="{{ csrf_token('add-edit-item') }}"/>
+        <button class="btn btn-sm btn-warning">Modifier</button>
+    </form>
+    <form action="{{ path('paint_delete', {id:painting.id}) }}" onsubmit="return confirm('Supprimer {{ painting.title }} ?')" method="POST">
+        <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
+        <input type="hidden" name="_method" value="DELETE"/>
+        <button class="btn btn-danger">Supprimer</button>
+    </form>
 </div>
 {% endblock %}

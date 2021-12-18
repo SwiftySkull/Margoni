@@ -60,8 +60,6 @@ class TechniqueController extends AbstractController
 
         $paintings = $paintingRepository->findByTechnique($technique);
 
-        // dd($paintings);
-
         return $this->render('technique/read.html.twig', [
             'paintings' => $paintings,
             'technique' => $technique,

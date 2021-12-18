@@ -60,8 +60,6 @@ class FrameController extends AbstractController
 
         $paintings = $paintingRepository->findByFrame($frame);
 
-        // dd($paintings);
-
         return $this->render('frame/read.html.twig', [
             'paintings' => $paintings,
             'frame' => $frame,

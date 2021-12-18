@@ -61,8 +61,6 @@ class CategoryController extends AbstractController
 
         $paintings = $paintingRepository->findByCategory($category);
 
-        // dd($paintings);
-
         return $this->render('category/read.html.twig', [
             'paintings' => $paintings,
             'category' => $category,
