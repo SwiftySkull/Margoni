@@ -1,5 +1,7 @@
 # Fichier de suivi
 
+<https://trello.com/b/SssHMhYA/margoni-admin>
+
 ## 17/12/2021
 
 ### A faire
@@ -34,3 +36,11 @@ FrameController + templates fait
 SituationController + templates fait
 SizeController + templates fait
 TechniqueController + templates fait
+
+Création, modification, suppression d'un tableau OK
+
+Création d'un trello pour mieux se repérer <https://trello.com/b/SssHMhYA/margoni-admin>
+
+### Liens utiles
+
+<https://sql.sh/cours/jointures/inner-join> Pour le LEFT JOIN
