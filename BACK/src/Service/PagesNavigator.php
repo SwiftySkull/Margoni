@@ -91,7 +91,6 @@ class PagesNavigator
     public function getPageId(int $id): int
     {
         if ($this->totalPages <= $id) {
-            dump($this->totalPages);
             $id = $this->totalPages;
         }
 
@@ -112,8 +111,6 @@ class PagesNavigator
      */
     public function getNextPage(int $id = 1): int
     {
-        dump($id);
-
         $nextPage = $id + 5;
         if ($this->totalPages - 5 <= $id) {
             $nextPage = $this->totalPages;
