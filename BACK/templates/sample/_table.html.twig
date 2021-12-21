@@ -1,6 +1,6 @@
 <tr>
 <th scope="row">{{ variable.id }}</th>
-<td><a href="{{ path(var ~ '_read', {id:variable.id}) }}">{{ unique }}</a></td>
+<td><a href="{{ path(var ~ '_read', {id:variable.id, page:1}) }}">{{ unique }}</a></td>
 <td>
     <form action="{{ path(var ~ '_edit', {id:variable.id}) }}" method="POST">
     <input type="hidden" name="token" value="{{ csrf_token('add-edit-item') }}"/>

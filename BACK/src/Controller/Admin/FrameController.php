@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Frame;
 use App\Form\FrameType;
+use App\Service\PagesNavigator;
 use App\Repository\FrameRepository;
 use App\Repository\PaintingRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,6 +24,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class FrameController extends AbstractController
 {
+    private $pagesNavigator;
+
+    public function __construct(PagesNavigator $pagesNavigator)
+    {
+        $this->pagesNavigator = $pagesNavigator;
+    }
+
     /**
      * Endpoint to show all the frames
      * Route pour montrer tous les encadrements
@@ -47,12 +55,12 @@ class FrameController extends AbstractController
      * Route pour montrer toutes les peintures d'un type d'encadrement
      * 
      * @Route(
-     *      "/read/{id<\d+>}",
+     *      "/read/{id<\d+>}/page/{page<\d+>}",
      *      name="read",
      *      methods={"GET"},
      * )
      */
-    public function read(Frame $frame = null, PaintingRepository $paintingRepository)
+    public function read(Frame $frame = null, PaintingRepository $paintingRepository, $page)
     {
         if (null === $frame) {
             throw $this->createNotFoundException('Oups ! Type d\'encadrement non trouvé.');
@@ -60,9 +68,19 @@ class FrameController extends AbstractController
 
         $paintings = $paintingRepository->findByFrame($frame);
 
+        $this->pagesNavigator->setAllEntries($paintings);
+
+        $id = $this->pagesNavigator->getPageId($page);
+
         return $this->render('frame/read.html.twig', [
             'paintings' => $paintings,
             'frame' => $frame,
+            'pages' => $this->pagesNavigator->getMinMax($id),
+            'limitPerPage' => $this->pagesNavigator->getLimitPerPage(),
+            'slice' => $this->pagesNavigator->getSlice($id),
+            'previousPage' => $this->pagesNavigator->getPreviousPage($id),
+            'nextPage' => $this->pagesNavigator->getNextPage($id),
+            'totalPages' => $this->pagesNavigator->getTotalPages(),
         ]);
     }
 

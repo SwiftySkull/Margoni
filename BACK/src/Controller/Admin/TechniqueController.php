@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Technique;
 use App\Form\TechniqueType;
+use App\Service\PagesNavigator;
 use App\Repository\PaintingRepository;
 use App\Repository\TechniqueRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,6 +24,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class TechniqueController extends AbstractController
 {
+    private $pagesNavigator;
+
+    public function __construct(PagesNavigator $pagesNavigator)
+    {
+        $this->pagesNavigator = $pagesNavigator;
+    }
+
     /**
      * Endpoint to show all the techniques
      * Route pour montrer toutes les techniques
@@ -47,12 +55,12 @@ class TechniqueController extends AbstractController
      * Route pour montrer toutes les peintures d'une technique
      * 
      * @Route(
-     *      "/read/{id<\d+>}",
+     *      "/read/{id<\d+>}/page/{page<\d+>}",
      *      name="read",
      *      methods={"GET"},
      * )
      */
-    public function read(Technique $technique = null, PaintingRepository $paintingRepository)
+    public function read(Technique $technique = null, PaintingRepository $paintingRepository, $page)
     {
         if (null === $technique) {
             throw $this->createNotFoundException('Oups ! Technique non trouvée.');
@@ -60,9 +68,19 @@ class TechniqueController extends AbstractController
 
         $paintings = $paintingRepository->findByTechnique($technique);
 
+        $this->pagesNavigator->setAllEntries($paintings);
+
+        $id = $this->pagesNavigator->getPageId($page);
+
         return $this->render('technique/read.html.twig', [
             'paintings' => $paintings,
             'technique' => $technique,
+            'pages' => $this->pagesNavigator->getMinMax($id),
+            'limitPerPage' => $this->pagesNavigator->getLimitPerPage(),
+            'slice' => $this->pagesNavigator->getSlice($id),
+            'previousPage' => $this->pagesNavigator->getPreviousPage($id),
+            'nextPage' => $this->pagesNavigator->getNextPage($id),
+            'totalPages' => $this->pagesNavigator->getTotalPages(),
         ]);
     }
 

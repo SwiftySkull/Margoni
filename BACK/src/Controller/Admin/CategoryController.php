@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Category;
 use App\Form\CategoryType;
+use App\Service\PagesNavigator;
 use App\Repository\CategoryRepository;
 use App\Repository\PaintingRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,6 +25,13 @@ use Symfony\Component\Translation\Exception\NotFoundResourceException;
  */
 class CategoryController extends AbstractController
 {
+    private $pagesNavigator;
+
+    public function __construct(PagesNavigator $pagesNavigator)
+    {
+        $this->pagesNavigator = $pagesNavigator;
+    }
+
     /**
      * Endpoint to show all the categories
      * Route pour montrer toutes les catégories
@@ -48,12 +56,12 @@ class CategoryController extends AbstractController
      * Route pour montrer toutes les peintures d'une catégorie
      * 
      * @Route(
-     *      "/read/{id<\d+>}",
+     *      "/read/{id<\d+>}/page/{page<\d+>}",
      *      name="read",
      *      methods={"GET"},
      * )
      */
-    public function read(Category $category = null, PaintingRepository $paintingRepository)
+    public function read(Category $category = null, PaintingRepository $paintingRepository, $page)
     {
         if (null === $category) {
             throw $this->createNotFoundException('Oups ! Catégorie non trouvée.');
@@ -61,9 +69,19 @@ class CategoryController extends AbstractController
 
         $paintings = $paintingRepository->findByCategory($category);
 
+        $this->pagesNavigator->setAllEntries($paintings);
+
+        $id = $this->pagesNavigator->getPageId($page);
+
         return $this->render('category/read.html.twig', [
             'paintings' => $paintings,
             'category' => $category,
+            'pages' => $this->pagesNavigator->getMinMax($id),
+            'limitPerPage' => $this->pagesNavigator->getLimitPerPage(),
+            'slice' => $this->pagesNavigator->getSlice($id),
+            'previousPage' => $this->pagesNavigator->getPreviousPage($id),
+            'nextPage' => $this->pagesNavigator->getNextPage($id),
+            'totalPages' => $this->pagesNavigator->getTotalPages(),
         ]);
     }
 

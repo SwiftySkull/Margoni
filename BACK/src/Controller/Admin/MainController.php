@@ -7,6 +7,7 @@ use App\Form\PaintingType;
 use App\Repository\CategoryRepository;
 use App\Repository\PaintingRepository;
 use App\Repository\TechniqueRepository;
+use App\Service\PagesNavigator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MainController extends AbstractController
 {
-    private $limitPage = 20;
+    private $pagesNavigator;
+
+    public function __construct(PagesNavigator $pagesNavigator)
+    {
+        $this->pagesNavigator = $pagesNavigator;
+    }
 
     /**
      * Home page with all the paintigs, juste for a try
@@ -29,23 +35,23 @@ class MainController extends AbstractController
     public function home(PaintingRepository $paintingRepository): Response
     {
         $paintings = $paintingRepository->findAllCustom();
+        $this->pagesNavigator->setAllEntries($paintingRepository->findAll());
+        $totalPages = $this->pagesNavigator->getTotalPages();
 
-        $totalPages = round(count($paintingRepository->findAll())/$this->limitPage) + 1;
-        $page = 0;
-        $slice = $page * $this->limitPage;
-
-        // shuffle($paintings);
-
-        $pages = ['pageMin' => 1, 'pageMax' => 5];
+        $limitPerPage = $this->pagesNavigator->getLimitPerPage();
 
         return $this->render('main/home.html.twig', [
             'paintings' => $paintings,
-            'pages' => $pages,
-            'slice' => $slice,
+            'pages' => $this->pagesNavigator->getMinMax(),
+
+            // TODO: Améliorer non pas la méthode mais la requête associée
+            // pour éviter d'avoir toujours une requête à 1000 résultats TODO:
+            'slice' => $this->pagesNavigator->getSlice(),
+
             'totalPages' => $totalPages,
-            'limitPage' => $this->limitPage,
-            'previousPage' => 1,
-            'nextPage' => 6,
+            'limitPerPage' => $limitPerPage,
+            'previousPage' => $this->pagesNavigator->getPreviousPage(),
+            'nextPage' => $this->pagesNavigator->getNextPage(),
         ]);
     }
 
@@ -56,50 +62,25 @@ class MainController extends AbstractController
     {
         $paintings = $paintingRepository->findAllCustom();
 
-        $totalPages = round(count($paintingRepository->findAll())/$this->limitPage) + 1;
+        $this->pagesNavigator->setAllEntries($paintingRepository->findAll());
 
-        if ($totalPages <= $id) {
-            $id = $totalPages;
-        }
-
-        $pages = ['pageMin' => $id - 2, 'pageMax' => $id + 2];
-
-        if (3 > $id) {
-            $pages = ['pageMin' => 1, 'pageMax' => 5];
-        }
+        $totalPages = $this->pagesNavigator->getTotalPages();
+        $id = $this->pagesNavigator->getPageId($id);
+        $pages = $this->pagesNavigator->getMinMax($id);
+        $previousPage = $this->pagesNavigator->getPreviousPage($id);
+        $nextPage = $this->pagesNavigator->getNextPage($id);
+        $limitPage = $this->pagesNavigator->getLimitPerPage();
         
-        if ($totalPages - 2 < $id) {
-            $pages = ['pageMin' => $totalPages - 4, 'pageMax' => $totalPages];
-        }
-    
-        if (0 == $id) {
-            $id = 1;
-        }
-
-        $page = $id - 1;
-        
-        $slice = $page * $this->limitPage;
-        
-        $previousPage = $id - 5;
-        if (5 >= $id) {
-            $previousPage = 1;
-        }
-
-        $nextPage = $id + 5;
-        if ($totalPages - 5 <= $id) {
-            $nextPage = $totalPages;
-        }
-
-        dump($totalPages);
-        dump($pages['pageMax']);
-        dump($pages['pageMax'] > $totalPages - 2);
+        // TODO: Améliorer non pas la méthode mais la requête associée
+        // pour éviter d'avoir toujours une requête à 1000 résultats TODO:
+        $slice = $this->pagesNavigator->getSlice($id);
 
         return $this->render('main/home.html.twig', [
             'paintings' => $paintings,
             'pages' => $pages,
             'slice' => $slice,
             'totalPages' => $totalPages,
-            'limitPage' => $this->limitPage,
+            'limitPage' => $limitPage,
             'previousPage' => $previousPage,
             'nextPage' => $nextPage,
         ]);
