@@ -6,10 +6,11 @@
 
 {% block body %}
 
-<div class="example-wrapper">
-    <h1>Hello ! ✅</h1>
+<h1>Hello ! ✅</h1>
+<h2>Liste de toutes les peintures</h2>
 
-    {{ include('sample/_painting_skeleton.html.twig') }}}
+{{ include('sample/_painting_skeleton.html.twig', {'paintings': paintings}) }}
 
-</div>
+{{ include('main/nav_pages.html.twig', {'previousPage' : previousPage, 'nextPage': nextPage, 'pages' : pages, 'totalPages': totalPages}) }}
+
 {% endblock %}

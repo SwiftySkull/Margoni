@@ -7,6 +7,7 @@ use App\Form\PaintingType;
 use App\Repository\CategoryRepository;
 use App\Repository\PaintingRepository;
 use App\Repository\TechniqueRepository;
+use App\Service\PagesNavigator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MainController extends AbstractController
 {
+    private $pagesNavigator;
+
+    public function __construct(PagesNavigator $pagesNavigator)
+    {
+        $this->pagesNavigator = $pagesNavigator;
+    }
+
     /**
      * Home page with all the paintigs, juste for a try
      * 
@@ -26,12 +34,44 @@ class MainController extends AbstractController
      */
     public function home(PaintingRepository $paintingRepository): Response
     {
-        $paintings = $paintingRepository->findAllCustom();
+        $this->pagesNavigator->setAllEntries($paintingRepository->countAll());
 
-        shuffle($paintings);
+        $paintings = $paintingRepository->findAllLimited();
+
+        $totalPages = $this->pagesNavigator->getTotalPages(25);
 
         return $this->render('main/home.html.twig', [
             'paintings' => $paintings,
+            'pages' => $this->pagesNavigator->getMinMax(),
+            'totalPages' => $totalPages,
+            'previousPage' => $this->pagesNavigator->getPreviousPage(),
+            'nextPage' => $this->pagesNavigator->getNextPage(),
+        ]);
+    }
+
+    /**
+     * @Route("/page/{id<\d+>}", name="home_plus", methods={"GET"})
+     */
+    public function homePlus(PaintingRepository $paintingRepository, $id)
+    {
+        $this->pagesNavigator->setAllEntries($paintingRepository->countAll());
+
+        $pageId = $this->pagesNavigator->getPageId($id);
+        $slice = $this->pagesNavigator->getSlice($pageId);
+
+        $paintings = $paintingRepository->findAllLimited($slice);
+
+        $totalPages = $this->pagesNavigator->getTotalPages();
+        $pages = $this->pagesNavigator->getMinMax($pageId);
+        $previousPage = $this->pagesNavigator->getPreviousPage($pageId);
+        $nextPage = $this->pagesNavigator->getNextPage($pageId);
+
+        return $this->render('main/home.html.twig', [
+            'paintings' => $paintings,
+            'pages' => $pages,
+            'totalPages' => $totalPages,
+            'previousPage' => $previousPage,
+            'nextPage' => $nextPage,
         ]);
     }
 

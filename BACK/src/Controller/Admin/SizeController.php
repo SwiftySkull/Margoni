@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Size;
 use App\Form\SizeType;
+use App\Service\PagesNavigator;
 use App\Repository\SizeRepository;
 use App\Repository\PaintingRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,6 +24,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class SizeController extends AbstractController
 {
+    private $pagesNavigator;
+
+    public function __construct(PagesNavigator $pagesNavigator)
+    {
+        $this->pagesNavigator = $pagesNavigator;
+    }
+
     /**
      * Endpoint to show all the sizes
      * Route pour montrer toutes les taille/format
@@ -47,22 +55,31 @@ class SizeController extends AbstractController
      * Route pour montrer toutes les peintures d'une taille/format
      * 
      * @Route(
-     *      "/read/{id<\d+>}",
+     *      "/read/{id<\d+>}/page/{page<\d+>}",
      *      name="read",
      *      methods={"GET"},
      * )
      */
-    public function read(Size $size = null, PaintingRepository $paintingRepository)
+    public function read(Size $size = null, PaintingRepository $paintingRepository, $page)
     {
         if (null === $size) {
             throw $this->createNotFoundException('Oups ! Format non trouvé.');
         }
 
-        $paintings = $paintingRepository->findBySize($size);
+        $this->pagesNavigator->setAllEntries($paintingRepository->countBySize($size));
+
+        $pageId = $this->pagesNavigator->getPageId($page);
+        $slice = $this->pagesNavigator->getSlice($pageId);
+
+        $paintings = $paintingRepository->findSizeLimited($size, $slice);
 
         return $this->render('size/read.html.twig', [
             'paintings' => $paintings,
             'size' => $size,
+            'pages' => $this->pagesNavigator->getMinMax($pageId),
+            'previousPage' => $this->pagesNavigator->getPreviousPage($pageId),
+            'nextPage' => $this->pagesNavigator->getNextPage($pageId),
+            'totalPages' => $this->pagesNavigator->getTotalPages(),
         ]);
     }
 

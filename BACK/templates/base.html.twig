@@ -37,7 +37,7 @@
                         <a class="nav-link {% block sizeActive %}{% endblock %}" aria-current="page" href="{{ path('size_browse') }}">Format</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% block heightActive %}{% endblock %}" aria-current="page" href="{{ path('searching_height_browse') }}">Taille</a>
+                        <a class="nav-link {% block heightActive %}{% endblock %} disabled" aria-current="page" href="{{ path('searching_height_browse') }}">Taille</a>
                     </li>
                     <li class="nav-item">
                         <form action="{{ path('paint_add') }}" method="POST">
