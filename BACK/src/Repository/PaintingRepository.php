@@ -14,27 +14,57 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PaintingRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $limitPerPage;
+
+    public function __construct(ManagerRegistry $registry, $limitPerPage)
     {
         parent::__construct($registry, Painting::class);
+        $this->limitPerPage = $limitPerPage;
     }
 
-    // public function findAllCustom()
-    // {
-    //     $entityManager = $this->getEntityManager();
+    /**
+     * Return all the paintings with custom request to decrease the total number of requests
+     * 
+     * Retourne toutes les peintures avec une requête custom pour diminuer le nombre de requêtes totales
+     * 
+     * @param integer $offset
+     */
+    public function findAllLimited(int $offset = 0)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->innerJoin('p.frame', 'f')
+            ->addSelect('f')
+            ->innerJoin('p.situation', 'sit')
+            ->addSelect('sit')
+            ->innerJoin('p.size', 'size')
+            ->addSelect('size')
+            ->innerJoin('p.techniques', 't')
+            ->addSelect('t')
+            ->innerJoin('p.categories', 'c')
+            ->addSelect('c')
+            ->orderBy('p.id')
+            ->setFirstResult($offset)
+            ->setMaxResults($this->limitPerPage)
+            ->getQuery()
+            ->getResult()
+        ;
 
-    //     $query = $entityManager->createQuery(
-            // 'SELECT p, f, situation, size, t, c 
-            // FROM App\Entity\Painting p
-            // INNER JOIN p.frame f
-            // INNER JOIN p.situation situation
-            // INNER JOIN p.size size
-            // INNER JOIN p.techniques t
-            // INNER JOIN p.categories c'
-    //     );
-    
-    //     return $query->getResult();
-    // }
+        return $qb;
+    }
+
+    /**
+     * Get the number of results
+     * 
+     * Récupère le nombre de résultat
+     */
+    public function countAll()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('count(p.id)')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
 
     /**
      * Return all the paintings with custom request to decrease the total number of requests
@@ -58,35 +88,12 @@ class PaintingRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    /**
-     * TODO: Faire des requêtes pour avoir plusieurs pages et pas tout sur une seule TODO:
-     * Return all the paintings with custom request to decrease the total number of requests
-     * Retourne toutes les peintures avec une requête custom pour diminuer le nombre de requêtes totales
-     */
-    public function findAllLimited()
-    {
-        return $this->createQueryBuilder('p')
-            ->innerJoin('p.frame', 'f')
-            ->addSelect('f')
-            ->innerJoin('p.situation', 'sit')
-            ->addSelect('sit')
-            ->innerJoin('p.size', 'size')
-            ->addSelect('size')
-            ->innerJoin('p.techniques', 't')
-            ->addSelect('t')
-            ->innerJoin('p.categories', 'c')
-            ->addSelect('c')
-            ->setMaxResults(5)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
 
     /**
      * Return all the paintings of a specific category
      * Retourne toutes les peintures d'une catégorie spécifique
      *
-     * @param [entity] $category
+     * @param entity $category
      */
     public function findByCategory($category)
     {
@@ -108,10 +115,63 @@ class PaintingRepository extends ServiceEntityRepository
     }
 
     /**
+     * Return all the paintings of a category with custom request to decrease the total number of requests, also set an offset instruction
+     * 
+     * Retourne toutes les peintures d'une catégorie avec une requête custom pour diminuer le nombre de requêtes totales, ajoute aussi une instruction offset
+     *
+     * @param entity $category
+     * @param integer $offset
+     */
+    public function findCategLimited($category, int $offset = 0)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->innerJoin('p.frame', 'f')
+            ->addSelect('f')
+            ->innerJoin('p.situation', 'sit')
+            ->addSelect('sit')
+            ->innerJoin('p.size', 'size')
+            ->addSelect('size')
+            ->innerJoin('p.techniques', 't')
+            ->addSelect('t')
+            ->innerJoin('p.categories', 'c')
+            ->addSelect('c')
+            ->where('c = :cat')
+            ->setParameter('cat', $category)
+            ->orderBy('p.id')
+            ->setFirstResult($offset)
+            ->setMaxResults($this->limitPerPage)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $qb;
+    }
+
+    /**
+     * Get the number of results for a category
+     * 
+     * Récupère le nombre de résultat pour une catégorie
+     * 
+     * @param entity $category
+     */    
+    public function countByCateg($category)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('count(p.id)')
+            ->innerJoin('p.categories', 'c')
+            ->where('c = :cat')
+            ->setParameter('cat', $category)
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    /**
      * Return all the paintings of a specific type of framing
      * Retourne toutes les peintures d'un type d'encadrement
      *
-     * @param [entity] $frame
+     * @param entity $frame
      */
     public function findByFrame($frame)
     {
@@ -133,10 +193,63 @@ class PaintingRepository extends ServiceEntityRepository
     }
 
     /**
+     * Get the number of results for a frame
+     * 
+     * Récupère le nombre de résultat pour encadrement
+     * 
+     * @param entity $frame
+     */
+    public function countByFrame($frame)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('count(p.id)')
+            ->innerJoin('p.frame', 'f')
+            ->where('f = :frame')
+            ->setParameter('frame', $frame)
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    /**
+     * Return all the paintings of a type of frame with custom request to decrease the total number of requests, also set an offset instruction
+     * 
+     * Retourne toutes les peintures d'un type d'encadrement avec une requête custom pour diminuer le nombre de requêtes totales, ajoute aussi une instruction offset
+     *
+     * @param entity $frame
+     * @param integer $offset
+     */
+    public function findFrameLimited($frame, int $offset = 0)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->innerJoin('p.frame', 'f')
+            ->addSelect('f')
+            ->innerJoin('p.situation', 'sit')
+            ->addSelect('sit')
+            ->innerJoin('p.size', 'size')
+            ->addSelect('size')
+            ->innerJoin('p.techniques', 't')
+            ->addSelect('t')
+            ->innerJoin('p.categories', 'c')
+            ->addSelect('c')
+            ->where('f = :frame')
+            ->setParameter('frame', $frame)
+            ->orderBy('p.id')
+            ->setFirstResult($offset)
+            ->setMaxResults($this->limitPerPage)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $qb;
+    }
+
+    /**
      * Return all the paintings of a specific situation/collection
      * Retourne toutes les peintures d'une collection
      *
-     * @param [entity] $situation
+     * @param entity $situation
      */
     public function findBySituation($situation)
     {
@@ -158,10 +271,63 @@ class PaintingRepository extends ServiceEntityRepository
     }
 
     /**
+     * Get the number of results for a situation
+     * 
+     * Récupère le nombre de résultat pour une situation/collection
+     * 
+     * @param entity $situation
+     */
+    public function countBySituation($situation)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('count(p.id)')
+            ->innerJoin('p.situation', 's')
+            ->where('s = :situation')
+            ->setParameter('situation', $situation)
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    /**
+     * Return all the paintings of a situation with custom request to decrease the total number of requests, also set an offset instruction
+     * 
+     * Retourne toutes les peintures d'une collection/situation avec une requête custom pour diminuer le nombre de requêtes totales, ajoute aussi une instruction offset
+     *
+     * @param entity $situation
+     * @param integer $offset
+     */
+    public function findSituationLimited($situation, int $offset = 0)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->innerJoin('p.frame', 'f')
+            ->addSelect('f')
+            ->innerJoin('p.situation', 'sit')
+            ->addSelect('sit')
+            ->innerJoin('p.size', 'size')
+            ->addSelect('size')
+            ->innerJoin('p.techniques', 't')
+            ->addSelect('t')
+            ->innerJoin('p.categories', 'c')
+            ->addSelect('c')
+            ->where('sit = :situation')
+            ->setParameter('situation', $situation)
+            ->orderBy('p.id')
+            ->setFirstResult($offset)
+            ->setMaxResults($this->limitPerPage)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $qb;
+    }
+
+    /**
      * Return all the paintings of a specific size
      * Retourne toutes les peintures d'un format spécifique
      *
-     * @param [entity] $size
+     * @param entity $size
      */
     public function findBySize($size)
     {
@@ -183,10 +349,63 @@ class PaintingRepository extends ServiceEntityRepository
     }
 
     /**
+     * Get the number of results for a siza
+     * 
+     * Récupère le nombre de résultat pour un format
+     * 
+     * @param entity $size
+     */
+    public function countBySize($size)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('count(p.id)')
+            ->innerJoin('p.size', 's')
+            ->where('s = :size')
+            ->setParameter('size', $size)
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    /**
+     * Return all the paintings of a size with custom request to decrease the total number of requests, also set an offset instruction
+     * 
+     * Retourne toutes les peintures d'un certain format avec une requête custom pour diminuer le nombre de requêtes totales, ajoute aussi une instruction offset
+     *
+     * @param entity $size
+     * @param integer $offset
+     */
+    public function findSizeLimited($size, int $offset = 0)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->innerJoin('p.frame', 'f')
+            ->addSelect('f')
+            ->innerJoin('p.situation', 'sit')
+            ->addSelect('sit')
+            ->innerJoin('p.size', 'size')
+            ->addSelect('size')
+            ->innerJoin('p.techniques', 't')
+            ->addSelect('t')
+            ->innerJoin('p.categories', 'c')
+            ->addSelect('c')
+            ->where('size = :size')
+            ->setParameter('size', $size)
+            ->orderBy('p.id')
+            ->setFirstResult($offset)
+            ->setMaxResults($this->limitPerPage)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $qb;
+    }
+
+    /**
      * Return all the paintings of a specific technique
      * Retourne toutes les peintures d'une technique spécifique
      *
-     * @param [entity] $technique
+     * @param entity $technique
      */
     public function findByTechnique($technique)
     {
@@ -205,6 +424,59 @@ class PaintingRepository extends ServiceEntityRepository
         )->setParameter('technique', $technique);
 
         return $query->getResult();
+    }
+
+    /**
+     * Get the number of results for a technique
+     * 
+     * Récupère le nombre de résultat pour une technique
+     * 
+     * @param entity $technique
+     */
+    public function countByTechnique($technique)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('count(p.id)')
+            ->innerJoin('p.techniques', 't')
+            ->where('t = :t')
+            ->setParameter('t', $technique)
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    /**
+     * Return all the paintings of a technique with custom request to decrease the total number of requests, also set an offset instruction
+     * 
+     * Retourne toutes les peintures d'une technique avec une requête custom pour diminuer le nombre de requêtes totales, ajoute aussi une instruction offset
+     * 
+     * @param entity $technique
+     * @param integer $offset
+     */
+    public function findTechniqueLimited($technique, int $offset = 0)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->innerJoin('p.frame', 'f')
+            ->addSelect('f')
+            ->innerJoin('p.situation', 'sit')
+            ->addSelect('sit')
+            ->innerJoin('p.size', 'size')
+            ->addSelect('size')
+            ->innerJoin('p.techniques', 't')
+            ->addSelect('t')
+            ->innerJoin('p.categories', 'c')
+            ->addSelect('c')
+            ->where('t = :technique')
+            ->setParameter('technique', $technique)
+            ->orderBy('p.id')
+            ->setFirstResult($offset)
+            ->setMaxResults($this->limitPerPage)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $qb;
     }
 
     // public function findByCategory($category)

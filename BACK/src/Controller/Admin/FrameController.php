@@ -65,21 +65,21 @@ class FrameController extends AbstractController
         if (null === $frame) {
             throw $this->createNotFoundException('Oups ! Type d\'encadrement non trouvé.');
         }
+    
+        $this->pagesNavigator->setAllEntries($paintingRepository->countByFrame($frame));
 
-        $paintings = $paintingRepository->findByFrame($frame);
+        $pageId = $this->pagesNavigator->getPageId($page);
+        $slice = $this->pagesNavigator->getSlice($pageId);
 
-        $this->pagesNavigator->setAllEntries($paintings);
+        $paintings = $paintingRepository->findFrameLimited($frame, $slice);
 
-        $id = $this->pagesNavigator->getPageId($page);
 
         return $this->render('frame/read.html.twig', [
             'paintings' => $paintings,
             'frame' => $frame,
-            'pages' => $this->pagesNavigator->getMinMax($id),
-            'limitPerPage' => $this->pagesNavigator->getLimitPerPage(),
-            'slice' => $this->pagesNavigator->getSlice($id),
-            'previousPage' => $this->pagesNavigator->getPreviousPage($id),
-            'nextPage' => $this->pagesNavigator->getNextPage($id),
+            'pages' => $this->pagesNavigator->getMinMax($pageId),
+            'previousPage' => $this->pagesNavigator->getPreviousPage($pageId),
+            'nextPage' => $this->pagesNavigator->getNextPage($pageId),
             'totalPages' => $this->pagesNavigator->getTotalPages(),
         ]);
     }

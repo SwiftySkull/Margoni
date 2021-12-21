@@ -66,19 +66,19 @@ class SizeController extends AbstractController
             throw $this->createNotFoundException('Oups ! Format non trouvé.');
         }
 
-        $paintings = $paintingRepository->findBySize($size);
-        $this->pagesNavigator->setAllEntries($paintings);
+        $this->pagesNavigator->setAllEntries($paintingRepository->countBySize($size));
 
-        $id = $this->pagesNavigator->getPageId($page);
+        $pageId = $this->pagesNavigator->getPageId($page);
+        $slice = $this->pagesNavigator->getSlice($pageId);
+
+        $paintings = $paintingRepository->findSizeLimited($size, $slice);
 
         return $this->render('size/read.html.twig', [
             'paintings' => $paintings,
             'size' => $size,
-            'pages' => $this->pagesNavigator->getMinMax($id),
-            'limitPerPage' => $this->pagesNavigator->getLimitPerPage(),
-            'slice' => $this->pagesNavigator->getSlice($id),
-            'previousPage' => $this->pagesNavigator->getPreviousPage($id),
-            'nextPage' => $this->pagesNavigator->getNextPage($id),
+            'pages' => $this->pagesNavigator->getMinMax($pageId),
+            'previousPage' => $this->pagesNavigator->getPreviousPage($pageId),
+            'nextPage' => $this->pagesNavigator->getNextPage($pageId),
             'totalPages' => $this->pagesNavigator->getTotalPages(),
         ]);
     }

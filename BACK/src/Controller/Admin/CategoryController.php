@@ -66,21 +66,19 @@ class CategoryController extends AbstractController
         if (null === $category) {
             throw $this->createNotFoundException('Oups ! Catégorie non trouvée.');
         }
+        $this->pagesNavigator->setAllEntries($paintingRepository->countByCateg($category));
 
-        $paintings = $paintingRepository->findByCategory($category);
+        $pageId = $this->pagesNavigator->getPageId($page);
+        $slice = $this->pagesNavigator->getSlice($pageId);
 
-        $this->pagesNavigator->setAllEntries($paintings);
-
-        $id = $this->pagesNavigator->getPageId($page);
+        $paintings = $paintingRepository->findCategLimited($category, $slice);
 
         return $this->render('category/read.html.twig', [
             'paintings' => $paintings,
             'category' => $category,
-            'pages' => $this->pagesNavigator->getMinMax($id),
-            'limitPerPage' => $this->pagesNavigator->getLimitPerPage(),
-            'slice' => $this->pagesNavigator->getSlice($id),
-            'previousPage' => $this->pagesNavigator->getPreviousPage($id),
-            'nextPage' => $this->pagesNavigator->getNextPage($id),
+            'pages' => $this->pagesNavigator->getMinMax($pageId),
+            'previousPage' => $this->pagesNavigator->getPreviousPage($pageId),
+            'nextPage' => $this->pagesNavigator->getNextPage($pageId),
             'totalPages' => $this->pagesNavigator->getTotalPages(),
         ]);
     }

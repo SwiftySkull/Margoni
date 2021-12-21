@@ -101,7 +101,7 @@ class AppFixtures extends Fixture
             $manager->persist($category);
         }
 
-        for ($i=0; $i < self::NB_PAINTINGS; $i++) { 
+        for ($i=1; $i < self::NB_PAINTINGS; $i++) { 
             $painting = new Painting();
             $painting->setTitle('Peinture '.$i);
             $painting->setDate($faker->dateTimeBetween('-100 years', '-30 years'));
@@ -130,9 +130,9 @@ class AppFixtures extends Fixture
             // $categoriesList = [];
 
             shuffle($techniquesList);
-            $painting->addTechnique($techniquesList[0]);
+            $painting->addTechniques($techniquesList[0]);
             shuffle($categoriesList);
-            $painting->addCategory($categoriesList[0]);
+            $painting->addCategories($categoriesList[0]);
 
             $paintingsList[] = $painting;
 

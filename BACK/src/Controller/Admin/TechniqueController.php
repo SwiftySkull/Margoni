@@ -66,20 +66,19 @@ class TechniqueController extends AbstractController
             throw $this->createNotFoundException('Oups ! Technique non trouvée.');
         }
 
-        $paintings = $paintingRepository->findByTechnique($technique);
+        $this->pagesNavigator->setAllEntries($paintingRepository->countByTechnique($technique));
 
-        $this->pagesNavigator->setAllEntries($paintings);
+        $pageId = $this->pagesNavigator->getPageId($page);
+        $slice = $this->pagesNavigator->getSlice($pageId);
 
-        $id = $this->pagesNavigator->getPageId($page);
+        $paintings = $paintingRepository->findTechniqueLimited($technique, $slice);
 
         return $this->render('technique/read.html.twig', [
             'paintings' => $paintings,
             'technique' => $technique,
-            'pages' => $this->pagesNavigator->getMinMax($id),
-            'limitPerPage' => $this->pagesNavigator->getLimitPerPage(),
-            'slice' => $this->pagesNavigator->getSlice($id),
-            'previousPage' => $this->pagesNavigator->getPreviousPage($id),
-            'nextPage' => $this->pagesNavigator->getNextPage($id),
+            'pages' => $this->pagesNavigator->getMinMax($pageId),
+            'previousPage' => $this->pagesNavigator->getPreviousPage($pageId),
+            'nextPage' => $this->pagesNavigator->getNextPage($pageId),
             'totalPages' => $this->pagesNavigator->getTotalPages(),
         ]);
     }

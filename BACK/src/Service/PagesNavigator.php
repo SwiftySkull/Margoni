@@ -19,31 +19,19 @@ class PagesNavigator
     }
 
     /**
-     * First method to execute to get all the entries to consider
+     * First method to execute to get the number of entries to consider
      * for the pagination and the total number of pages
      *
-     * Première méthode à exécuter pour récupérer toutes les entrées
+     * Première méthode à exécuter pour récupérer le nombre d'entrées
      * à considérer pour la pagination et le nombre total de pages
      * 
-     * @param array $allEntries
+     * @param integer $allEntries
      * @return void
      */
-    public function setAllEntries(array $allEntries)
+    public function setAllEntries(int $allEntries)
     {
-        $this->allEntries = count($allEntries);
+        $this->allEntries = $allEntries;
         $this->totalPages = $this->getTotalPages();
-    }
-
-    /**
-     * Get the number of entries
-     *
-     * Récupère le nomtre d'entrées
-     * 
-     * @return int
-     */
-    public function getAllEntries(): int
-    {
-        return $this->allEntries;
     }
 
     /**

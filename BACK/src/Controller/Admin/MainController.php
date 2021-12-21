@@ -34,22 +34,16 @@ class MainController extends AbstractController
      */
     public function home(PaintingRepository $paintingRepository): Response
     {
-        $paintings = $paintingRepository->findAllCustom();
-        $this->pagesNavigator->setAllEntries($paintingRepository->findAll());
-        $totalPages = $this->pagesNavigator->getTotalPages();
+        $this->pagesNavigator->setAllEntries($paintingRepository->countAll());
 
-        $limitPerPage = $this->pagesNavigator->getLimitPerPage();
+        $paintings = $paintingRepository->findAllLimited();
+
+        $totalPages = $this->pagesNavigator->getTotalPages(25);
 
         return $this->render('main/home.html.twig', [
             'paintings' => $paintings,
             'pages' => $this->pagesNavigator->getMinMax(),
-
-            // TODO: Améliorer non pas la méthode mais la requête associée
-            // pour éviter d'avoir toujours une requête à 1000 résultats TODO:
-            'slice' => $this->pagesNavigator->getSlice(),
-
             'totalPages' => $totalPages,
-            'limitPerPage' => $limitPerPage,
             'previousPage' => $this->pagesNavigator->getPreviousPage(),
             'nextPage' => $this->pagesNavigator->getNextPage(),
         ]);
@@ -60,27 +54,22 @@ class MainController extends AbstractController
      */
     public function homePlus(PaintingRepository $paintingRepository, $id)
     {
-        $paintings = $paintingRepository->findAllCustom();
+        $this->pagesNavigator->setAllEntries($paintingRepository->countAll());
 
-        $this->pagesNavigator->setAllEntries($paintingRepository->findAll());
+        $pageId = $this->pagesNavigator->getPageId($id);
+        $slice = $this->pagesNavigator->getSlice($pageId);
+
+        $paintings = $paintingRepository->findAllLimited($slice);
 
         $totalPages = $this->pagesNavigator->getTotalPages();
-        $id = $this->pagesNavigator->getPageId($id);
-        $pages = $this->pagesNavigator->getMinMax($id);
-        $previousPage = $this->pagesNavigator->getPreviousPage($id);
-        $nextPage = $this->pagesNavigator->getNextPage($id);
-        $limitPage = $this->pagesNavigator->getLimitPerPage();
-        
-        // TODO: Améliorer non pas la méthode mais la requête associée
-        // pour éviter d'avoir toujours une requête à 1000 résultats TODO:
-        $slice = $this->pagesNavigator->getSlice($id);
+        $pages = $this->pagesNavigator->getMinMax($pageId);
+        $previousPage = $this->pagesNavigator->getPreviousPage($pageId);
+        $nextPage = $this->pagesNavigator->getNextPage($pageId);
 
         return $this->render('main/home.html.twig', [
             'paintings' => $paintings,
             'pages' => $pages,
-            'slice' => $slice,
             'totalPages' => $totalPages,
-            'limitPage' => $limitPage,
             'previousPage' => $previousPage,
             'nextPage' => $nextPage,
         ]);
