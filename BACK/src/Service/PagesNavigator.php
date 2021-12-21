@@ -153,8 +153,6 @@ class PagesNavigator
     }
 
     /**
-     * TODO: Améliorer non pas la méthode mais la requête associée
-     * pour éviter d'avoir toujours une requête à 1000 résultats TODO:
      * Get the slice number to display specific results
      *
      * Récupère le nombre "slice", de coupe, pour afficher des résultats spécifiques
