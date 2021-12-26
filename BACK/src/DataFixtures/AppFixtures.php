@@ -103,7 +103,11 @@ class AppFixtures extends Fixture
 
         for ($i=1; $i < self::NB_PAINTINGS; $i++) { 
             $painting = new Painting();
-            $painting->setTitle('Peinture '.$i);
+            $painting->setDbName('Peinture '.$i);
+            $x = mt_rand(0, 1);
+            if (1 == $x) {
+                $painting->setTitle($faker->words(mt_rand(1, 5), true));
+            }
             $painting->setDate($faker->dateTimeBetween('-100 years', '-30 years'));
 
             $height = mt_rand(300, 1500);

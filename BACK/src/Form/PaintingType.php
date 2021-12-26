@@ -12,6 +12,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -28,7 +29,15 @@ class PaintingType extends AbstractType
         $builder
             ->add('title', TextType::class, [
                 'label' => 'Titre de la peinture',
-                'constraints' => new NotBlank(),
+            ])
+            ->add('dbName', TextType::class, [
+                'label' => 'Nom générique (obligatoire)',
+                'constraints' => [
+                    new NotBlank(),
+                    new Length([
+                        'max' => 50,
+                    ]),
+                ],
             ])
             ->add('date', DateType::class, [
                 'label' => 'Date de la peinture',
@@ -54,7 +63,7 @@ class PaintingType extends AbstractType
                 'label' => 'Informations complémentaires, histoire de la peinture',
             ])
             ->add('picture', FileType::class, [
-                'label' => 'Fichier de la photo',
+                'label' => 'Fichier de la photo (obligatoire)',
                 'mapped' => false,
                 'constraints' => new File([
                     'mimeTypes' => [

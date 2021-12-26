@@ -27,9 +27,14 @@ class Painting
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $title;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $dbName;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -324,6 +329,26 @@ class Painting
     public function removeTechniques(Technique $techniques): self
     {
         $this->techniques->removeElement($techniques);
+
+        return $this;
+    }
+
+    /**
+     * Get the value of dbName
+     */ 
+    public function getDbName()
+    {
+        return $this->dbName;
+    }
+
+    /**
+     * Set the value of dbName
+     *
+     * @return  self
+     */ 
+    public function setDbName($dbName)
+    {
+        $this->dbName = $dbName;
 
         return $this;
     }
