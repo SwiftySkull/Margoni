@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20211217151909 extends AbstractMigration
+final class Version20211226192435 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -22,15 +22,15 @@ final class Version20211217151909 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE category (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(30) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE frame (id INT AUTO_INCREMENT NOT NULL, framing VARCHAR(50) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE painting (id INT AUTO_INCREMENT NOT NULL, frame_id INT DEFAULT NULL, size_id INT DEFAULT NULL, situation_id INT DEFAULT NULL, title VARCHAR(50) NOT NULL, date DATETIME DEFAULT NULL, height INT DEFAULT NULL, width INT DEFAULT NULL, location LONGTEXT DEFAULT NULL, information LONGTEXT DEFAULT NULL, picture LONGTEXT NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, INDEX IDX_66B9EBA03FA3C347 (frame_id), INDEX IDX_66B9EBA0498DA827 (size_id), INDEX IDX_66B9EBA03408E8AF (situation_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE painting (id INT AUTO_INCREMENT NOT NULL, frame_id INT DEFAULT NULL, size_id INT DEFAULT NULL, situation_id INT DEFAULT NULL, title VARCHAR(50) DEFAULT NULL, db_name VARCHAR(50) NOT NULL, date DATETIME DEFAULT NULL, height INT DEFAULT NULL, width INT DEFAULT NULL, location LONGTEXT DEFAULT NULL, information LONGTEXT DEFAULT NULL, picture LONGTEXT NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, INDEX IDX_66B9EBA03FA3C347 (frame_id), INDEX IDX_66B9EBA0498DA827 (size_id), INDEX IDX_66B9EBA03408E8AF (situation_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE painting_category (painting_id INT NOT NULL, category_id INT NOT NULL, INDEX IDX_79D2014EB00EB939 (painting_id), INDEX IDX_79D2014E12469DE2 (category_id), PRIMARY KEY(painting_id, category_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE painting_technique (painting_id INT NOT NULL, technique_id INT NOT NULL, INDEX IDX_AA4398E8B00EB939 (painting_id), INDEX IDX_AA4398E81F8ACB26 (technique_id), PRIMARY KEY(painting_id, technique_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE situation (id INT AUTO_INCREMENT NOT NULL, collection VARCHAR(40) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE size (id INT AUTO_INCREMENT NOT NULL, format VARCHAR(10) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE technique (id INT AUTO_INCREMENT NOT NULL, type VARCHAR(40) NOT NULL, created_at DATETIME NOT NULL, uptadet_at DATETIME DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE painting ADD CONSTRAINT FK_66B9EBA03FA3C347 FOREIGN KEY (frame_id) REFERENCES frame (id)');
-        $this->addSql('ALTER TABLE painting ADD CONSTRAINT FK_66B9EBA0498DA827 FOREIGN KEY (size_id) REFERENCES size (id)');
-        $this->addSql('ALTER TABLE painting ADD CONSTRAINT FK_66B9EBA03408E8AF FOREIGN KEY (situation_id) REFERENCES situation (id)');
+        $this->addSql('CREATE TABLE technique (id INT AUTO_INCREMENT NOT NULL, type VARCHAR(40) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE painting ADD CONSTRAINT FK_66B9EBA03FA3C347 FOREIGN KEY (frame_id) REFERENCES frame (id) ON DELETE SET NULL');
+        $this->addSql('ALTER TABLE painting ADD CONSTRAINT FK_66B9EBA0498DA827 FOREIGN KEY (size_id) REFERENCES size (id) ON DELETE SET NULL');
+        $this->addSql('ALTER TABLE painting ADD CONSTRAINT FK_66B9EBA03408E8AF FOREIGN KEY (situation_id) REFERENCES situation (id) ON DELETE SET NULL');
         $this->addSql('ALTER TABLE painting_category ADD CONSTRAINT FK_79D2014EB00EB939 FOREIGN KEY (painting_id) REFERENCES painting (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE painting_category ADD CONSTRAINT FK_79D2014E12469DE2 FOREIGN KEY (category_id) REFERENCES category (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE painting_technique ADD CONSTRAINT FK_AA4398E8B00EB939 FOREIGN KEY (painting_id) REFERENCES painting (id) ON DELETE CASCADE');
