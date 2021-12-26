@@ -3,15 +3,20 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Painting;
+use App\Entity\Picture;
 use App\Form\PaintingType;
+use App\Service\PagesNavigator;
 use App\Repository\CategoryRepository;
 use App\Repository\PaintingRepository;
+use App\Repository\PictureRepository;
+use Symfony\Component\Filesystem\Path;
 use App\Repository\TechniqueRepository;
-use App\Service\PagesNavigator;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MainController extends AbstractController
@@ -84,10 +89,25 @@ class MainController extends AbstractController
      *      methods={"GET"},
      * )
      */
-    public function read(Painting $painting = null)
+    public function read(Painting $painting = null, PictureRepository $picture)
     {
         if (null === $painting) {
             throw $this->createNotFoundException('Oups ! Tableau non trouvé.'); 
+        }
+
+
+        if (1000 == $painting->getId()) {
+            $test = $picture->find(3);
+            dump($test);
+
+            $imgURL = 'data:image/jpeg;base64,'.$test->getImgDesc();
+
+            dump($test->getFile());
+            return $this->render('main/read.html.twig', [
+                'painting' => $painting,
+                'testPicture' => $imgURL,
+            ]);
+    
         }
 
         return $this->render('main/read.html.twig', [
@@ -161,12 +181,72 @@ class MainController extends AbstractController
         $form = $this->createForm(PaintingType::class, $painting);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($painting);
-            $em->flush();
+        $filesystem = new Filesystem();
+        // try {
+        //     $filesystem->mkdir('/images/', 0777);
+        //     $filesystem->copy(file_get_contents($request->files->get('painting')['picture']), '/images/');
+        // } catch (IOExceptionInterface $exception) {
+        //     echo "An error occurred while creating your directory at ".$exception->getPath();
+        // }
 
-            return $this->redirectToRoute('read_paint', ['id' => $painting->getId()]);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            // dump($filesystem);
+            // $filesystem->copy()
+        
+            // $filesystem->dumpFile('picture.jpg', $request->files->get('painting')['picture']);
+            // $ret = false;
+            // $img_blob = '';
+            // $img_taille = 0;
+            // $img_type = '';
+            // $img_nom = '';
+            // $taille_max = 250000;
+            // $ret = is_uploaded_file($request->files->get('painting')['picture']);
+
+            // dump($ret);
+            $file = $request->files->get('painting')['picture']->getClientOriginalName();
+            dump($file);
+            // dump($_FILES['painting']['name']['picture']);
+            // dump($request->files->get('painting')['picture']->getType());
+        
+            // if (!$ret) {
+            //     echo "Problème de transfert";
+            //     return false;
+            // } else {
+            //     // Le fichier a bien été reçu
+            $img_taille = $request->files->get('painting')['picture']->getSize();
+            
+            //     if ($img_taille > $taille_max) {
+            //         echo "Trop gros !";
+            //         return false;
+            //     }
+
+            $img_type = $request->files->get('painting')['picture']->getType();
+            $img_nom  = $request->files->get('painting')['picture']->getFilename();
+
+            $img_blob = file_get_contents($request->files->get('painting')['picture']);
+
+            //     dump('blob');
+            //     dump($img_blob);
+            // }
+        
+        
+            $picture = new Picture();
+            $picture->setTitle($request->files->get('painting')['picture']->getClientOriginalName());
+            $picture->setTaille($img_taille);
+            $picture->setFile($img_blob);
+            $picture->setType($img_type);
+            $picture->setImgDesc(base64_encode($img_blob));
+
+            // dd($picture);
+            $em->persist($picture);
+        
+            // if ($form->isSubmitted() && $form->isValid()) {
+            //     $em->persist($painting);
+            $em->flush();
         }
+        //     return $this->redirectToRoute('read_paint', ['id' => $painting->getId()]);
+        // }
 
         return $this->render('technique/edit.html.twig', [
             'form' => $form->createView(),

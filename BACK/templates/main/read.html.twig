@@ -3,7 +3,11 @@
 {% block title %}{{ painting.title }}{% endblock %}
 
 {% block body %}
-
+{% if null is not same as testPicture%}
+<p>IMAGE</p>
+{# <img src="data:image/jpeg;base64,'.base64_encode($image->load()) .'" /> #}
+<img src="{{ testPicture }}" />
+{% endif %}
 <div class="example-wrapper">
     <h1>{{ painting.title ?? '- Titre générique -' }}</h1>
     <h4>Nom générique : {{ painting.dbName }}</h4>
@@ -46,3 +50,5 @@
     </form>
 </div>
 {% endblock %}
+
+{# http://localhost:8000/paint/read/1000 #}
