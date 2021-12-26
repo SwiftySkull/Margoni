@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Entité qui décrit tous les éléments nécessaires pour une peinture
  * 
  * @ORM\Entity(repositoryClass=PaintingRepository::class)
- * @UniqueEntity("title", "picture")
+ * @UniqueEntity("title")
  * 
  * @ORM\HasLifecycleCallbacks()
  */
@@ -64,7 +64,7 @@ class Painting
     /**
      * @ORM\Column(type="text")
      */
-    private $picture;
+    // private $picture;
 
     /**
      * @ORM\Column(type="datetime")
@@ -103,6 +103,11 @@ class Painting
      * @ORM\ManyToMany(targetEntity=Technique::class, inversedBy="paintings")
      */
     private $techniques;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Picture::class, cascade={"persist", "remove"})
+     */
+    private $picture;
 
     public function __construct()
     {
@@ -188,31 +193,31 @@ class Painting
         return $this;
     }
 
-    public function getPicture(): ?string
-    {
-        return $this->picture;
-    }
+    // public function getPicture(): ?string
+    // {
+    //     return $this->picture;
+    // }
 
-    public function setPicture(string $picture): self
-    {
-        $this->picture = $picture;
+    // public function setPicture(string $picture): self
+    // {
+    //     $this->picture = $picture;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    /**
-     * Function to set the value for the picture
-     * TODO: La valeur est à modifier quand j'aurais réussi à trouver comment récupérer des photos TODO:
-     * 
-     * @ORM\PrePersist
-     */
-    public function setPictureValue()
-    {
-        if (null === $this->picture) {
-            $this->picture = 'https://picsum.photos/500/500';
-        }
+    // /**
+    //  * Function to set the value for the picture
+    //  * TODO: La valeur est à modifier quand j'aurais réussi à trouver comment récupérer des photos TODO:
+    //  * 
+    //  * @ORM\PrePersist
+    //  */
+    // public function setPictureValue()
+    // {
+    //     if (null === $this->picture) {
+    //         $this->picture = 'https://picsum.photos/500/500';
+    //     }
         
-    }
+    // }
 
 
     public function getCreatedAt(): ?\DateTimeInterface
@@ -349,6 +354,18 @@ class Painting
     public function setDbName($dbName)
     {
         $this->dbName = $dbName;
+
+        return $this;
+    }
+
+    public function getPicture(): ?Picture
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?Picture $picture): self
+    {
+        $this->picture = $picture;
 
         return $this;
     }

@@ -3,9 +3,11 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Painting;
+use App\Entity\Picture;
 use App\Form\PaintingType;
 use App\Repository\CategoryRepository;
 use App\Repository\PaintingRepository;
+use App\Repository\PictureRepository;
 use App\Repository\TechniqueRepository;
 use App\Service\PagesNavigator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -105,7 +107,7 @@ class MainController extends AbstractController
      *      methods={"GET", "POST"},
      * )
      */
-    public function edit(Painting $painting = null, $id, Request $request, EntityManagerInterface $em, TechniqueRepository $techniqueRepository, CategoryRepository $categoryRepository)
+    public function edit(Painting $painting = null, $id, Request $request, EntityManagerInterface $em, TechniqueRepository $techniqueRepository, CategoryRepository $categoryRepository, PictureRepository $pictureRepository)
     {
         $submittedToken = $request->request->get('token');
         if (!$this->isCsrfTokenValid('add-edit-item', $submittedToken)) {
@@ -121,7 +123,6 @@ class MainController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // $painting->setPicture($form->get('picture')->getData()->getPathName());
             for ($i=0; $i < count($form->get('technique')->getData()); $i++) {
                 $technique = $techniqueRepository->find($form->get('technique')->getData()[$i]);
                 $painting->addTechniques($technique);
@@ -130,6 +131,17 @@ class MainController extends AbstractController
             for ($i=0; $i < count($form->get('categories')->getData()); $i++) { 
                 $category = $categoryRepository->find($form->get('categories')->getData()[$i]);
                 $painting->addCategories($category);
+            }
+
+            if (null != $request->files->get('painting')['picture']) {
+                $actualPicture = $pictureRepository->find($painting->getPicture());
+                $pictureTitle = preg_filter('/.(jpg|JPG|PNG|png|JPEG|jpeg)/', '', $request->files->get('painting')['picture']->getClientOriginalName());
+                $actualPicture->setTitle($pictureTitle);
+                $actualPicture->setPathname($request->files->get('painting')['picture']->getClientOriginalName());
+                $actualPicture->setFile(base64_encode(file_get_contents($request->files->get('painting')['picture'])));
+    
+                $painting->setDbName($pictureTitle);
+                $painting->setPicture($actualPicture);
             }
 
             $em->flush();
@@ -162,6 +174,16 @@ class MainController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $picture = new Picture();
+            
+            $pictureTitle = preg_filter('/.(jpg|JPG|PNG|png|JPEG|jpeg)/', '', $request->files->get('painting')['picture']->getClientOriginalName());
+            $picture->setTitle($pictureTitle);
+            $picture->setPathname($request->files->get('painting')['picture']->getClientOriginalName());
+            $picture->setFile(base64_encode(file_get_contents($request->files->get('painting')['picture'])));
+            $em->persist($picture);
+
+            $painting->setDbName($pictureTitle);
+            $painting->setPicture($picture);
             $em->persist($painting);
             $em->flush();
 

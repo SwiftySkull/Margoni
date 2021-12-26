@@ -27,17 +27,19 @@ class PaintingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('picture', FileType::class, [
+                'label' => 'Fichier de la photo (obligatoire)',
+                'mapped' => false,
+                'constraints' => new File([
+                    'mimeTypes' => [
+                        'image/png',
+                        'image/jpeg',
+                    ],
+                    'mimeTypesMessage' => 'Le fichier n\'est pas au bon format (.png, .jpg, .jpeg)',
+                ]),
+            ])
             ->add('title', TextType::class, [
                 'label' => 'Titre de la peinture',
-            ])
-            ->add('dbName', TextType::class, [
-                'label' => 'Nom générique (obligatoire)',
-                'constraints' => [
-                    new NotBlank(),
-                    new Length([
-                        'max' => 50,
-                    ]),
-                ],
             ])
             ->add('date', DateType::class, [
                 'label' => 'Date de la peinture',
@@ -61,17 +63,6 @@ class PaintingType extends AbstractType
             ])
             ->add('information', TextareaType::class, [
                 'label' => 'Informations complémentaires, histoire de la peinture',
-            ])
-            ->add('picture', FileType::class, [
-                'label' => 'Fichier de la photo (obligatoire)',
-                'mapped' => false,
-                'constraints' => new File([
-                    'mimeTypes' => [
-                        'image/png',
-                        'image/jpeg',
-                    ],
-                    'mimeTypesMessage' => 'Le fichier n\'est pas au bon format (.png, .jpg, .jpeg)',
-                ]),
             ])
             ->add('frame', EntityType::class, [
                 'class' => Frame::class,
@@ -101,6 +92,15 @@ class PaintingType extends AbstractType
             ])
             // ->add('createdAt')
             // ->add('updatedAt')
+                        // ->add('dbName', TextType::class, [
+            //     'label' => 'Nom générique (obligatoire)',
+            //     'constraints' => [
+            //         new NotBlank(),
+            //         new Length([
+            //             'max' => 50,
+            //         ]),
+            //     ],
+            // ])
         ;
     }
 

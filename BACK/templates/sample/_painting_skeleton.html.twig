@@ -14,7 +14,7 @@
         <p>Collection : {{ paint.situation.collection ?? 'Non précisée.' }}</p>
         <p>Localisation : {{ paint.location ?? 'Non précisée.' }}</p>
     </div>
-    <img src="{{ paint.picture }}" style="height: 150px; width: 150px"/>
-    <p>Information : {{ paint.information|u.truncate(200, '[...]', false) ?? 'Pas d\'information complémentaire pour le moment.'}}</p>
+    <img src="data:image/jpeg;base64,{{ paint.picture.file }}" style="height: 150px; width: 150px"/>
+    <p>Information : {{ paint.information ? paint.information|u.truncate(200, '[...]', false) : 'Pas d\'information complémentaire pour le moment.'}}</p>
     <hr>
 {% endfor %}
