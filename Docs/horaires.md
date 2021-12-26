@@ -20,6 +20,10 @@ Total 6h20
 
 Total 5h30
 
+## 26/12/2021
 
+16h45 -> 22h30
 
-TOTAL : 19h
+Total 5h45
+
+## TOTAL : 24h45

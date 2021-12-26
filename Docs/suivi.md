@@ -79,11 +79,30 @@ Requête d'offset aussi fonctionnelle
 
 <https://stackoverflow.com/questions/9214471/count-rows-in-doctrine-querybuilder> pour compter des lignes en query builder
 
-## XX/XX/20XX
+## 26/12/2021
 
 ### A faire
 
 Récupération des informations d'une photo !!
+
+Champ de recherche pour chercher un tableau par son nom ou une de ses caractéristiques textuelles
+Préparer les routes API
+
+### Fait
+
+Première méthode d'ajout en base de données des informations d'une photo. Récupération et encodage pour le moment.
+
+Réduire le pourcentage de qualité des photos entre 80 et 95%, si la photo fait moins de 3mo c'est bon, si on a des ko c'est encore mieux sans tuer la qualité.
+
+### Liens utiles
+
+<https://webdevdesigner.com/q/php-display-image-blob-from-mysql-duplicate-46922/> pour l'utilisation de la base64 en encodage
+
+## XX/XX/XXXX
+
+### A faire
+
+Faire la pull request, vérifier un dernier coup le code de la branche Photo avant de merge le tout.
 
 Champ de recherche pour chercher un tableau par son nom ou une de ses caractéristiques textuelles
 Préparer les routes API
