@@ -1,6 +1,6 @@
 {% for paint in paintings %}
     <div>
-        <p><b><a href="{{ path('read_paint', {id:paint.id}) }}">{{ paint.title }}</a></b> peint en {{ paint.date is not same as null ? paint.date|date('d-M-Y') : 'Non précisée.' }} ({{ paint.size.format ?? 'Non précisé.' }})
+        <p><b><a href="{{ path('read_paint', {id:paint.id}) }}">{{ paint.title ?? paint.dbName }}</a></b> peint en {{ paint.date is not same as null ? paint.date|date('d-M-Y') : 'Non précisée.' }} ({{ paint.size.format ?? 'Non précisé.' }})
         {% if paint.height is not same as null and paint.width is not same as null %}
             {{ paint.height }} x {{ paint.width }} mm
         {% else %}
