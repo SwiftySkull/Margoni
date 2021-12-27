@@ -44,6 +44,7 @@ class PaintingRepository extends ServiceEntityRepository
             // ->addSelect('c')
             ->leftJoin('p.picture', 'pic')
             ->addSelect('pic')
+
             ->orderBy('p.id')
             ->setFirstResult($offset)
             ->setMaxResults($this->limitPerPage)
