@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Size;
 use App\Entity\Frame;
+use App\Entity\Picture;
 use App\Entity\Category;
 use App\Entity\Painting;
 use App\Entity\Situation;
@@ -21,6 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\Image;
 
 class PaintingType extends AbstractType
 {
@@ -28,15 +30,20 @@ class PaintingType extends AbstractType
     {
         $builder
             ->add('picture', FileType::class, [
-                'label' => 'Fichier de la photo (obligatoire)',
+                'label' => 'Fichier de la photo',
                 'mapped' => false,
-                'constraints' => new File([
-                    'mimeTypes' => [
-                        'image/png',
-                        'image/jpeg',
-                    ],
-                    'mimeTypesMessage' => 'Le fichier n\'est pas au bon format (.png, .jpg, .jpeg)',
-                ]),
+                'constraints' => [
+                    new Image([
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpeg',
+                        ],
+                        'mimeTypesMessage' => 'Le fichier n\'est pas au bon format (.png, .jpg, .jpeg)',
+                        'maxPixels' => 2000000,
+                        'maxPixelsMessage' => 'Le fichier est trop volumineux et ne doit pas faire plus que 2Mo.',
+                    ]),
+                    new NotBlank(),
+                ],
             ])
             ->add('title', TextType::class, [
                 'label' => 'Titre de la peinture',

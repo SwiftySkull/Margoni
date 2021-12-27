@@ -40,7 +40,7 @@ class MainController extends AbstractController
 
         $paintings = $paintingRepository->findAllLimited();
 
-        $totalPages = $this->pagesNavigator->getTotalPages(25);
+        $totalPages = $this->pagesNavigator->getTotalPages();
 
         return $this->render('main/home.html.twig', [
             'paintings' => $paintings,
@@ -123,15 +123,16 @@ class MainController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            for ($i=0; $i < count($form->get('technique')->getData()); $i++) {
-                $technique = $techniqueRepository->find($form->get('technique')->getData()[$i]);
-                $painting->addTechniques($technique);
-            }
+            dump($painting);
+            // for ($i=0; $i < count($form->get('technique')->getData()); $i++) {
+            //     $technique = $techniqueRepository->find($form->get('technique')->getData()[$i]);
+            //     $painting->addTechniques($technique);
+            // }
 
-            for ($i=0; $i < count($form->get('categories')->getData()); $i++) { 
-                $category = $categoryRepository->find($form->get('categories')->getData()[$i]);
-                $painting->addCategories($category);
-            }
+            // for ($i=0; $i < count($form->get('categories')->getData()); $i++) { 
+            //     $category = $categoryRepository->find($form->get('categories')->getData()[$i]);
+            //     $painting->addCategories($category);
+            // }
 
             if (null != $request->files->get('painting')['picture']) {
                 $actualPicture = $pictureRepository->find($painting->getPicture());
@@ -190,7 +191,7 @@ class MainController extends AbstractController
             return $this->redirectToRoute('read_paint', ['id' => $painting->getId()]);
         }
 
-        return $this->render('technique/edit.html.twig', [
+        return $this->render('main/edit.html.twig', [
             'form' => $form->createView(),
             'method' => 'Création',
         ]);
