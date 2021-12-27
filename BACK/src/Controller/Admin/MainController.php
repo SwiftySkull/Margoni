@@ -120,20 +120,11 @@ class MainController extends AbstractController
 
         $form = $this->createForm(PaintingType::class, $painting);
 
+        $oldDbName = $painting->getDbName();
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($painting);
-            // for ($i=0; $i < count($form->get('technique')->getData()); $i++) {
-            //     $technique = $techniqueRepository->find($form->get('technique')->getData()[$i]);
-            //     $painting->addTechniques($technique);
-            // }
-
-            // for ($i=0; $i < count($form->get('categories')->getData()); $i++) { 
-            //     $category = $categoryRepository->find($form->get('categories')->getData()[$i]);
-            //     $painting->addCategories($category);
-            // }
-
             if (null != $request->files->get('painting')['picture']) {
                 $actualPicture = $pictureRepository->find($painting->getPicture());
                 $pictureTitle = preg_filter('/.(jpg|JPG|PNG|png|JPEG|jpeg)/', '', $request->files->get('painting')['picture']->getClientOriginalName());
@@ -141,9 +132,9 @@ class MainController extends AbstractController
                 $actualPicture->setPathname($request->files->get('painting')['picture']->getClientOriginalName());
                 $actualPicture->setFile(base64_encode(file_get_contents($request->files->get('painting')['picture'])));
     
-                $painting->setDbName($pictureTitle);
                 $painting->setPicture($actualPicture);
             }
+
 
             $em->flush();
 
@@ -183,7 +174,10 @@ class MainController extends AbstractController
             $picture->setFile(base64_encode(file_get_contents($request->files->get('painting')['picture'])));
             $em->persist($picture);
 
-            $painting->setDbName($pictureTitle);
+            if (null == $painting->getDbName()) {
+                $painting->setDbName($pictureTitle);                
+            }
+
             $painting->setPicture($picture);
             $em->persist($painting);
             $em->flush();

@@ -7,10 +7,9 @@
 <h1>{{ method }} d'une peinture</h1>
 
 {% if 'Création' is same as method %}
-<h2>L'ajout d'une photo est obligatoire</h2>
 <h4>La création du tableau peut se limiter à la photo</h4>
 {% endif %}
 
-{{ include('sample/_form.html.twig') }}
+{{ include('main/_form.html.twig') }}
 
 {% endblock %}
