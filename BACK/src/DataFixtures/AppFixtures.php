@@ -2,9 +2,11 @@
 
 namespace App\DataFixtures;
 
+use App\Donnees\Jinx;
 use App\Entity\Category;
 use App\Entity\Frame;
 use App\Entity\Painting;
+use App\Entity\Picture;
 use App\Entity\Situation;
 use Faker\Factory;
 use App\Entity\Size;
@@ -25,6 +27,7 @@ class AppFixtures extends Fixture
         $trun = $this->connection->executeQuery('TRUNCATE TABLE situation');
         $trun = $this->connection->executeQuery('TRUNCATE TABLE size');
         $trun = $this->connection->executeQuery('TRUNCATE TABLE technique');
+        $trun = $this->connection->executeQuery('TRUNCATE TABLE picture');
     }
 
     private $formatNumber = [1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 25, 30, 40, 50, 60, 80, 100, 120];
@@ -101,7 +104,7 @@ class AppFixtures extends Fixture
             $manager->persist($category);
         }
 
-        for ($i=1; $i < self::NB_PAINTINGS; $i++) { 
+        for ($i=1; $i <= self::NB_PAINTINGS; $i++) { 
             $painting = new Painting();
             $painting->setDbName('Peinture '.$i);
             $x = mt_rand(0, 1);
@@ -115,7 +118,15 @@ class AppFixtures extends Fixture
 
             $painting->setHeight($height);
             $painting->setWidth($width);
-            $painting->setPicture('https://picsum.photos/'.$height.'/'.$width);
+
+            $picture = new Picture();
+            $picture->setTitle('titre'.$i);
+            $picture->setPathname('titre'.$i.'.jpg');
+            $jinx = new Jinx();
+            $picture->setFile($jinx->getJinx());
+            $manager->persist($picture);
+
+            $painting->setPicture($picture);
             $painting->setInformation($faker->sentence(150));
             $painting->setLocation($faker->sentence(10));
 

@@ -4,14 +4,18 @@ namespace App\Form;
 
 use App\Entity\Size;
 use App\Entity\Frame;
+use App\Entity\Picture;
 use App\Entity\Category;
 use App\Entity\Painting;
 use App\Entity\Situation;
 use App\Entity\Technique;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,13 +31,51 @@ class PaintingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                $painting = $event->getData();
+
+                $form = $event->getForm();
+                if (null === $painting->getId()) {
+                    $form->add('picture', FileType::class, [
+                        'label' => 'Fichier de la photo (Obligatoire)',
+                        'mapped' => false,
+                        'constraints' => [
+                            new File([
+                                'mimeTypes' => [
+                                    'image/png',
+                                    'image/jpeg',
+                                ],
+                                'mimeTypesMessage' => 'Le fichier n\'est pas au bon format (.png, .jpg, .jpeg)',
+                                'maxSize' => 2000000,
+                                'maxSizeMessage' => 'Le fichier est trop volumineux et ne doit pas faire plus que 2Mo.',
+                            ]),
+                            new NotBlank(),
+                        ],
+                    ]);
+                } else {
+                    $form->add('picture', FileType::class, [
+                        'label' => 'Fichier de la photo',
+                        'mapped' => false,
+                        'constraints' => [
+                            new File([
+                                'mimeTypes' => [
+                                    'image/png',
+                                    'image/jpeg',
+                                ],
+                                'mimeTypesMessage' => 'Le fichier n\'est pas au bon format (.png, .jpg, .jpeg)',
+                                'maxSize' => 2000000,
+                                'maxSizeMessage' => 'Le fichier est trop volumineux et ne doit pas faire plus que 2Mo.',
+                            ]),
+                        ],
+                    ]);
+                }
+            })
             ->add('title', TextType::class, [
                 'label' => 'Titre de la peinture',
             ])
             ->add('dbName', TextType::class, [
-                'label' => 'Nom générique (obligatoire)',
+                'label' => 'Nom générique',
                 'constraints' => [
-                    new NotBlank(),
                     new Length([
                         'max' => 50,
                     ]),
@@ -61,17 +103,6 @@ class PaintingType extends AbstractType
             ])
             ->add('information', TextareaType::class, [
                 'label' => 'Informations complémentaires, histoire de la peinture',
-            ])
-            ->add('picture', FileType::class, [
-                'label' => 'Fichier de la photo (obligatoire)',
-                'mapped' => false,
-                'constraints' => new File([
-                    'mimeTypes' => [
-                        'image/png',
-                        'image/jpeg',
-                    ],
-                    'mimeTypesMessage' => 'Le fichier n\'est pas au bon format (.png, .jpg, .jpeg)',
-                ]),
             ])
             ->add('frame', EntityType::class, [
                 'class' => Frame::class,
@@ -101,7 +132,22 @@ class PaintingType extends AbstractType
             ])
             // ->add('createdAt')
             // ->add('updatedAt')
-        ;
+            // ->add('picture', FileType::class, [
+            //     'label' => 'Fichier de la photo',
+            //     'mapped' => false,
+            //     'constraints' => [
+            //         new File([
+            //             'mimeTypes' => [
+            //                 'image/png',
+            //                 'image/jpeg',
+            //             ],
+            //             'mimeTypesMessage' => 'Le fichier n\'est pas au bon format (.png, .jpg, .jpeg)',
+            //             'maxSize' => 2000000,
+            //             'maxSizeMessage' => 'Le fichier est trop volumineux et ne doit pas faire plus que 2Mo.',
+            //         ]),
+            //     ],
+            // ])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

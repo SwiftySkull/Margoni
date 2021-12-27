@@ -47,23 +47,15 @@ class PagesNavigator
     }
 
     /**
-     * Get the number of pages depending on the limitation of entries
-     * per page set by the user or with the default value
+     * Get the number of pages depending on the limitation of entries per page
      * 
-     * Récupère le nombre de pages en fonction de la limite d'entrées
-     * par page choisir par l'utilisateur ou avec la valeur par défaut 
+     * Récupère le nombre de pages en fonction de la limite d'entrées par page 
      *
-     * @param integer|null $userLimitPerPage Limit desired byt the user
-     *              Limite désirée par l'utilisateur
      * @return integer
      */
-    public function getTotalPages(int $userLimitPerPage = null): int
+    public function getTotalPages(): int
     {
-        if (null === $userLimitPerPage) {
-            $this->totalPages = round($this->allEntries/$this->limitPerPage) + 1;
-        } else {
-            $this->totalPages = round($this->allEntries/$userLimitPerPage) + 1;
-        }
+        $this->totalPages = round($this->allEntries/$this->limitPerPage) + 1;
 
         return $this->totalPages;
     }

@@ -7,7 +7,7 @@
 <div class="example-wrapper">
     <h1>{{ painting.title ?? '- Titre générique -' }}</h1>
     <h4>Nom générique : {{ painting.dbName }}</h4>
-    <img src="{{ painting.picture }}" />
+    <img src="data:image/jpeg;base64,{{ painting.picture.file }}" style="max-width: 80%"/>
     <br>
     <p><b>Date de création</b> : {{ painting.date is not same as null ? painting.date|date('d M Y') : 'Non précisée.' }}</p>
     <p><b>Catégories de l'oeuvre</b> :</p>
