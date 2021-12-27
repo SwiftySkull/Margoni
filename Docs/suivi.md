@@ -98,7 +98,7 @@ Réduire le pourcentage de qualité des photos entre 80 et 95%, si la photo fait
 
 <https://webdevdesigner.com/q/php-display-image-blob-from-mysql-duplicate-46922/> pour l'utilisation de la base64 en encodage
 
-## XX/XX/XXXX
+## 27/12/2021
 
 ### A faire
 
@@ -106,3 +106,28 @@ Faire la pull request, vérifier un dernier coup le code de la branche Photo ava
 
 Champ de recherche pour chercher un tableau par son nom ou une de ses caractéristiques textuelles
 Préparer les routes API
+
+### Fait
+
+Modification des formulaires ajout/edition des tableaux par rapport aux photos
+Pull request pour les photos OK
+
+Création du champ de recherche pour chercher les tableaux avec un mot clé
+
+Modification des templates en conséquence
+
+### Liens utiles
+
+<https://symfony.com/doc/current/reference/constraints> Pour les contraintes notamment les contraintes de fichier (aujourd'hui)
+
+## XX
+
+### A faire
+
+Faire la pull request, vérifier un dernier coup le code de la branche SearchingTool avant de merge le tout.
+
+Préparer les routes API
+
+Faire la recherche par taille
+
+Associer une taille à un format spécifique automatiquement (format 1F -> cm et inversement)

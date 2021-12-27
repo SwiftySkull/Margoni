@@ -26,4 +26,10 @@ Total 5h30
 
 Total 5h45
 
-## TOTAL : 24h45
+## 27/12/2021
+
+17h30 -> 22h45
+
+Total 5h15
+
+## TOTAL : 30h
