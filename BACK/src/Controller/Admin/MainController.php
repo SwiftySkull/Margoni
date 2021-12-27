@@ -48,6 +48,7 @@ class MainController extends AbstractController
             'totalPages' => $totalPages,
             'previousPage' => $this->pagesNavigator->getPreviousPage(),
             'nextPage' => $this->pagesNavigator->getNextPage(),
+            'count' => $paintingRepository->countAll(),
         ]);
     }
 
@@ -74,6 +75,7 @@ class MainController extends AbstractController
             'totalPages' => $totalPages,
             'previousPage' => $previousPage,
             'nextPage' => $nextPage,
+            'count' => $paintingRepository->countAll(),
         ]);
     }
 
