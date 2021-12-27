@@ -33,14 +33,14 @@ class PaintingType extends AbstractType
                 'label' => 'Fichier de la photo',
                 'mapped' => false,
                 'constraints' => [
-                    new Image([
+                    new File([
                         'mimeTypes' => [
                             'image/png',
                             'image/jpeg',
                         ],
                         'mimeTypesMessage' => 'Le fichier n\'est pas au bon format (.png, .jpg, .jpeg)',
-                        'maxPixels' => 2000000,
-                        'maxPixelsMessage' => 'Le fichier est trop volumineux et ne doit pas faire plus que 2Mo.',
+                        'maxSize' => 2000000,
+                        'maxSizeMessage' => 'Le fichier est trop volumineux et ne doit pas faire plus que 2Mo.',
                     ]),
                     new NotBlank(),
                 ],
