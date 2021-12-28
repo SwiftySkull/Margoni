@@ -37,7 +37,7 @@
                         <a class="nav-link {% block sizeActive %}{% endblock %}" aria-current="page" href="{{ path('size_browse') }}">Format</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% block heightActive %}{% endblock %} disabled" aria-current="page" href="{{ path('searching_height_browse') }}">Taille</a>
+                        <a class="nav-link {% block heightActive %}{% endblock %} disabled" aria-current="page" href="#">Taille</a>
                     </li>
                     <li class="nav-item">
                         <form action="{{ path('paint_add') }}" method="POST">
@@ -46,8 +46,8 @@
                         </form>
                     </li>
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <form class="d-flex" action="{{ path('search') }}" method="post">
+                    <input class="form-control me-2" type="search" placeholder="Search" name="search" id="search"  aria-label="Search">
                     <button class="btn btn-outline-primary" type="submit">Search</button>
                 </form>
                 </div>

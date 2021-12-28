@@ -80,6 +80,7 @@ class SizeController extends AbstractController
             'previousPage' => $this->pagesNavigator->getPreviousPage($pageId),
             'nextPage' => $this->pagesNavigator->getNextPage($pageId),
             'totalPages' => $this->pagesNavigator->getTotalPages(),
+            'count' => $paintingRepository->countBySize($size),
         ]);
     }
 

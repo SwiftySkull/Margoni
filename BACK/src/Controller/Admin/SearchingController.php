@@ -2,27 +2,86 @@
 
 namespace App\Controller\Admin;
 
+use App\Service\PagesNavigator;
+use App\Repository\PaintingRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/**
- * @Route("/searching", name="searching_")
- */
 class SearchingController extends AbstractController
 {
+    private $pagesNavigator;
+
+    public function __construct(PagesNavigator $pagesNavigator)
+    {
+        $this->pagesNavigator = $pagesNavigator;
+    }
 
     /**
      * @Route(
-     *      "/height",
-     *      name="height_browse",
-     *      methods={"GET"},
+     *      "/{search}",
+     *      name="search",
+     *      methods={"POST", "GET"},
      * )
      */
-    public function height(): Response
+    public function search(Request $request, PaintingRepository $paintingRepository, $search = null)
     {
-        return $this->render('height/browse.html.twig', [
-            
+        $searchbar = $request->request->get('search');
+
+        if (null == $search && null == $searchbar) {
+            return $this->redirectToRoute('home');
+        }
+
+        if (null != $search && null == $searchbar) {
+            $research = $search;
+        }
+
+        if (null == $search && null != $searchbar) {
+            $research = $searchbar;
+        }
+
+        $totalSearch = $paintingRepository->findBySearch($research);
+        $this->pagesNavigator->setAllEntries(count($totalSearch));
+
+        $paintings = $paintingRepository->findBySearchLimited($research);
+
+        $totalPages = $this->pagesNavigator->getTotalPages();
+
+        dump($paintings);
+        return $this->render('main/search.html.twig', [
+            'paintings' => $paintings,
+            'pages' => $this->pagesNavigator->getMinMax(),
+            'totalPages' => $totalPages,
+            'previousPage' => $this->pagesNavigator->getPreviousPage(),
+            'nextPage' => $this->pagesNavigator->getNextPage(),
+            'search' => $research,
+            'count' => count($totalSearch),
         ]);
+    }
+
+    /**
+     * @Route("/{search}/page/{id<\d+>}", name="search_plus", methods={"GET", "POST"})
+     */
+    public function searchPlus(PaintingRepository $paintingRepository, $id, $search)
+    {
+        $totalSearch = $paintingRepository->findBySearch($search);
+        $this->pagesNavigator->setAllEntries(count($totalSearch));
+
+        $pageId = $this->pagesNavigator->getPageId($id);
+        $slice = $this->pagesNavigator->getSlice($pageId);
+
+        $paintings = $paintingRepository->findBySearchLimited($search, $slice);
+
+        return $this->render('main/search.html.twig', [
+            'paintings' => $paintings,
+            'pages' => $this->pagesNavigator->getMinMax($pageId),
+            'totalPages' => $this->pagesNavigator->getTotalPages(),
+            'previousPage' => $this->pagesNavigator->getPreviousPage($pageId),
+            'nextPage' => $this->pagesNavigator->getNextPage($pageId),
+            'search' => $search,
+            'count' => count($totalSearch),
+        ]);
+
     }
 }

@@ -8,7 +8,11 @@
 
 <h1>Recherche par collection</h1>
 
-<h2>Liste des tableaux de la collection {{ situation.collection }}</h2>
+{% if 0 is not same as count %}
+<h2>Liste des {{ count }} tableaux de la collection {{ situation.collection }}</h2>
+{% else %}
+<h2>Aucun tableau trouvé</h2>
+{% endif %}
 
 {{ include('sample/_painting_skeleton.html.twig', {'paintings': paintings}) }}
 

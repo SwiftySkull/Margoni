@@ -22,6 +22,87 @@ class PaintingRepository extends ServiceEntityRepository
         $this->limitPerPage = $limitPerPage;
     }
 
+    public function findBySearch($search)
+    {
+        $qb = $this->createQueryBuilder('p')
+        ->leftJoin('p.frame', 'f')
+        ->leftJoin('p.situation', 'sit')
+        ->leftJoin('p.size', 'size')
+        ->leftJoin('p.techniques', 't')
+        ->leftJoin('p.categories', 'c')
+        ->leftJoin('p.picture', 'pic')
+        ->orderBy('p.id', 'ASC');
+
+        // Si mot clé présent on ajoute une condition
+        if (null !== $search && '' !== $search) {
+            $qb->orwhere('p.title LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ->orwhere('p.dbName LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ->orwhere('p.location LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ->orwhere('p.information LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ->orwhere('f.framing LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ->orwhere('sit.collection LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ->orwhere('size.format LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ->orwhere('t.type LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ->orwhere('c.name LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ->orwhere('pic.title LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ;
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findBySearchLimited($search, int $offset = 0)
+    {
+        $qb = $this->createQueryBuilder('p')
+        ->leftJoin('p.frame', 'f')
+        ->leftJoin('p.situation', 'sit')
+        ->leftJoin('p.size', 'size')
+        ->leftJoin('p.techniques', 't')
+        ->leftJoin('p.categories', 'c')
+        ->leftJoin('p.picture', 'pic')
+        ->orderBy('p.id', 'ASC')
+        ->groupBy('p')
+        ->setFirstResult($offset)
+        ->setMaxResults($this->limitPerPage);
+
+        // Si mot clé présent on ajoute une condition
+        if (null !== $search && '' !== $search) {
+            $qb->orwhere('p.title LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ->orwhere('p.dbName LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ->orwhere('p.location LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ->orwhere('p.information LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ->orwhere('f.framing LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ->orwhere('sit.collection LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ->orwhere('size.format LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ->orwhere('t.type LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ->orwhere('c.name LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ->orwhere('pic.title LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ;
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
     /**
      * Return all the paintings with custom request to decrease the total number of requests
      * 
@@ -44,7 +125,6 @@ class PaintingRepository extends ServiceEntityRepository
             // ->addSelect('c')
             ->leftJoin('p.picture', 'pic')
             ->addSelect('pic')
-
             ->orderBy('p.id')
             ->setFirstResult($offset)
             ->setMaxResults($this->limitPerPage)
