@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\FrameRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -23,11 +24,17 @@ class Frame
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups("painting_read")
+     * @Groups("frames_browse")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * 
+     * @Groups("painting_read")
+     * @Groups("frames_browse")
      */
     private $framing;
 

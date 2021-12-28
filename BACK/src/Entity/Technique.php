@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TechniqueRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -23,11 +24,17 @@ class Technique
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups("paintings_browse")
+     * @Groups("techniques_browse")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=40)
+     * 
+     * @Groups("paintings_browse")
+     * @Groups("techniques_browse")
      */
     private $type;
 
@@ -125,6 +132,33 @@ class Technique
     {
         if ($this->paintings->removeElement($painting)) {
             $painting->removeTechniques($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Painting[]
+     */
+    public function getPainti(): Collection
+    {
+        return $this->painti;
+    }
+
+    public function addPainti(Painting $painti): self
+    {
+        if (!$this->painti->contains($painti)) {
+            $this->painti[] = $painti;
+            $painti->addTechnique($this);
+        }
+
+        return $this;
+    }
+
+    public function removePainti(Painting $painti): self
+    {
+        if ($this->painti->removeElement($painti)) {
+            $painti->removeTechnique($this);
         }
 
         return $this;
