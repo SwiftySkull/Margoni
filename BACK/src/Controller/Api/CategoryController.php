@@ -55,6 +55,6 @@ class CategoryController extends AbstractController
 
         $results = [$category, ['total results' => $total], $paintings];
 
-        return $this->json($results, 200, [], ['groups' => 'paintings_browse']);
+        return $this->json($results, 200, [], ['groups' => ['paintings_browse', 'categories_browse']]);
     }
 }

@@ -26,6 +26,7 @@ class Technique
      * @ORM\Column(type="integer")
      * 
      * @Groups("paintings_browse")
+     * @Groups("techniques_browse")
      */
     private $id;
 
@@ -33,6 +34,7 @@ class Technique
      * @ORM\Column(type="string", length=40)
      * 
      * @Groups("paintings_browse")
+     * @Groups("techniques_browse")
      */
     private $type;
 
