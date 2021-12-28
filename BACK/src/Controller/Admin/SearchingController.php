@@ -61,14 +61,14 @@ class SearchingController extends AbstractController
     }
 
     /**
-     * @Route("/{search}/page/{id<\d+>}", name="search_plus", methods={"GET", "POST"})
+     * @Route("/{search}/page/{page<\d+>}", name="search_plus", methods={"GET", "POST"})
      */
-    public function searchPlus(PaintingRepository $paintingRepository, $id, $search)
+    public function searchPlus(PaintingRepository $paintingRepository, $page, $search)
     {
         $totalSearch = $paintingRepository->findBySearch($search);
         $this->pagesNavigator->setAllEntries(count($totalSearch));
 
-        $pageId = $this->pagesNavigator->getPageId($id);
+        $pageId = $this->pagesNavigator->getPageId($page);
         $slice = $this->pagesNavigator->getSlice($pageId);
 
         $paintings = $paintingRepository->findBySearchLimited($search, $slice);
