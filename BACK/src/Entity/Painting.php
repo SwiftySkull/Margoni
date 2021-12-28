@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PaintingRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -23,41 +24,57 @@ class Painting
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups("paintings_browse")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * 
+     * @Groups("paintings_browse")
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * 
+     * @Groups("paintings_browse")
      */
     private $dbName;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * 
+     * @Groups("paintings_browse")
      */
     private $date;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * 
+     * @Groups("paintings_browse")
      */
     private $height;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * 
+     * @Groups("paintings_browse")
      */
     private $width;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * 
+     * @Groups("painting_read")
      */
     private $location;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * 
+     * @Groups("painting_read")
      */
     private $information;
 
@@ -79,33 +96,46 @@ class Painting
     /**
      * @ORM\ManyToOne(targetEntity=Frame::class, inversedBy="paintings")
      * @ORM\JoinColumn(onDelete="SET NULL")
+     * 
+     * @Groups("painting_read")
      */
     private $frame;
 
     /**
      * @ORM\ManyToOne(targetEntity=Size::class, inversedBy="paintings")
      * @ORM\JoinColumn(onDelete="SET NULL")
+     * 
+     * @Groups("paintings_browse")
      */
     private $size;
 
     /**
      * @ORM\ManyToOne(targetEntity=Situation::class, inversedBy="paintings")
      * @ORM\JoinColumn(onDelete="SET NULL")
+     * 
+     * @Groups("painting_read")
      */
     private $situation;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="paintings")
+     * 
+     * @Groups("paintings_browse")
      */
     private $categories;
 
     /**
      * @ORM\ManyToMany(targetEntity=Technique::class, inversedBy="paintings")
+     * 
+     * @Groups("paintings_browse")
      */
     private $techniques;
 
     /**
      * @ORM\OneToOne(targetEntity=Picture::class, cascade={"persist", "remove"})
+     * 
+     * @Groups("paintings_browseXXXXXXXXX")
+     * @Groups("painting_readXXXXXXXXXXXX")
      */
     private $picture;
 
@@ -366,6 +396,46 @@ class Painting
     public function setPicture(?Picture $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Technique[]
+     */
+    public function getTechniques(): Collection
+    {
+        return $this->techniques;
+    }
+
+    public function addTechnique(Technique $technique): self
+    {
+        if (!$this->techniques->contains($technique)) {
+            $this->techniques[] = $technique;
+        }
+
+        return $this;
+    }
+
+    public function removeTechnique(Technique $technique): self
+    {
+        $this->techniques->removeElement($technique);
 
         return $this;
     }

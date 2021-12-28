@@ -100,7 +100,6 @@ class MainController extends AbstractController
     }
 
     /**
-     * TODO: Créer la récupération des informations d'une photo TODO:
      * Form to edit the informations of a painting
      * 
      * @Route(
@@ -151,8 +150,6 @@ class MainController extends AbstractController
     }
 
     /**
-     * TODO: Récupérer les informations d'une photo TODO:
-     * 
      * @Route("/paint/add", name="paint_add", methods={"POST", "GET"})
      */
     public function add(EntityManagerInterface $em, Request $request)
