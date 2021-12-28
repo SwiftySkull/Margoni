@@ -7,7 +7,12 @@
 {% block body %}
 
 <h1>Recherche actuelle : {{ search }}</h1>
+
+{% if 0 is not same as count %}
 <h2>Liste pour un total de {{ count }} peintures</h2>
+{% else %}
+<h2>Aucun tableau trouvé</h2>
+{% endif %}
 
 {{ include('sample/_painting_skeleton.html.twig', {'paintings': paintings}) }}
 
