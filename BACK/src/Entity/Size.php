@@ -26,6 +26,7 @@ class Size
      * @ORM\Column(type="integer")
      * 
      * @Groups("paintings_browse")
+     * @Groups("sizes_browse")
      */
     private $id;
 
@@ -33,6 +34,7 @@ class Size
      * @ORM\Column(type="string", length=10)
      * 
      * @Groups("paintings_browse")
+     * @Groups("sizes_browse")
      */
     private $format;
 

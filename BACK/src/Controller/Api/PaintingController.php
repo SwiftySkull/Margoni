@@ -27,7 +27,11 @@ class PaintingController extends AbstractController
 
         $paintings = $paintingRepository->findAllLimited();
 
-        return $this->json($paintings, 200, [], ['groups' => 'paintings_browse']);
+        $total = $paintingRepository->countAll();
+
+        $results = [['total results' => $total], $paintings];
+
+        return $this->json($results, 200, [], ['groups' => 'paintings_browse']);
     }
 
     /**
@@ -42,7 +46,11 @@ class PaintingController extends AbstractController
 
         $paintings = $paintingRepository->findAllLimited($slice);
 
-        return $this->json($paintings, 200, [], ['groups' => 'paintings_browse']);
+        $total = $paintingRepository->countAll();
+
+        $results = [['total results' => $total], $paintings];
+
+        return $this->json($results, 200, [], ['groups' => 'paintings_browse']);
     }
 
     /**

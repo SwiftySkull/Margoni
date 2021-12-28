@@ -46,12 +46,14 @@ class FrameController extends AbstractController
 
         $this->pagesNavigator->setAllEntries($paintingRepository->countByFrame($frame));
 
+        $total = $paintingRepository->countByFrame($frame);
+
         $pageId = $this->pagesNavigator->getPageId($page);
         $slice = $this->pagesNavigator->getSlice($pageId);
 
         $paintings = $paintingRepository->findFrameLimited($frame, $slice);
 
-        $results = [$frame, $paintings];
+        $results = [$frame, ['total results' => $total], $paintings];
 
         return $this->json($results, 200, [], ['groups' => ['paintings_browse', 'frames_browse']]);
     }

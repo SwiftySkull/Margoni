@@ -20,7 +20,7 @@ class SituationController extends AbstractController
     }
 
     /**
-     * @Route("/api/collections", name="api_collections_browse", methods={"GET"})
+     * @Route("/api/situations", name="api_situations_browse", methods={"GET"})
      */
     public function browse(SituationRepository $situationRepository): Response
     {
@@ -30,8 +30,8 @@ class SituationController extends AbstractController
     }
 
     /**
-     * @Route("/api/collection/{id<\d+>}", name="api_collection_read_main", methods={"GET"})
-     * @Route("/api/collection/{id<\d+>}/page/{page<\d+>}", name="api_collection_read", methods={"GET"})
+     * @Route("/api/situation/{id<\d+>}", name="api_situation_read_main", methods={"GET"})
+     * @Route("/api/situation/{id<\d+>}/page/{page<\d+>}", name="api_situation_read", methods={"GET"})
      */
     public function read(Situation $situation = null, PaintingRepository $paintingRepository, $page = 0)
     {
@@ -46,12 +46,14 @@ class SituationController extends AbstractController
 
         $this->pagesNavigator->setAllEntries($paintingRepository->countBySituation($situation));
 
+        $total = $paintingRepository->countBySituation($situation);
+
         $pageId = $this->pagesNavigator->getPageId($page);
         $slice = $this->pagesNavigator->getSlice($pageId);
 
         $paintings = $paintingRepository->findSituationLimited($situation, $slice);
 
-        $results = [$situation, $paintings];
+        $results = [$situation, ['total results' => $total], $paintings];
 
         return $this->json($results, 200, [], ['groups' => ['paintings_browse', 'situations_browse']]);
     }

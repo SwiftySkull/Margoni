@@ -46,12 +46,14 @@ class CategoryController extends AbstractController
 
         $this->pagesNavigator->setAllEntries($paintingRepository->countByCateg($category));
 
+        $total = $paintingRepository->countByCateg($category);
+
         $pageId = $this->pagesNavigator->getPageId($page);
         $slice = $this->pagesNavigator->getSlice($pageId);
 
         $paintings = $paintingRepository->findCategLimited($category, $slice);
 
-        $results = [$category, $paintings];
+        $results = [$category, ['total results' => $total], $paintings];
 
         return $this->json($results, 200, [], ['groups' => 'paintings_browse']);
     }
