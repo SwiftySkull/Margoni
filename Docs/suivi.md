@@ -120,7 +120,7 @@ Modification des templates en conséquence
 
 <https://symfony.com/doc/current/reference/constraints> Pour les contraintes notamment les contraintes de fichier (aujourd'hui)
 
-## XX
+## 28/12/2021
 
 ### A faire
 
@@ -130,4 +130,25 @@ Préparer les routes API
 
 Faire la recherche par taille
 
+Associer une taille à un format spécifique automatiquement (format 1F -> cm et inversement)
+
+### Fait
+
+Pull request SearchingTool faite
+Routes API créées, Nelmio CORS Policy Bundle aussi installé et tout est pull sur develop.
+Tout le monde peut y avoir accès pour le moment.
+
+### Liens utiles
+
+<https://github.com/nelmio/NelmioCorsBundle> Pour la sécurité des CORS
+
+
+## XX
+
+### A faire
+
+Modifier le dictionnaire de données pour rajouter l'entité Picture
+Ajouter un fichier pour indiquer les routes disponibles en API (API Endpoint)
+
+Faire la recherche par taille
 Associer une taille à un format spécifique automatiquement (format 1F -> cm et inversement)
