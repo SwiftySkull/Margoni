@@ -26,6 +26,7 @@ class Frame
      * @ORM\Column(type="integer")
      * 
      * @Groups("painting_read")
+     * @Groups("frames_browse")
      */
     private $id;
 
@@ -33,6 +34,7 @@ class Frame
      * @ORM\Column(type="string", length=50)
      * 
      * @Groups("painting_read")
+     * @Groups("frames_browse")
      */
     private $framing;
 

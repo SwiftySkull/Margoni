@@ -51,7 +51,12 @@ class PaintingController extends AbstractController
     public function read(Painting $painting = null)
     {
         if (null === $painting) {
-            throw $this->createNotFoundException('Oups ! Tableau non trouvé.'); 
+            $message = [
+                'status' => Response::HTTP_NOT_FOUND,
+                'error' => 'Tableau non trouvé.',
+            ];
+
+            return $this->json($message, Response::HTTP_NOT_FOUND);
         }
 
         return $this->json($painting, 200, [], ['groups' => ['paintings_browse', 'painting_read']]);

@@ -49,7 +49,7 @@ class SituationController extends AbstractController
         $pageId = $this->pagesNavigator->getPageId($page);
         $slice = $this->pagesNavigator->getSlice($pageId);
 
-        $paintings = $paintingRepository->findCategLimited($situation, $slice);
+        $paintings = $paintingRepository->findSituationLimited($situation, $slice);
 
         $results = [$situation, $paintings];
 
