@@ -5,11 +5,14 @@
 {% block body %}
 
 <div class="example-wrapper">
+
+    {{ include('_flash_messages.html.twig') }}
+
     <h1>{{ painting.title ?? '- Titre générique -' }}</h1>
     <h4>Nom générique : {{ painting.dbName }}</h4>
     <img src="data:image/jpeg;base64,{{ painting.picture.file }}" style="max-width: 80%"/>
     <br>
-    <p><b>Date de création</b> : {{ painting.date is not same as null ? painting.date|date('d M Y') : 'Non précisée.' }}</p>
+    <p><b>Date de création</b> : {{ painting.date is not same as null ? painting.date : 'Non précisée.' }}</p>
     <p><b>Catégories de l'oeuvre</b> :</p>
     <ul>
         {% for category in painting.categories %}
@@ -25,7 +28,7 @@
     </ul>
     
     {% if painting.height is not same as null and painting.width is not same as null %}
-        <p><b>Taille</b> : {{ painting.height }} x {{ painting.width }} mm</p>
+        <p><b>Taille</b> : {{ painting.height }} x {{ painting.width }} cm</p>
     {% else %}
         <p><b>Taille</b> : Non précisée.</p>
     {% endif %}

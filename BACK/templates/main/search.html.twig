@@ -18,7 +18,7 @@
 
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
-    <li class="page-item"><a class="page-link" href="{{ path('search_plus', {id:previousPage, search:search}) }}">- 5 Previous</a></li>
+    <li class="page-item"><a class="page-link" href="{{ path('search_plus', {page:previousPage, search:search}) }}">- 5 Previous</a></li>
     
     {% if pages['pageMin'] < 2 %}
     {% else %}
@@ -26,7 +26,7 @@
     {% endif %}
     
     {% for i in pages['pageMin']..pages['pageMax'] %}
-        <li class="page-item"><a class="page-link" href="{{ path('search_plus', {id:i, search:search}) }}">{{ i }}</a></li>
+        <li class="page-item"><a class="page-link" href="{{ path('search_plus', {page:i, search:search}) }}">{{ i }}</a></li>
     {% endfor %}
         
     {% if pages['pageMax'] > totalPages - 1 %}
@@ -34,7 +34,7 @@
     <li class="page-item"><p class="page-link" href="">...</p></li>
     {% endif %}
 
-    <li class="page-item"><a class="page-link" href="{{ path('search_plus', {id:nextPage, search:search}) }}">+ 5 Next</a></li>
+    <li class="page-item"><a class="page-link" href="{{ path('search_plus', {page:nextPage, search:search}) }}">+ 5 Next</a></li>
   </ul>
 </nav>
 

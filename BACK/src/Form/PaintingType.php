@@ -25,6 +25,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class PaintingType extends AbstractType
 {
@@ -81,16 +82,15 @@ class PaintingType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('date', DateType::class, [
-                'label' => 'Date de la peinture',
-                'widget' => 'text',
-                'help' => 'Au format Mois - Jour - Année',
+            ->add('date', IntegerType::class, [
+                'label' => 'Année de la peinture',
+                'help' => 'Le jour sera spécifié dans les informations',
             ])
             ->add('height', IntegerType::class, [
-                'label' => 'Hauteur de la peinture (en millimètre)',
+                'label' => 'Hauteur de la peinture (en cm)',
             ])
             ->add('width', IntegerType::class, [
-                'label' => 'Largeur de la peinture (en millimètre)',
+                'label' => 'Largeur de la peinture (en cm)',
             ])
             ->add('size', EntityType::class, [
                 'class' => Size::class,

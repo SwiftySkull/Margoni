@@ -8,7 +8,9 @@ use App\Form\PaintingType;
 use App\Repository\CategoryRepository;
 use App\Repository\PaintingRepository;
 use App\Repository\PictureRepository;
+use App\Repository\SizeRepository;
 use App\Repository\TechniqueRepository;
+use App\Service\FormatConversion;
 use App\Service\PagesNavigator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -108,7 +110,7 @@ class MainController extends AbstractController
      *      methods={"GET", "POST"},
      * )
      */
-    public function edit(Painting $painting = null, $id, Request $request, EntityManagerInterface $em, TechniqueRepository $techniqueRepository, CategoryRepository $categoryRepository, PictureRepository $pictureRepository)
+    public function edit(Painting $painting = null, $id, Request $request, EntityManagerInterface $em, PictureRepository $pictureRepository, FormatConversion $formatConversion, SizeRepository $sizeRepository)
     {
         $submittedToken = $request->request->get('token');
         if (!$this->isCsrfTokenValid('add-edit-item', $submittedToken)) {
@@ -120,8 +122,6 @@ class MainController extends AbstractController
         }
 
         $form = $this->createForm(PaintingType::class, $painting);
-
-        $oldDbName = $painting->getDbName();
 
         $form->handleRequest($request);
 
@@ -136,6 +136,68 @@ class MainController extends AbstractController
                 $painting->setPicture($actualPicture);
             }
 
+            // Automatic modification of the size and format
+            if (null != $painting->getSize()) {
+                if (null === $painting->getHeight() || null === $painting->getWidth()) {
+                    $sizes = $formatConversion->getWidthHeightFromFormat($painting->getSize()->getFormat());
+                    $painting->setHeight($sizes['height']);
+                    $painting->setWidth($sizes['width']);    
+                }
+            }
+
+            if (null === $painting->getSize()) {
+                if (null != $painting->getHeight() && null != $painting->getWidth()) {
+                    $format = $formatConversion->getFormatFromtWidthHeight($painting->getHeight(), $painting->getWidth());
+                    if (false != $format) {
+                        $foundSize = $sizeRepository->findOneBy(['format' => $format[1]]);     
+                        $painting->setSize($foundSize);
+    
+                        if ('H' == $format[0]) {
+                            $painting->setInformation('Format '.$format[1].' Horizontal. '.$painting->getInformation());
+                        }    
+                    }
+                }
+            }
+
+            if ($painting->getHeight() < $painting->getWidth()) {
+                if (null != $painting->getSize()) {
+                    $retrieveHFormatToAdd = strstr($painting->getInformation(), 'Format '.$painting->getSize()->getFormat().' Horizontal');
+                    if (false === $retrieveHFormatToAdd) {
+                        $painting->setInformation('Format '.$painting->getSize()->getFormat().' Horizontal. '.$painting->getInformation());
+                    }    
+                }
+            } else if ($painting->getHeight() > $painting->getWidth()) {
+                if (null != $painting->getSize()) {
+                    $retrieveHFormatToRemove = strstr($painting->getInformation(), 'Format '.$painting->getSize()->getFormat().' Horizontal');
+                    if (false != $retrieveHFormatToRemove) {
+                        $emptyHFormat = str_replace('Format '.$painting->getSize()->getFormat().' Horizontal.', '', $painting->getInformation());
+                        $painting->setInformation('' != $emptyHFormat ? $emptyHFormat : null);
+                    }
+                }
+            }
+            // End of the size and format
+
+            if (null != $painting->getSize()) {
+                $comparison = $formatConversion->checkWidthHeightAndFormat($painting->getSize()->getFormat(), $painting->getHeight(), $painting->getWidth());
+                if (!$comparison) {
+                    $this->addFlash('danger', 'Il y a une différence entre les dimensions et le format mentionné !');
+                    $painting->setInformation('Attention ! Il y a une différence entre les dimensions et le format mentionné ! '.$painting->getInformation());
+                }
+    
+                if ($comparison) {
+                    $checkMessageExists = strstr($painting->getInformation(), 'Attention ! Il y a une différence entre les dimensions et le format mentionné !');
+                    if (false != $checkMessageExists) {
+                        $removeComparison = str_replace('Attention ! Il y a une différence entre les dimensions et le format mentionné !', '', $painting->getInformation());
+                        $painting->setInformation('' != $removeComparison ? $removeComparison : null);
+                    }
+                }    
+            } else {
+                $checkMessageExists = strstr($painting->getInformation(), 'Attention ! Il y a une différence entre les dimensions et le format mentionné !');
+                if (false != $checkMessageExists) {
+                    $removeComparison = str_replace('Attention ! Il y a une différence entre les dimensions et le format mentionné !', '', $painting->getInformation());
+                    $painting->setInformation('' != $removeComparison ? $removeComparison : null);
+                }
+            }
 
             $em->flush();
 
@@ -152,7 +214,7 @@ class MainController extends AbstractController
     /**
      * @Route("/paint/add", name="paint_add", methods={"POST", "GET"})
      */
-    public function add(EntityManagerInterface $em, Request $request)
+    public function add(EntityManagerInterface $em, Request $request, FormatConversion $formatConversion, SizeRepository $sizeRepository)
     {
         $submittedToken = $request->request->get('token');
         if (!$this->isCsrfTokenValid('add-edit-item', $submittedToken)) {
@@ -165,6 +227,8 @@ class MainController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // Insertion of the picture
             $picture = new Picture();
             
             $pictureTitle = preg_filter('/.(jpg|JPG|PNG|png|JPEG|jpeg)/', '', $request->files->get('painting')['picture']->getClientOriginalName());
@@ -174,10 +238,51 @@ class MainController extends AbstractController
             $em->persist($picture);
 
             if (null == $painting->getDbName()) {
-                $painting->setDbName($pictureTitle);                
+                $dbName = str_replace(['-', '_'], ' ', $pictureTitle);
+                $painting->setDbName($dbName);                
             }
 
             $painting->setPicture($picture);
+            // End of picture
+
+            // Automatic modification of the size and format
+            if (null != $painting->getSize()) {
+                if (null === $painting->getHeight() || null === $painting->getWidth()) {
+                    $sizes = $formatConversion->getWidthHeightFromFormat($painting->getSize()->getFormat());
+                    $painting->setHeight($sizes['height']);
+                    $painting->setWidth($sizes['width']);
+
+                    if ($painting->getHeight() < $painting->getWidth()) {
+                        $painting->setInformation('Format '.$painting->getSize()->getFormat().' Horizontal. '.$painting->getInformation());
+                    }
+                }    
+            }
+
+            if (null === $painting->getSize()) {
+                if (null != $painting->getHeight() && null != $painting->getWidth()) {
+                    $format = $formatConversion->getFormatFromtWidthHeight($painting->getHeight(), $painting->getWidth());
+                    if (false != $format) {
+                        $foundSize = $sizeRepository->findOneBy(['format' => $format[1]]);     
+                        $painting->setSize($foundSize);
+    
+                        if ('H' == $format[0]) {
+                            $painting->setInformation('Format '.$format[1].' Horizontal. '.$painting->getInformation());
+                        }    
+                    }
+                }
+            }
+
+            if (null != $painting->getSize()) {
+                $checkingConversion = $formatConversion->checkWidthHeightAndFormat($painting->getSize()->getFormat(), $painting->getHeight(), $painting->getWidth());
+
+                if (!$checkingConversion) {
+                    $this->addFlash('danger', 'Il y a une différence entre les dimensions et le format mentionné !');
+                    $painting->setInformation('Attention ! Il y a une différence entre les dimensions et le format mentionné ! '.$painting->getInformation());
+                }    
+            }
+
+            // End of the size and format
+
             $em->persist($painting);
             $em->flush();
 

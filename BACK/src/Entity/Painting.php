@@ -7,14 +7,12 @@ use App\Repository\PaintingRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Entity describing all the elements we need for a painting
  * Entité qui décrit tous les éléments nécessaires pour une peinture
  * 
  * @ORM\Entity(repositoryClass=PaintingRepository::class)
- * @UniqueEntity("title")
  * 
  * @ORM\HasLifecycleCallbacks()
  */
@@ -44,7 +42,7 @@ class Painting
     private $dbName;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="integer", length=4, nullable=true)
      * 
      * @Groups("paintings_browse")
      */
@@ -163,12 +161,12 @@ class Painting
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?int
     {
         return $this->date;
     }
 
-    public function setDate(?\DateTimeInterface $date): self
+    public function setDate(?int $date): self
     {
         $this->date = $date;
 
