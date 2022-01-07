@@ -142,8 +142,7 @@ Tout le monde peut y avoir accès pour le moment.
 
 <https://github.com/nelmio/NelmioCorsBundle> Pour la sécurité des CORS
 
-
-## XX
+## 07/01/2022
 
 ### A faire
 
@@ -152,3 +151,22 @@ Ajouter un fichier pour indiquer les routes disponibles en API (API Endpoint)
 
 Faire la recherche par taille
 Associer une taille à un format spécifique automatiquement (format 1F -> cm et inversement)
+
+## Fait
+
+Création d'un nouveau service pour la conversion des dimensions des tableaux en un format spécifique et vice-versa + modifications du MainController en conséquence
+Modification du champ date qui devient une string et non plus un datetime !!!
+Suppression de la clé unique des noms et titre de photos
+
+## XX
+
+### A faire
+
+Modifier le dictionnaire de données pour rajouter l'entité Picture
+Modifier datetime en string pour Painting->date
+
+Vérifier l'intérêt d'un input d'affichage pour les tableaux à afficher sur le site ou non
+
+Ajouter un fichier pour indiquer les routes disponibles en API (API Endpoint)
+
+Faire la recherche par taille

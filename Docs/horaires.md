@@ -36,4 +36,12 @@ Total 5h15
 
 14h15 -> 16h15
 
-## TOTAL : 30h
+Total 2h
+
+## 07/01/2022
+
+15h->21h30
+
+Total 6h30
+
+## TOTAL : 38h30
