@@ -19,6 +19,23 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
+    /**
+     * Fin all the categories order by the name from A to Z
+     */
+    public function findAllAsc()
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT c 
+            FROM App\Entity\Category c
+            ORDER BY c.name ASC'
+
+        );
+
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Category[] Returns an array of Category objects
     //  */
