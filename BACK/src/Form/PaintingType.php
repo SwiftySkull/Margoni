@@ -9,13 +9,18 @@ use App\Entity\Category;
 use App\Entity\Painting;
 use App\Entity\Situation;
 use App\Entity\Technique;
+use App\Repository\FrameRepository;
 use Symfony\Component\Form\FormEvent;
+use App\Repository\CategoryRepository;
 use Symfony\Component\Form\FormEvents;
+use App\Repository\SituationRepository;
+use App\Repository\TechniqueRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,8 +29,8 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Validator\Constraints\Regex;
 
 class PaintingType extends AbstractType
 {
@@ -106,18 +111,30 @@ class PaintingType extends AbstractType
             ])
             ->add('frame', EntityType::class, [
                 'class' => Frame::class,
+                'query_builder' => function (FrameRepository $fr) {
+                    return $fr->createQueryBuilder('f')
+                        ->orderBy('f.framing', 'ASC');
+                },
                 'label' => 'Encadrement',
                 'choice_label' => 'framing',
-                'placeholder' => 'Le tableau est actuellement...'
+                'placeholder' => 'Le tableau est actuellement...',
             ])
             ->add('situation', EntityType::class, [
                 'class' => Situation::class,
+                'query_builder' => function (SituationRepository $sr) {
+                    return $sr->createQueryBuilder('s')
+                        ->orderBy('s.collection', 'ASC');
+                },
                 'label' => 'Collection',
                 'choice_label' => 'collection',
                 'placeholder' => 'Le tableau se trouve actuellement...'
             ])
             ->add('technique', EntityType::class, [
                 'class' => Technique::class,
+                'query_builder' => function (TechniqueRepository $tr) {
+                    return $tr->createQueryBuilder('t')
+                        ->orderBy('t.type', 'ASC');
+                },
                 'label' => 'Les techniques utilisées sont :',
                 'choice_label' => 'type',
                 'expanded' => true,
@@ -125,6 +142,10 @@ class PaintingType extends AbstractType
             ])
             ->add('categories', EntityType::class, [
                 'class' => Category::class,
+                'query_builder' => function (CategoryRepository $cr) {
+                    return $cr->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
+                },
                 'label' => 'Ce qui décrit le tableau',
                 'choice_label' => 'name',
                 'expanded' => true,
