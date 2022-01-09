@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use phpDocumentor\Reflection\Types\Boolean;
+
 class FormatConversion
 {
     const HEIGHTS = [22, 24, 27, 33, 35, 41, 46, 55, 61, 65, 73, 81, 92, 100, 116, 130, 146, 162, 195];
@@ -283,25 +285,25 @@ class FormatConversion
 
             foreach (self::FIGURE as $key => $value) {
                 if ($value['height'] == $height && $value['width'] == $width) {
-                    return ['V', $key.'F'];
+                    return ['Orientation' => 'V', 'format' => $key.'F'];
                 } else if ($value['height'] == $width && $value['width'] == $height) {
-                    return ['H', $key.'F'];
+                    return ['Orientation' => 'H', 'format' => $key.'F'];
                 }
             }
 
             foreach (self::PAYSAGE as $key => $value) {
                 if ($value['height'] == $height && $value['width'] == $width) {
-                    return ['V', $key.'P'];
+                    return ['Orientation' => 'V', 'format' => $key.'P'];
                 } else if ($value['height'] == $width && $value['width'] == $height) {
-                    return ['H', $key.'P'];
+                    return ['Orientation' => 'H', 'format' => $key.'P'];
                 }
             }
 
             foreach (self::MARINE as $key => $value) {
                 if ($value['height'] == $height && $value['width'] == $width) {
-                    return ['V', $key.'M'];
+                    return ['Orientation' => 'V', 'format' => $key.'M'];
                 } else if ($value['height'] == $width && $value['width'] == $height) {
-                    return ['H', $key.'M'];
+                    return ['Orientation' => 'H', 'format' => $key.'M'];
                 }
             }
 
@@ -331,5 +333,25 @@ class FormatConversion
         }
 
         return false;
+    }
+
+    /**
+     * From the object HttpFoundation Request, get the file if it's a picture
+     * and check if it's vertical or horizontal. (only pictures)
+     * If true the picture is vertical.
+     *
+     * @param mixed $request
+     * @return boolean
+     */
+    public function getPictureOrientation($request)
+    {
+        $imageWidth = getimagesize($request->files->get('painting')['picture'])[0];
+        $imageHeight = getimagesize($request->files->get('painting')['picture'])[1];
+
+        if ($imageWidth > $imageHeight) {
+            return false;
+        }
+
+        return true;
     }
 }
