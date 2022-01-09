@@ -5,8 +5,10 @@ namespace App\Controller\Admin\MainController;
 use App\Entity\Painting;
 use App\Entity\Picture;
 use App\Form\PaintingType;
+use App\Repository\PaintingRepository;
 use App\Repository\PictureRepository;
 use App\Repository\SizeRepository;
+use App\Service\CheckingExistingPainting;
 use App\Service\FormatConversion;
 use App\Service\PagesNavigator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -48,47 +50,43 @@ class AddEditController extends AbstractController
                 $actualPicture->setTitle($pictureTitle);
                 $actualPicture->setPathname($request->files->get('painting')['picture']->getClientOriginalName());
                 $actualPicture->setFile(base64_encode(file_get_contents($request->files->get('painting')['picture'])));
+                
+                $frenchOrientation = $formatConversion->getPictureOrientation($request);
+                $actualPicture->setOrientation($frenchOrientation ? 'V' : 'H');
     
                 $painting->setPicture($actualPicture);
+
+                $height = $painting->getHeight();
+                $width = $painting->getWidth();
+
+                if ('H' === $actualPicture->getOrientation() && $height > $width) {
+                    $painting->setHeight($width);
+                    $painting->setWidth($height);
+                }
+                if ('V' === $actualPicture->getOrientation() && $height < $width) {
+                    $painting->setHeight($width);
+                    $painting->setWidth($height);
+                }
             }
 
             // Automatic modification of the size and format
-            if (null != $painting->getSize()) {
-                if (null === $painting->getHeight() || null === $painting->getWidth()) {
-                    $sizes = $formatConversion->getWidthHeightFromFormat($painting->getSize()->getFormat());
+            if (null != $painting->getSize() && (null === $painting->getHeight() || null === $painting->getWidth())) {
+                $sizes = $formatConversion->getWidthHeightFromFormat($painting->getSize()->getFormat());
+                if ('V' == $painting->getPicture()->getOrientation() || null == $painting->getPicture()->getOrientation()) {
                     $painting->setHeight($sizes['height']);
                     $painting->setWidth($sizes['width']);    
+                } else {
+                    $painting->setHeight($sizes['width']);
+                    $painting->setWidth($sizes['height']);
                 }
             }
 
-            if (null === $painting->getSize()) {
-                if (null != $painting->getHeight() && null != $painting->getWidth()) {
-                    $format = $formatConversion->getFormatFromtWidthHeight($painting->getHeight(), $painting->getWidth());
-                    if (false != $format) {
-                        $foundSize = $sizeRepository->findOneBy(['format' => $format[1]]);     
-                        $painting->setSize($foundSize);
-    
-                        if ('H' == $format[0]) {
-                            $painting->setInformation('Format '.$format[1].' Horizontal. '.$painting->getInformation());
-                        }    
-                    }
-                }
-            }
+            if (null === $painting->getSize() && null != $painting->getHeight() && null != $painting->getWidth()) {
+                $format = $formatConversion->getFormatFromtWidthHeight($painting->getHeight(), $painting->getWidth());
+                if (false != $format) {
+                    $foundSize = $sizeRepository->findOneBy(['format' => $format['format']]);     
+                    $painting->setSize($foundSize);
 
-            if ($painting->getHeight() < $painting->getWidth()) {
-                if (null != $painting->getSize()) {
-                    $retrieveHFormatToAdd = strstr($painting->getInformation(), 'Format '.$painting->getSize()->getFormat().' Horizontal');
-                    if (false === $retrieveHFormatToAdd) {
-                        $painting->setInformation('Format '.$painting->getSize()->getFormat().' Horizontal. '.$painting->getInformation());
-                    }    
-                }
-            } else if ($painting->getHeight() > $painting->getWidth()) {
-                if (null != $painting->getSize()) {
-                    $retrieveHFormatToRemove = strstr($painting->getInformation(), 'Format '.$painting->getSize()->getFormat().' Horizontal');
-                    if (false != $retrieveHFormatToRemove) {
-                        $emptyHFormat = str_replace('Format '.$painting->getSize()->getFormat().' Horizontal.', '', $painting->getInformation());
-                        $painting->setInformation('' != $emptyHFormat ? $emptyHFormat : null);
-                    }
                 }
             }
             // End of the size and format
@@ -130,7 +128,7 @@ class AddEditController extends AbstractController
     /**
      * @Route("/paint/add", name="paint_add", methods={"POST", "GET"})
      */
-    public function add(EntityManagerInterface $em, Request $request, FormatConversion $formatConversion, SizeRepository $sizeRepository)
+    public function add(EntityManagerInterface $em, Request $request, FormatConversion $formatConversion, SizeRepository $sizeRepository, PaintingRepository $paintingRepository, CheckingExistingPainting $checkingExistingPainting)
     {
         $submittedToken = $request->request->get('token');
         if (!$this->isCsrfTokenValid('add-edit-item', $submittedToken)) {
@@ -146,11 +144,14 @@ class AddEditController extends AbstractController
 
             // Insertion of the picture
             $picture = new Picture();
-            
+
+            $frenchOrientation = $formatConversion->getPictureOrientation($request);
+
             $pictureTitle = preg_filter('/.(jpg|JPG|PNG|png|JPEG|jpeg)/', '', $request->files->get('painting')['picture']->getClientOriginalName());
             $picture->setTitle($pictureTitle);
             $picture->setPathname($request->files->get('painting')['picture']->getClientOriginalName());
             $picture->setFile(base64_encode(file_get_contents($request->files->get('painting')['picture'])));
+            $picture->setOrientation($frenchOrientation ? 'V' : 'H');
             $em->persist($picture);
 
             if (null == $painting->getDbName()) {
@@ -165,25 +166,21 @@ class AddEditController extends AbstractController
             if (null != $painting->getSize()) {
                 if (null === $painting->getHeight() || null === $painting->getWidth()) {
                     $sizes = $formatConversion->getWidthHeightFromFormat($painting->getSize()->getFormat());
-                    $painting->setHeight($sizes['height']);
-                    $painting->setWidth($sizes['width']);
 
-                    if ($painting->getHeight() < $painting->getWidth()) {
-                        $painting->setInformation('Format '.$painting->getSize()->getFormat().' Horizontal. '.$painting->getInformation());
+                    if ('V' === $picture->getOrientation() || null === $picture->getOrientation()) {
+                        $painting->setHeight($sizes['height']);
+                        $painting->setWidth($sizes['width']);    
+                    } else {
+                        $painting->setHeight($sizes['width']);
+                        $painting->setWidth($sizes['height']);    
                     }
                 }    
-            }
-
-            if (null === $painting->getSize()) {
+            } else {
                 if (null != $painting->getHeight() && null != $painting->getWidth()) {
                     $format = $formatConversion->getFormatFromtWidthHeight($painting->getHeight(), $painting->getWidth());
                     if (false != $format) {
-                        $foundSize = $sizeRepository->findOneBy(['format' => $format[1]]);     
+                        $foundSize = $sizeRepository->findOneBy(['format' => $format['format']]);     
                         $painting->setSize($foundSize);
-    
-                        if ('H' == $format[0]) {
-                            $painting->setInformation('Format '.$format[1].' Horizontal. '.$painting->getInformation());
-                        }    
                     }
                 }
             }
@@ -198,6 +195,13 @@ class AddEditController extends AbstractController
             }
 
             // End of the size and format
+
+            $existingPainting = $checkingExistingPainting->checkPainting($painting);
+            if ($existingPainting['check']) {
+                $this->addFlash('warning', $existingPainting['message']);
+            } else {
+                $this->addFlash('success', 'Peinture ajoutée avec succès !');
+            }
 
             $em->persist($painting);
             $em->flush();
