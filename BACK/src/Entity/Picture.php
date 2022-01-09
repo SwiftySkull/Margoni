@@ -40,6 +40,13 @@ class Picture
     private $file;
 
     /**
+     * @ORM\Column(type="string", length=1, nullable=true)
+     * 
+     * @Groups("paintings_browse")
+     */
+    private $orientation;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -129,4 +136,24 @@ class Picture
         $this->updatedAt = new \DateTime();
     }
 
+
+    /**
+     * Get the value of orientation
+     */ 
+    public function getOrientation()
+    {
+        return $this->orientation;
+    }
+
+    /**
+     * Set the value of orientation
+     *
+     * @return  self
+     */ 
+    public function setOrientation($orientation)
+    {
+        $this->orientation = $orientation;
+
+        return $this;
+    }
 }
