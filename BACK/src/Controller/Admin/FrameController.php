@@ -43,7 +43,7 @@ class FrameController extends AbstractController
      */
     public function browse(FrameRepository $frameRepository): Response
     {
-        $frames = $frameRepository->findAll();
+        $frames = $frameRepository->findAllAsc();
 
         return $this->render('frame/browse.html.twig', [
             'frames' => $frames,

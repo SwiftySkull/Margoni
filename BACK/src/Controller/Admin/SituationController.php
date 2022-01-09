@@ -43,7 +43,7 @@ class SituationController extends AbstractController
      */
     public function browse(SituationRepository $situationRepository): Response
     {
-        $situations = $situationRepository->findAll();
+        $situations = $situationRepository->findAllAsc();
 
         return $this->render('situation/browse.html.twig', [
             'situations' => $situations,
