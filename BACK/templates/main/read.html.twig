@@ -28,7 +28,7 @@
     </ul>
     
     {% if painting.height is not same as null and painting.width is not same as null %}
-        <p><b>Taille</b> : {{ painting.height }} x {{ painting.width }} cm</p>
+        <p><b>Taille</b> : {{ painting.height }} x {{ painting.width }} cm (hauteur x largeur)</p>
     {% else %}
         <p><b>Taille</b> : Non précisée.</p>
     {% endif %}

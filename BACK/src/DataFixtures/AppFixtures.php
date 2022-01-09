@@ -68,6 +68,8 @@ class AppFixtures extends Fixture
             }            
         }
 
+        $manager->flush();
+        
         for ($i=0; $i < count($this->framing); $i++) { 
             $frame = new Frame();
             $frame->setFraming($this->framing[$i]);
@@ -111,7 +113,7 @@ class AppFixtures extends Fixture
             if (1 == $x) {
                 $painting->setTitle($faker->words(mt_rand(1, 5), true));
             }
-            $painting->setDate($faker->dateTimeBetween('-100 years', '-30 years'));
+            $painting->setDate(1956);
 
             $height = mt_rand(300, 1500);
             $width = mt_rand(300, 1500);
