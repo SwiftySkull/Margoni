@@ -77,11 +77,6 @@ class Painting
     private $information;
 
     /**
-     * @ORM\Column(type="text")
-     */
-    // private $picture;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -220,33 +215,6 @@ class Painting
 
         return $this;
     }
-
-    // public function getPicture(): ?string
-    // {
-    //     return $this->picture;
-    // }
-
-    // public function setPicture(string $picture): self
-    // {
-    //     $this->picture = $picture;
-
-    //     return $this;
-    // }
-
-    // /**
-    //  * Function to set the value for the picture
-    //  * TODO: La valeur est à modifier quand j'aurais réussi à trouver comment récupérer des photos TODO:
-    //  * 
-    //  * @ORM\PrePersist
-    //  */
-    // public function setPictureValue()
-    // {
-    //     if (null === $this->picture) {
-    //         $this->picture = 'https://picsum.photos/500/500';
-    //     }
-        
-    // }
-
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
