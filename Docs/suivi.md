@@ -170,3 +170,22 @@ Vérifier l'intérêt d'un input d'affichage pour les tableaux à afficher sur l
 Ajouter un fichier pour indiquer les routes disponibles en API (API Endpoint)
 
 Faire la recherche par taille
+
+### Fait
+
+Associer une taille à un format spécifique automatiquement (format 1F -> cm et inversement), fonctionne dans les deux sens
+Détermination de l'orientation automatique d'un tableau suivant sa photo si c'est horizontal ou vertical
+Ajout d'un service pour vérifier l'exitence d'une peinture.
+Modifier datetime en string pour Painting->date
+
+## XX
+
+### A faire
+Modifier le dictionnaire de données pour rajouter l'entité Picture
+Ajouter un fichier pour indiquer les routes disponibles en API (API Endpoint)
+
+Vérifier l'intérêt d'un input d'affichage pour les tableaux à afficher sur le site ou non
+
+Ajouter un fichier pour indiquer les routes disponibles en API (API Endpoint)
+
+Faire la recherche par taille
