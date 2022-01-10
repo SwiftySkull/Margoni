@@ -2,10 +2,17 @@
 
 namespace App\Service;
 
-use phpDocumentor\Reflection\Types\Boolean;
+use App\Repository\SizeRepository;
 
 class FormatConversion
 {
+    private $sizeRepository;
+
+    public function __construct(SizeRepository $sizeRepository)
+    {
+        $this->sizeRepository = $sizeRepository;
+    }
+
     const HEIGHTS = [22, 24, 27, 33, 35, 41, 46, 55, 61, 65, 73, 81, 92, 100, 116, 130, 146, 162, 195];
     const WIDTHS = [12, 14, 16, 19, 22, 24, 27, 33, 38, 46, 50, 54, 60, 65, 73, 81, 89, 97, 114, 130];
     const MEASUREMENTS = [12, 14, 16, 19, 22, 24, 27, 33, 35, 38, 41, 46, 50, 54, 55, 60, 61, 65, 73, 81, 89, 92, 97, 100, 114, 116, 130, 146, 162, 195];
@@ -250,7 +257,7 @@ class FormatConversion
      * For example if the format is 30F then the measurements will be 92*73 (h*w)
      *
      * @param string $format    Format of the painting
-     * @return array
+     * @return array ['height' => height value, 'width' => width value]
      */
     public function getWidthHeightFromFormat(string $format): array
     {
@@ -274,7 +281,8 @@ class FormatConversion
      *
      * @param integer $height   Height of the painting
      * @param integer $width    Width of the painting
-     * @return array|false
+     * @return array|false      Returns false if the format doesn't exist, otherwise
+     *                          returns the orientation and the size/format
      */
     public function getFormatFromtWidthHeight(int $height, int $width): array|false
     {
@@ -336,22 +344,100 @@ class FormatConversion
     }
 
     /**
-     * From the object HttpFoundation Request, get the file if it's a picture
-     * and check if it's vertical or horizontal. (only pictures)
+     * Check if tge picture if vertical or horizontal. (only pictures) ; 
      * If true the picture is vertical.
      *
-     * @param mixed $request
-     * @return boolean
+     * @param mixed $picture
+     * @return boolean true if vertical / false if horizontal
      */
-    public function getPictureOrientation($request)
+    public function getPictureOrientation($picture)
     {
-        $imageWidth = getimagesize($request->files->get('painting')['picture'])[0];
-        $imageHeight = getimagesize($request->files->get('painting')['picture'])[1];
+        $imageWidth = getimagesize($picture)[0];
+        $imageHeight = getimagesize($picture)[1];
 
         if ($imageWidth > $imageHeight) {
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * Set the size/format, height and width of a painting
+     *
+     * @param object $painting The painting before setting informations
+     * @return object $painting modified
+     */
+    public function setSizes(object $painting): object
+    {
+        $picture = $painting->getPicture();
+
+        $height = $painting->getHeight();
+        $width = $painting->getWidth();
+
+        if (null != $painting->getSize() && (null === $height || null === $width)) {
+            $sizes = $this->getWidthHeightFromFormat($painting->getSize()->getFormat());
+
+            if ('V' === $picture->getOrientation() || null === $picture->getOrientation()) {
+                $painting->setHeight($sizes['height']);
+                $painting->setWidth($sizes['width']);    
+            } else {
+                $painting->setHeight($sizes['width']);
+                $painting->setWidth($sizes['height']);    
+            }
+        }
+
+        if (null === $painting->getSize() && null != $height && null != $width) {
+            $format = $this->getFormatFromtWidthHeight($height, $width);
+            if (false != $format) {
+                $foundSize = $this->sizeRepository->findOneBy(['format' => $format['format']]);     
+                $painting->setSize($foundSize);
+
+            }
+        }
+
+        if ('H' === $picture->getOrientation() && $height > $width) {
+            $painting->setHeight($width);
+            $painting->setWidth($height);
+        }
+        if ('V' === $picture->getOrientation() && $height < $width) {
+            $painting->setHeight($width);
+            $painting->setWidth($height);
+        }
+
+        return $painting;
+    }
+
+    /**
+     * Check the size/format and width/height of a painting to specify if there's
+     * a mistake or not and put a message or not in the description
+     *
+     * @param object $painting Object painting to check
+     * @return object $painting modified
+     */
+    public function setWarningSizeMessage(object $painting): object
+    {
+        if (null != $painting->getSize()) {
+            $comparison = $this->checkWidthHeightAndFormat($painting->getSize()->getFormat(), $painting->getHeight(), $painting->getWidth());
+            if (!$comparison) {
+                $painting->setInformation('Attention ! Il y a une différence entre les dimensions et le format mentionné ! '.$painting->getInformation());
+            }
+
+            if ($comparison) {
+                $checkMessageExists = strstr($painting->getInformation(), 'Attention ! Il y a une différence entre les dimensions et le format mentionné !');
+                if (false != $checkMessageExists) {
+                    $removeComparison = str_replace('Attention ! Il y a une différence entre les dimensions et le format mentionné !', '', $painting->getInformation());
+                    $painting->setInformation('' != $removeComparison ? $removeComparison : null);
+                }
+            }    
+        } else {
+            $checkMessageExists = strstr($painting->getInformation(), 'Attention ! Il y a une différence entre les dimensions et le format mentionné !');
+            if (false != $checkMessageExists) {
+                $removeComparison = str_replace('Attention ! Il y a une différence entre les dimensions et le format mentionné !', '', $painting->getInformation());
+                $painting->setInformation('' != $removeComparison ? $removeComparison : null);
+            }
+        }
+
+        return $painting;
     }
 }
