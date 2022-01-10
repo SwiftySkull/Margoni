@@ -50,10 +50,12 @@ class CheckingExistingPainting
 
         $editTitle = true;
 
-        foreach ($existingTitlePaintings as $value) {
-            if ($value->getId() === $painting->getId()) {
-                $editTitle = false;
-            }
+        if (null != $existingTitlePaintings) {
+            foreach ($existingTitlePaintings as $value) {
+                if ($value->getId() === $painting->getId()) {
+                    $editTitle = false;
+                }
+            }    
         }
 
         if (null != $existingTitlePaintings && $editTitle) {
