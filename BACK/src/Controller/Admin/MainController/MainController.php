@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\Admin\MainController;
 
 use App\Entity\Painting;
 use App\Entity\Picture;
@@ -8,7 +8,9 @@ use App\Form\PaintingType;
 use App\Repository\CategoryRepository;
 use App\Repository\PaintingRepository;
 use App\Repository\PictureRepository;
+use App\Repository\SizeRepository;
 use App\Repository\TechniqueRepository;
+use App\Service\FormatConversion;
 use App\Service\PagesNavigator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -96,97 +98,6 @@ class MainController extends AbstractController
 
         return $this->render('main/read.html.twig', [
             'painting' => $painting,
-        ]);
-    }
-
-    /**
-     * Form to edit the informations of a painting
-     * 
-     * @Route(
-     *      "/paint/edit/{id<\d+>}",
-     *      name="paint_edit",
-     *      methods={"GET", "POST"},
-     * )
-     */
-    public function edit(Painting $painting = null, $id, Request $request, EntityManagerInterface $em, TechniqueRepository $techniqueRepository, CategoryRepository $categoryRepository, PictureRepository $pictureRepository)
-    {
-        $submittedToken = $request->request->get('token');
-        if (!$this->isCsrfTokenValid('add-edit-item', $submittedToken)) {
-            throw $this->createAccessDeniedException('Action non autorisée !!!');
-        }
-
-        if (null === $painting) {
-            throw $this->createNotFoundException('Oups ! Tableau non trouvé.'); 
-        }
-
-        $form = $this->createForm(PaintingType::class, $painting);
-
-        $oldDbName = $painting->getDbName();
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            if (null != $request->files->get('painting')['picture']) {
-                $actualPicture = $pictureRepository->find($painting->getPicture());
-                $pictureTitle = preg_filter('/.(jpg|JPG|PNG|png|JPEG|jpeg)/', '', $request->files->get('painting')['picture']->getClientOriginalName());
-                $actualPicture->setTitle($pictureTitle);
-                $actualPicture->setPathname($request->files->get('painting')['picture']->getClientOriginalName());
-                $actualPicture->setFile(base64_encode(file_get_contents($request->files->get('painting')['picture'])));
-    
-                $painting->setPicture($actualPicture);
-            }
-
-
-            $em->flush();
-
-            return $this->redirectToRoute('read_paint', ['id' => $id]);
-        }
-
-        return $this->render('main/edit.html.twig', [
-            'painting' => $painting,
-            'method' => 'Modification',
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/paint/add", name="paint_add", methods={"POST", "GET"})
-     */
-    public function add(EntityManagerInterface $em, Request $request)
-    {
-        $submittedToken = $request->request->get('token');
-        if (!$this->isCsrfTokenValid('add-edit-item', $submittedToken)) {
-            throw $this->createAccessDeniedException('Action non autorisée !!!');
-        }
-
-        $painting = new Painting();
-
-        $form = $this->createForm(PaintingType::class, $painting);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $picture = new Picture();
-            
-            $pictureTitle = preg_filter('/.(jpg|JPG|PNG|png|JPEG|jpeg)/', '', $request->files->get('painting')['picture']->getClientOriginalName());
-            $picture->setTitle($pictureTitle);
-            $picture->setPathname($request->files->get('painting')['picture']->getClientOriginalName());
-            $picture->setFile(base64_encode(file_get_contents($request->files->get('painting')['picture'])));
-            $em->persist($picture);
-
-            if (null == $painting->getDbName()) {
-                $painting->setDbName($pictureTitle);                
-            }
-
-            $painting->setPicture($picture);
-            $em->persist($painting);
-            $em->flush();
-
-            return $this->redirectToRoute('read_paint', ['id' => $painting->getId()]);
-        }
-
-        return $this->render('main/edit.html.twig', [
-            'form' => $form->createView(),
-            'method' => 'Création',
         ]);
     }
 

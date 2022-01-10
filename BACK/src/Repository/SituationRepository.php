@@ -19,6 +19,23 @@ class SituationRepository extends ServiceEntityRepository
         parent::__construct($registry, Situation::class);
     }
 
+    /**
+     * Fin all the situations/collections order by the name from A to Z
+     */
+    public function findAllAsc()
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT s 
+            FROM App\Entity\Situation s
+            ORDER BY s.collection ASC'
+
+        );
+
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Situation[] Returns an array of Situation objects
     //  */

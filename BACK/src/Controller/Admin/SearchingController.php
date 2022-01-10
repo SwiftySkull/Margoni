@@ -20,7 +20,7 @@ class SearchingController extends AbstractController
 
     /**
      * @Route(
-     *      "/{search}",
+     *      "/search/{search}",
      *      name="search",
      *      methods={"POST", "GET"},
      * )
@@ -61,7 +61,7 @@ class SearchingController extends AbstractController
     }
 
     /**
-     * @Route("/{search}/page/{page<\d+>}", name="search_plus", methods={"GET", "POST"})
+     * @Route("/search/{search}/page/{page<\d+>}", name="search_plus", methods={"GET", "POST"})
      */
     public function searchPlus(PaintingRepository $paintingRepository, $page, $search)
     {

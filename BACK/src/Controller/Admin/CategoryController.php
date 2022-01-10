@@ -44,7 +44,7 @@ class CategoryController extends AbstractController
      */
     public function browse(CategoryRepository $categoryRepository): Response
     {
-        $categories = $categoryRepository->findAll();
+        $categories = $categoryRepository->findAllAsc();
 
         return $this->render('category/browse.html.twig', [
             'categories' => $categories,

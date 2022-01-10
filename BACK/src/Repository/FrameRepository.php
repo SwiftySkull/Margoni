@@ -19,6 +19,23 @@ class FrameRepository extends ServiceEntityRepository
         parent::__construct($registry, Frame::class);
     }
 
+    /**
+     * Fin all the frames order by the name from A to Z
+     */
+    public function findAllAsc()
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT f 
+            FROM App\Entity\Frame f
+            ORDER BY f.framing ASC'
+
+        );
+
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Frame[] Returns an array of Frame objects
     //  */

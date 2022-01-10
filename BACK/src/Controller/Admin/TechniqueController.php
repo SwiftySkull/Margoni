@@ -43,7 +43,7 @@ class TechniqueController extends AbstractController
      */
     public function browse(TechniqueRepository $techniqueRepository): Response
     {
-        $techniques = $techniqueRepository->findAll();
+        $techniques = $techniqueRepository->findAllAsc();
 
         return $this->render('technique/browse.html.twig', [
             'techniques' => $techniques,

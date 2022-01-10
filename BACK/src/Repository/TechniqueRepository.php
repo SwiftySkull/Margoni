@@ -19,6 +19,23 @@ class TechniqueRepository extends ServiceEntityRepository
         parent::__construct($registry, Technique::class);
     }
 
+    /**
+     * Fin all the techniques order by the name from A to Z
+     */
+    public function findAllAsc()
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT t 
+            FROM App\Entity\Technique t
+            ORDER BY t.type ASC'
+
+        );
+
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Technique[] Returns an array of Technique objects
     //  */
