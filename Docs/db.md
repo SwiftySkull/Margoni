@@ -72,7 +72,8 @@ INSERT INTO `technique` (`id`, `type`, `created_at`, `updated_at`) VALUES
 (2, 'Peinture à l\'huile', now(), NULL),
 (3, 'Peinture à l\'eau', now(), NULL),
 (4, 'Collage', now(), NULL),
-(5, 'Isorel', now(), NULL);
+(5, 'Isorel', now(), NULL),
+(6, 'Crayon/Fusain', now(), NULL);
 
 INSERT INTO `situation` (`id`, `collection`, `created_at`, `updated_at`) VALUES
 (1, 'Non présicé', now(), NULL),
@@ -94,5 +95,10 @@ INSERT INTO `category` (`id`, `name`, `created_at`, `updated_at`) VALUES
 (3, 'Machines agricoles', now(), NULL),
 (4, 'Champs', now(), NULL),
 (5, 'Portrait', now(), NULL),
-(6, 'Abbaye', now(), NULL);
+(6, 'Abbaye', now(), NULL),
+(7, 'Animaux', now(), NULL),
+(8, 'Dessins sur papier', now(), NULL),
+(9, 'Estran', now(), NULL),
+(10, 'Italie', now(), NULL),
+(11, 'Nature Morte', now(), NULL),
 

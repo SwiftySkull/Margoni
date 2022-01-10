@@ -44,4 +44,14 @@ Total 2h
 
 Total 6h30
 
-## TOTAL : 38h30
+## 09/01/2021
+
+Total 5h
+
+## 10/01/2021
+
+17h->20h45
+
+Total 3h45
+
+## TOTAL : 47h15
