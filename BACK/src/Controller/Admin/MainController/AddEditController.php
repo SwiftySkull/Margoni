@@ -5,8 +5,10 @@ namespace App\Controller\Admin\MainController;
 use App\Entity\Painting;
 use App\Entity\Picture;
 use App\Form\PaintingType;
+use App\Repository\FrameRepository;
 use App\Repository\PaintingRepository;
 use App\Repository\PictureRepository;
+use App\Repository\SituationRepository;
 use App\Repository\SizeRepository;
 use App\Service\CheckingExistingPainting;
 use App\Service\FormatConversion;
@@ -28,7 +30,7 @@ class AddEditController extends AbstractController
      *      methods={"GET", "POST"},
      * )
      */
-    public function edit(Painting $painting = null, $id, Request $request, EntityManagerInterface $em, PictureRepository $pictureRepository, FormatConversion $formatConversion, SizeRepository $sizeRepository)
+    public function edit(Painting $painting = null, $id, Request $request, EntityManagerInterface $em, PictureRepository $pictureRepository, FormatConversion $formatConversion, CheckingExistingPainting $checkingExistingPainting)
     {
         $submittedToken = $request->request->get('token');
         if (!$this->isCsrfTokenValid('add-edit-item', $submittedToken)) {
@@ -44,6 +46,7 @@ class AddEditController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             if (null != $request->files->get('painting')['picture']) {
                 $actualPicture = $pictureRepository->find($painting->getPicture());
                 $pictureTitle = preg_filter('/.(jpg|JPG|PNG|png|JPEG|jpeg)/', '', $request->files->get('painting')['picture']->getClientOriginalName());
@@ -51,66 +54,37 @@ class AddEditController extends AbstractController
                 $actualPicture->setPathname($request->files->get('painting')['picture']->getClientOriginalName());
                 $actualPicture->setFile(base64_encode(file_get_contents($request->files->get('painting')['picture'])));
                 
-                $frenchOrientation = $formatConversion->getPictureOrientation($request);
+                $frenchOrientation = $formatConversion->getPictureOrientation($request->files->get('painting')['picture']);
                 $actualPicture->setOrientation($frenchOrientation ? 'V' : 'H');
     
                 $painting->setPicture($actualPicture);
 
-                $height = $painting->getHeight();
-                $width = $painting->getWidth();
+                $newDbTitle = str_replace(['-', '_'], ' ', $pictureTitle);
 
-                if ('H' === $actualPicture->getOrientation() && $height > $width) {
-                    $painting->setHeight($width);
-                    $painting->setWidth($height);
-                }
-                if ('V' === $actualPicture->getOrientation() && $height < $width) {
-                    $painting->setHeight($width);
-                    $painting->setWidth($height);
-                }
+                if ($newDbTitle != $painting->getDbName()) {
+                    $painting->setDbName($newDbTitle);                
+                }    
             }
-
+            
             // Automatic modification of the size and format
-            if (null != $painting->getSize() && (null === $painting->getHeight() || null === $painting->getWidth())) {
-                $sizes = $formatConversion->getWidthHeightFromFormat($painting->getSize()->getFormat());
-                if ('V' == $painting->getPicture()->getOrientation() || null == $painting->getPicture()->getOrientation()) {
-                    $painting->setHeight($sizes['height']);
-                    $painting->setWidth($sizes['width']);    
-                } else {
-                    $painting->setHeight($sizes['width']);
-                    $painting->setWidth($sizes['height']);
-                }
-            }
-
-            if (null === $painting->getSize() && null != $painting->getHeight() && null != $painting->getWidth()) {
-                $format = $formatConversion->getFormatFromtWidthHeight($painting->getHeight(), $painting->getWidth());
-                if (false != $format) {
-                    $foundSize = $sizeRepository->findOneBy(['format' => $format['format']]);     
-                    $painting->setSize($foundSize);
-
-                }
-            }
-            // End of the size and format
+            $painting = $formatConversion->setSizes($painting);
+            
+            // Setting warning is there is a size error
+            $painting = $formatConversion->setWarningSizeMessage($painting);
 
             if (null != $painting->getSize()) {
-                $comparison = $formatConversion->checkWidthHeightAndFormat($painting->getSize()->getFormat(), $painting->getHeight(), $painting->getWidth());
-                if (!$comparison) {
+                $checkingConversion = $formatConversion->checkWidthHeightAndFormat($painting->getSize()->getFormat(), $painting->getHeight(), $painting->getWidth());
+
+                if (!$checkingConversion) {
                     $this->addFlash('danger', 'Il y a une différence entre les dimensions et le format mentionné !');
-                    $painting->setInformation('Attention ! Il y a une différence entre les dimensions et le format mentionné ! '.$painting->getInformation());
-                }
-    
-                if ($comparison) {
-                    $checkMessageExists = strstr($painting->getInformation(), 'Attention ! Il y a une différence entre les dimensions et le format mentionné !');
-                    if (false != $checkMessageExists) {
-                        $removeComparison = str_replace('Attention ! Il y a une différence entre les dimensions et le format mentionné !', '', $painting->getInformation());
-                        $painting->setInformation('' != $removeComparison ? $removeComparison : null);
-                    }
                 }    
+            }
+
+            $existingPainting = $checkingExistingPainting->checkPainting($painting);
+            if ($existingPainting['check']) {
+                $this->addFlash('warning', $existingPainting['message']);
             } else {
-                $checkMessageExists = strstr($painting->getInformation(), 'Attention ! Il y a une différence entre les dimensions et le format mentionné !');
-                if (false != $checkMessageExists) {
-                    $removeComparison = str_replace('Attention ! Il y a une différence entre les dimensions et le format mentionné !', '', $painting->getInformation());
-                    $painting->setInformation('' != $removeComparison ? $removeComparison : null);
-                }
+                $this->addFlash('success', 'Peinture modifiée avec succès !');
             }
 
             $em->flush();
@@ -128,7 +102,7 @@ class AddEditController extends AbstractController
     /**
      * @Route("/paint/add", name="paint_add", methods={"POST", "GET"})
      */
-    public function add(EntityManagerInterface $em, Request $request, FormatConversion $formatConversion, SizeRepository $sizeRepository, PaintingRepository $paintingRepository, CheckingExistingPainting $checkingExistingPainting)
+    public function add(EntityManagerInterface $em, Request $request, FormatConversion $formatConversion, CheckingExistingPainting $checkingExistingPainting)
     {
         $submittedToken = $request->request->get('token');
         if (!$this->isCsrfTokenValid('add-edit-item', $submittedToken)) {
@@ -145,13 +119,15 @@ class AddEditController extends AbstractController
             // Insertion of the picture
             $picture = new Picture();
 
-            $frenchOrientation = $formatConversion->getPictureOrientation($request);
 
             $pictureTitle = preg_filter('/.(jpg|JPG|PNG|png|JPEG|jpeg)/', '', $request->files->get('painting')['picture']->getClientOriginalName());
             $picture->setTitle($pictureTitle);
             $picture->setPathname($request->files->get('painting')['picture']->getClientOriginalName());
             $picture->setFile(base64_encode(file_get_contents($request->files->get('painting')['picture'])));
+
+            $frenchOrientation = $formatConversion->getPictureOrientation($request->files->get('painting')['picture']);
             $picture->setOrientation($frenchOrientation ? 'V' : 'H');
+
             $em->persist($picture);
 
             if (null == $painting->getDbName()) {
@@ -163,39 +139,20 @@ class AddEditController extends AbstractController
             // End of picture
 
             // Automatic modification of the size and format
-            if (null != $painting->getSize()) {
-                if (null === $painting->getHeight() || null === $painting->getWidth()) {
-                    $sizes = $formatConversion->getWidthHeightFromFormat($painting->getSize()->getFormat());
+            $painting = $formatConversion->setSizes($painting);
 
-                    if ('V' === $picture->getOrientation() || null === $picture->getOrientation()) {
-                        $painting->setHeight($sizes['height']);
-                        $painting->setWidth($sizes['width']);    
-                    } else {
-                        $painting->setHeight($sizes['width']);
-                        $painting->setWidth($sizes['height']);    
-                    }
-                }    
-            } else {
-                if (null != $painting->getHeight() && null != $painting->getWidth()) {
-                    $format = $formatConversion->getFormatFromtWidthHeight($painting->getHeight(), $painting->getWidth());
-                    if (false != $format) {
-                        $foundSize = $sizeRepository->findOneBy(['format' => $format['format']]);     
-                        $painting->setSize($foundSize);
-                    }
-                }
-            }
+            // Setting warning is there is a size error
+            $painting = $formatConversion->setWarningSizeMessage($painting);
 
             if (null != $painting->getSize()) {
                 $checkingConversion = $formatConversion->checkWidthHeightAndFormat($painting->getSize()->getFormat(), $painting->getHeight(), $painting->getWidth());
 
                 if (!$checkingConversion) {
                     $this->addFlash('danger', 'Il y a une différence entre les dimensions et le format mentionné !');
-                    $painting->setInformation('Attention ! Il y a une différence entre les dimensions et le format mentionné ! '.$painting->getInformation());
                 }    
             }
-
             // End of the size and format
-
+            
             $existingPainting = $checkingExistingPainting->checkPainting($painting);
             if ($existingPainting['check']) {
                 $this->addFlash('warning', $existingPainting['message']);
