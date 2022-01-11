@@ -127,8 +127,8 @@ class Painting
     /**
      * @ORM\OneToOne(targetEntity=Picture::class, cascade={"persist", "remove"})
      * 
-     * @Groups("paintings_browseXXXXXXXXX")
-     * @Groups("painting_readXXXXXXXXXXXX")
+     * @Groups("paintings_browse")
+     * @Groups("painting_read")
      */
     private $picture;
 

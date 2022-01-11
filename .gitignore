@@ -1,0 +1,28 @@
+
+###> symfony/framework-bundle ###
+/BACK/.env.local
+/BACK/.env.local.php
+/BACK/.env.*.local
+/BACK/config/secrets/prod/prod.decrypt.private.php
+/BACK/public/bundles/
+/BACK/var/
+/BACK/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+/BACK/.phpunit.result.cache
+/BACK/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> phpunit/phpunit ###
+/BACK/phpunit.xml
+/BACK/.phpunit.result.cache
+###< phpunit/phpunit ###
+
+/FRONT/node_modules/
+/FRONT/dist/
+
+/FRONT/.DS_Store
+/FRONT/Thumbs.db
+
+/FRONT/yarn-error.log
