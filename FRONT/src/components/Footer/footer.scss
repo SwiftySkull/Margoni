@@ -1,0 +1,64 @@
+@use 'src/styles/_vars';
+
+#footer {
+  border: solid 1px orange;
+  border-radius: 20px;
+  padding: 1rem 2rem;
+  margin-top: 1rem;
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    @media (min-width: vars.$medium) {
+      flex-direction: row;
+      justify-content: space-evenly;
+    }
+
+    a {
+      margin: 1rem 0;
+
+      @media (min-width: vars.$medium) {
+        margin: 0;
+        padding: 0.3rem 0;
+      }
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &:nth-child(2) {
+        border: solid 1px orange;
+        border-radius: 20px;
+        padding: 0.3rem 1.5rem;
+        width: fit-content;
+        margin: 0 auto;
+
+        @media (min-width: vars.$medium) {
+          margin: 0;
+        }
+      }
+
+      &:nth-child(4) {
+        display: flex;
+        width: fit-content;
+        margin: 0 auto;
+
+        @media (min-width: vars.$medium) {
+          margin: 0;
+        }
+      }
+
+      &:hover {
+        text-decoration: underline;
+        color: rgb(201, 74, 0);
+      }
+    }
+  }
+
+  .fb-logo {
+    height: 1rem;
+    margin-right: 5px;
+  }
+}
