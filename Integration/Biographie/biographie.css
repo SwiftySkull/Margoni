@@ -1,0 +1,176 @@
+body {
+    margin: 2rem 5rem;
+    color: rgb(231, 117, 9);
+}
+
+.body {
+    display: flex;
+    justify-content: space-between;
+}
+
+.resume {
+    margin-right: 1rem;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.main:not(:last-child) {
+    margin-bottom: 1rem;
+}
+
+.presentation {
+    border: solid 1px orange;
+    border-radius: 20px;
+    height: fit-content;
+    text-align: center;
+    padding: 1rem 3rem;
+}
+
+.presentation h1 {
+    font-size: 2rem;
+    font-style: italic;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px black;
+}
+
+.presentation h2 {
+    font-size: 1.8rem;
+    font-style: italic;
+    font-weight: bold;
+}
+
+
+.critiques {
+    border: solid 1px orange;
+    border-radius: 20px;
+    text-align: center;
+    height: fit-content;
+    display: flex;
+    position: relative;
+}
+
+.critiques .crit-content {
+    width: 100%;
+    margin: auto 0;
+    padding: 1rem;
+}
+
+.critiques p:not(:last-child){
+    margin-bottom: 1.2rem;
+}
+
+.critiques .wiki {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    opacity: 0.5;
+    font-weight: bold;
+}
+
+a:hover {
+    text-shadow: 1px 1px 1px rgb(102, 46, 0);
+}
+
+.pictures {
+    border: solid 1px orange;
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+.pictures img {
+    height: 100%;
+    align-self: center;
+    border: 5px orange solid;
+}
+
+.pictures img:not(:nth-child(2)) {
+    max-height: 80%;
+}
+
+.expositions {
+    border: solid 1px orange;
+    border-radius: 20px;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+.expositions p {
+    font-weight: bold;
+}
+
+.galerie {
+    border: solid 1px orange;
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.galerie>p {
+    border: solid 1px orange;
+    border-radius: 20px;
+    padding: 0.3rem 1.5rem;
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.galerie>a {
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.galerie ul {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.galerie ul li {
+    margin: 2rem 0;
+}
+
+.galerie img {
+    max-width: 150px;
+    margin: 0 auto;
+    box-shadow: 1px 1px 5px black;
+    border: solid 2px orange;
+    margin-bottom: 0.2rem;
+}
+
+.contact {
+    border: solid 1px orange;
+    border-radius: 20px;
+    padding: 2rem;
+    margin-top: 1rem;
+}
+
+.contact ul {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.fb-logo {
+    height: 1rem;
+    margin-right: 5px;
+}
+
+.contact ul li:nth-child(4) a {
+    display: flex;
+}
+
+.contact ul li:not(:nth-child(2)) {
+    text-decoration: underline;
+    padding: 0.3rem 1.5rem;
+}
+
+.contact ul li:nth-child(2) {
+    border: solid 1px orange;
+    border-radius: 20px;
+    padding: 0.3rem 1.5rem;
+}
