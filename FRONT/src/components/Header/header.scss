@@ -1,0 +1,55 @@
+@use 'src/styles/_vars';
+
+#header {
+  color: rgb(231, 117, 9);
+  margin-bottom: 1rem;
+  border: solid 1px orange;
+  border-radius: 20px;
+  height: fit-content;
+  padding: 0.5rem 3rem;
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+
+    @media (min-width: vars.$medium) {
+      justify-content: space-between;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-style: italic;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: 1px 1px 1px black;
+      width: 100%;
+      margin-bottom: 1rem;
+
+      @media (min-width: vars.$medium) {
+        font-size: 2rem;
+        width: initial;
+        margin: initial;
+      }
+
+      &:hover {
+        text-shadow: 3px 3px 3px black;
+      }
+    }
+
+    p {
+      width: 50%;
+      text-align: center;
+
+      @media (min-width: vars.$medium) {
+        width: initial;
+        align-self: center;
+        font-size: 1.5rem;
+      }
+
+      &:hover {
+        text-decoration: underline;
+        font-weight: bold;
+      }
+    }
+  }
+}

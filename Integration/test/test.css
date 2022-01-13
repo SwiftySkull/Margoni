@@ -1,0 +1,55 @@
+body {
+    margin: 2rem 5rem;
+}
+
+.un {
+    width: 80%;
+    border: 5px #f0f solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.deux {
+    height: 500px;
+    width: 100%;
+    border: 5px #0ff solid;
+    display: flex;
+    justify-content: space-between;
+}
+
+.ba {
+    height: 100px;
+    width: 100%;
+    background-color: blue;
+    margin-bottom: 1rem;
+    height: 45%;
+}
+
+.be {
+    height: 100px;
+    width: 100%;
+    background-color: green;
+    margin-bottom: 1rem;
+    height: 35%;
+}
+
+.bi {
+    height: 100px;
+    width: 100%;
+    background-color: red;
+}
+
+.bo {
+    width: 20%;
+    background-color: yellow;
+    height: 100%;
+    margin-left: 1rem;
+}
+
+.bu {
+    height: 100px;
+    width: 100%;
+    background-color: black;
+    margin-top: 1rem;
+}
