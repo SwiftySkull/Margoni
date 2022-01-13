@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 // == Import npm
 import React from 'react';
 
