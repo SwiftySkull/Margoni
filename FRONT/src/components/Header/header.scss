@@ -3,8 +3,8 @@
 #header {
   color: rgb(231, 117, 9);
   margin-bottom: 1rem;
-  border: solid 1px orange;
-  border-radius: 20px;
+  border: vars.$boxBorder;
+  border-radius: vars.$boxBorderRadius;
   height: fit-content;
   padding: 0.5rem 3rem;
 
@@ -47,8 +47,8 @@
       }
 
       &:hover {
-        text-decoration: underline;
-        font-weight: bold;
+        text-decoration: vars.$textHoverDecoration;
+        text-shadow: 0.5px 0.5px 0.5px black;
       }
     }
   }

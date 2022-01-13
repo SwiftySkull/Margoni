@@ -1,8 +1,8 @@
 @use 'src/styles/_vars';
 
 #footer {
-  border: solid 1px orange;
-  border-radius: 20px;
+  border: vars.$boxBorder;
+  border-radius: vars.$boxBorderRadius;
   padding: 1rem 2rem;
   margin-top: 1rem;
 
@@ -29,14 +29,20 @@
       }
 
       &:nth-child(2) {
-        border: solid 1px orange;
-        border-radius: 20px;
+        border: vars.$boxBorder;
+        border-radius: vars.$boxBorderRadius;
         padding: 0.3rem 1.5rem;
         width: fit-content;
         margin: 0 auto;
 
         @media (min-width: vars.$medium) {
           margin: 0;
+        }
+
+        &:hover {
+          color: vars.$textHoverColor;
+          text-decoration: vars.$textHoverDecoration;
+          box-shadow: vars.$boxHoverShadow;
         }
       }
 
@@ -51,8 +57,8 @@
       }
 
       &:hover {
-        text-decoration: underline;
-        color: rgb(201, 74, 0);
+        text-decoration: vars.$textHoverDecoration;
+        color: vars.$textHoverColor;
       }
     }
   }

@@ -1,5 +1,19 @@
 // == Screen sizes
+$small: 440px; // vars.$small;
+$medium: 720px; // vars.$medium;
+$inter: 920px; // vars.$inter;
+$big: 1080px; // vars.$big;
 
-$small: 440px; // vars.$small
-$medium: 720px; // vars.$medium
-$big: 1080px; // vars.$big
+// == Colors
+$mainColor: rgb(255, 136, 0); // vars.$mainColor;
+$secondaryColor: rgb(201, 74, 0); // vars.$secondaryColor;
+
+// == Box
+$boxBorder: solid 1px $mainColor; // vars.$boxBorder;
+$boxBorderRadius: 20px; // vars.$boxBorderRadius;
+
+// == Hover & Shadows
+$textHoverColor: $secondaryColor; // vars.$textHoverColor;
+$textHoverDecoration: underline; // vars.$textHoverDecoration;
+$boxHoverShadow: 2px 2px 2px 2px $secondaryColor; // vars.$boxHoverShadow;
+$imageShadow: 1px 1px 1px 1px black; // vars.$imageShadow;

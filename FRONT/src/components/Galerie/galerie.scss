@@ -1,3 +1,67 @@
+@use 'src/styles/_vars';
+
 #galerie {
-  background-color: #ff0;
+  border: vars.$boxBorder;
+  border-radius: vars.$boxBorderRadius;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  @media (max-width: vars.$inter) {
+    display: none;
+  }
+
+  >p {
+    border: vars.$boxBorder;
+    border-radius: vars.$boxBorderRadius;
+    padding: 0.3rem 1.5rem;
+    margin: 0 auto;
+    width: fit-content;
+
+    &:hover {
+      color: vars.$textHoverColor;
+      text-decoration: vars.$textHoverDecoration;
+      box-shadow: vars.$boxHoverShadow;
+    }
+  }
+
+  >a {
+    margin: 0 auto;
+
+    &:hover {
+      color: vars.$textHoverColor;
+      text-decoration: vars.$textHoverDecoration;
+    }
+  }
+
+  ul {
+    text-align: center;
+    margin: 0 auto;
+
+    li {
+      margin: 2rem 0;
+
+      a {
+        img {
+          max-width: 150px;
+          margin: 0 auto;
+          box-shadow: vars.$imageShadow;
+          border: solid 3px white;
+          margin-bottom: 0.2rem;
+        }
+        
+        &:hover {
+          p {
+            color: vars.$textHoverColor;
+            text-decoration: vars.$textHoverDecoration;
+          }
+
+          img {
+            box-shadow: 3px 3px 3px vars.$secondaryColor;
+          }
+        }
+      }
+    }
+  }
 }
