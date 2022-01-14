@@ -24,6 +24,7 @@ class Painting
      * @ORM\Column(type="integer")
      * 
      * @Groups("paintings_browse")
+     * @Groups("one_from_categ")
      */
     private $id;
 

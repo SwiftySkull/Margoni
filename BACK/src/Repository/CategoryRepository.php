@@ -36,6 +36,22 @@ class CategoryRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function getOneFromCategory($categ)
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT c, pc, p
+            FROM App\Entity\Category c
+            INNER JOIN c.id pc.categoryId
+            INNER JOIN pc.paintingId p
+            ORDER BY RAND()
+            LIMIT 1'
+        );
+
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Category[] Returns an array of Category objects
     //  */

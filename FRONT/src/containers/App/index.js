@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
 
+import { loadHomePage } from 'src/actions/mainActions';
+
 import App from 'src/components/App';
 
 /**
@@ -14,7 +16,9 @@ const mapStateToProps = (state) => ({
  * To dispatch function in the component
  */
 const mapDispatchToProps = (dispatch) => ({
-
+  loadHomePage: () => {
+    dispatch(loadHomePage());
+  },
 });
 
 // === Assistant creation for the component

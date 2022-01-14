@@ -22,7 +22,7 @@ const Vignette = ({
 }) => (
   <li>
     <a href={href}>
-      <img src={picture} alt={altPicture} />
+      <img src={`data:image/jpeg;base64,${picture}}`} alt={altPicture} />
       <p>{name}</p>
     </a>
   </li>

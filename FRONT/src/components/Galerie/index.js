@@ -1,5 +1,6 @@
 // == Import npm
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // == Import
 import Image from 'src/assets/images/denise_photo_1.jpg';
@@ -9,46 +10,31 @@ import Vignette from './vignette';
 import './galerie.scss';
 
 // == Composant
-const Galerie = () => (
+const Galerie = ({
+  categories,
+  pictures,
+}) => (
   <div id="galerie">
-    <p><a href="../Galerie/galerie.html">Galerie</a></p>
+    <p><a href="">Accueil</a></p>
+    <p><a href="">Biographie</a></p>
+    <p><a href="">Galerie</a></p>
     <ul>
-      {/* {categories.map((categ) => (
-      <Vignette
-        name={categ.name}
-        picture=""
-        altPicture={`Vignette ${categ.name}`}
-        href=""
-      />
-      ))} */}
-      <Vignette
-        name="Abbaye"
-        picture={Image}
-        altPicture="Vignette Abbaye"
-        href=""
-      />
-      <Vignette
-        name="Arbres"
-        picture=""
-        altPicture="Vignette Arbres"
-        href=""
-      />
-      <Vignette
-        name="Dessins de tissus"
-        picture=""
-        altPicture="Vignette Dessins de tissus"
-        href=""
-      />
-      <Vignette
-        name="Dessins signés"
-        picture=""
-        altPicture="Vignette Dessins Signés"
-        href=""
-      />
+      {categories.map((categ) => (
+        <Vignette
+          name={categ.name}
+          picture="" // utiliser filter
+          altPicture={`Vignette ${categ.name}`}
+          href=""
+        />
+      ))}
     </ul>
-    <a href="../Biographie/biographie.html">Biographie</a>
   </div>
 );
+
+Galerie.propTypes = {
+  categories: PropTypes.array.isRequired,
+  pictures: PropTypes.array.isRequired,
+};
 
 // == Export
 export default Galerie;

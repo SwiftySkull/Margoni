@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 
+import { shuffleCategories } from 'src/utils/utils';
 import { displayPaintings } from 'src/actions/mainActions';
 
 import Galerie from 'src/components/Galerie';
@@ -7,10 +8,9 @@ import Galerie from 'src/components/Galerie';
 /**
  * To display data in the component
  */
-
 const mapStateToProps = (state) => ({
-  numberOfPaintings: state.main.totalPaintings['total results'] ?? 0,
-  paintings: state.main.paintings,
+  categories: shuffleCategories(state.category.categories, 5),
+  pictures: state.category.shuffledPictures,
 });
 
 /**

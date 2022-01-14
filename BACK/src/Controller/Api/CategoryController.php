@@ -24,7 +24,7 @@ class CategoryController extends AbstractController
      */
     public function browse(CategoryRepository $categoryRepository): Response
     {
-        $categories = $categoryRepository->findAll();
+        $categories = $categoryRepository->findAllAsc();
 
         return $this->json($categories, 200, [], ['groups' => 'categories_browse']);
     }
@@ -56,5 +56,23 @@ class CategoryController extends AbstractController
         $results = [$category, ['total results' => $total], $paintings];
 
         return $this->json($results, 200, [], ['groups' => ['paintings_browse', 'categories_browse']]);
+    }
+
+    /**
+     * @Route("/api/getone/category", name="api_category_get_one_element", methods={"GET"})
+     */
+    public function getOneFromCategory(CategoryRepository $categoryRepository, PaintingRepository $paintingRepository)
+    {
+        $categories = $categoryRepository->findAll();
+
+        $shuffledPictures = [];
+
+        for ($i=0; $i < count($categories); $i++) { 
+            $random = $paintingRepository->getOneFromCategory($categories[$i]);
+            shuffle($random);
+            $shuffledPictures[] = $random[0] ?? null;
+        }
+
+        return $this->json($shuffledPictures, 200, [], ['groups' => ['paintings_browse', 'categories_browse']]);
     }
 }
