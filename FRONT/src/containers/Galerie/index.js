@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { shuffleCategories } from 'src/utils/utils';
+import { shuffleCategories, getPictureFromCategory } from 'src/utils/utils';
 import { displayPaintings } from 'src/actions/mainActions';
 
 import Galerie from 'src/components/Galerie';
@@ -8,10 +8,17 @@ import Galerie from 'src/components/Galerie';
 /**
  * To display data in the component
  */
-const mapStateToProps = (state) => ({
-  categories: shuffleCategories(state.category.categories, 5),
-  pictures: state.category.shuffledPictures,
-});
+const mapStateToProps = (state) => {
+  const { categories, shuffledPictures } = state.category;
+  const shuffledCategories = shuffleCategories(categories, 3);
+
+  const limitedPictures = getPictureFromCategory(shuffledPictures, shuffledCategories);
+
+  return {
+    categories: shuffledCategories,
+    pictures: limitedPictures !== undefined ? limitedPictures : [],
+  };
+};
 
 /**
  * To dispatch function in the component

@@ -3,8 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // == Import
-import Image from 'src/assets/images/denise_photo_1.jpg';
-
 import Vignette from './vignette';
 
 import './galerie.scss';
@@ -13,23 +11,37 @@ import './galerie.scss';
 const Galerie = ({
   categories,
   pictures,
-}) => (
-  <div id="galerie">
-    <p><a href="">Accueil</a></p>
-    <p><a href="">Biographie</a></p>
-    <p><a href="">Galerie</a></p>
-    <ul>
-      {categories.map((categ) => (
-        <Vignette
-          name={categ.name}
-          picture="" // utiliser filter
-          altPicture={`Vignette ${categ.name}`}
-          href=""
-        />
-      ))}
-    </ul>
-  </div>
-);
+}) => {
+  const displayVignettes = categories.length > 0 && pictures.length > 0;
+
+  return (
+    <div id="galerie">
+      <p><a href="">Accueil</a></p>
+      <p><a href="">Biographie</a></p>
+      <p><a href="">Galerie</a></p>
+      <ul>
+        {categories.map((categ) => {
+          let pictureFile = '';
+          if (displayVignettes) {
+            pictures.filter((pic) => {
+              if (pic.id === categ.id) {
+                pictureFile = pic.painting.picture.file;
+              }
+            });
+          }
+          return (
+            <Vignette
+              name={categ.name}
+              picture={pictureFile} // utiliser filter
+              altPicture={`Vignette ${categ.name}`}
+              href=""
+            />
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
 
 Galerie.propTypes = {
   categories: PropTypes.array.isRequired,

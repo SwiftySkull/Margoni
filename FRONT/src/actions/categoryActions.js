@@ -11,12 +11,13 @@ export const saveCategories = (categories) => ({
   categories,
 });
 
-export const shuffledPictures = (picture) => ({
+export const shuffledPictures = (picture, categories) => ({
   type: SHUFFLED_PICTURES,
   picture,
+  categories,
 });
 
-export const loadShuffledPictures = (length) => ({
+export const loadShuffledPictures = (categories) => ({
   type: LOAD_SHUFFLED_PICTURES,
-  length,
+  categories,
 });

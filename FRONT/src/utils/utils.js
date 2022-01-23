@@ -1,8 +1,8 @@
 /**
  * Shuffles an array and returns an amount of entry specified or all the array shuffled
  *
- * @param {*} array Array to shuffle
- * @param {*} nbEntries Number of entries desired
+ * @param {array} array Array to shuffle
+ * @param {string} nbEntries Number of entries desired
  *                      (by default it can be null so it will return the total array)
  * @returns Array shuffled of a number of entries selected or all the array
  */
@@ -35,4 +35,25 @@ export const shuffleCategories = (array, nbEntries = null) => {
   return shuffledCategories;
 };
 
-export const truc = () => true;
+/**
+ * Method to get the corresponding pictures to the selected categories.
+ *
+ * @param {array} pictures Array of all the pictures to check
+ * @param {array} categories Array of the selected categories
+ * @returns Array of the corresponding pictures
+ */
+export const getPictureFromCategory = (pictures, categories) => {
+  const arrayNotEmpty = categories.length > 0 && pictures.length > 0;
+
+  if (arrayNotEmpty) {
+    const picturesFilterder = pictures.filter((pic) => {
+      for (const iterator of categories) {
+        if (iterator.id == pic.id) {
+          return pic;
+        }
+      }
+    });
+
+    return picturesFilterder;
+  }
+};
