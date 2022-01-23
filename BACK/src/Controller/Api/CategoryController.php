@@ -67,10 +67,16 @@ class CategoryController extends AbstractController
 
         $shuffledPictures = [];
 
-        for ($i=0; $i < count($categories); $i++) { 
-            $random = $paintingRepository->getOneFromCategory($categories[$i]);
+        foreach ($categories as $key => $value) {
+            $random = $paintingRepository->getOneFromCategory($value->getId());
+
             shuffle($random);
-            $shuffledPictures[] = $random[0] ?? null;
+            
+            if (count($random) > 0) {
+                $shuffledPictures[] = ['id' => $value->getId(), 'painting' => $random[0]];
+            } else {
+                $shuffledPictures[] = ['id' => $value->getId(), 'painting' => null];
+            }
         }
 
         return $this->json($shuffledPictures, 200, [], ['groups' => ['paintings_browse', 'categories_browse']]);
