@@ -1,5 +1,6 @@
 // == Import npm
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // == Import
 import './header.scss';
@@ -8,9 +9,9 @@ import './header.scss';
 const Header = () => (
   <div id="header">
     <nav>
-      <h1><a href="">Denise Margoni</a></h1>
-      <p><a href="">Biographie</a></p>
-      <p><a href="">Galerie</a></p>
+      <h1><Link to="/">Denise Margoni</Link></h1>
+      <p><Link to="/biographie">Biographie</Link></p>
+      <p><Link to="">Galerie</Link></p>
     </nav>
   </div>
 );
