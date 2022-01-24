@@ -32,9 +32,8 @@ const Galerie = ({
         <div className="size-div">
           <select onChange={(e) => sizeChoice(e.target.value)}>
             <option value="">- Sélectionnez un format -</option>
-            <option value="0">Peinture n'ayant pas de format</option>
             {sizes.map((size) => (
-              <option value={size.id} key={size.id}>{size.format}</option>
+              <option value={size.id} key={size.id}>{size.format == 'NULL' ? 'Peinture n\'ayant pas de format' : size.format}</option>
             ))}
           </select>
         </div>
