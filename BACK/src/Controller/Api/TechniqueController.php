@@ -24,7 +24,7 @@ class TechniqueController extends AbstractController
      */
     public function browse(TechniqueRepository $techniqueRepository): Response
     {
-        $techniques = $techniqueRepository->findAll();
+        $techniques = $techniqueRepository->findAllAsc();
 
         return $this->json($techniques, 200, [], ['groups' => 'techniques_browse']);
     }

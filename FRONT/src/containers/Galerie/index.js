@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
   const limitedPictures = getPictureFromCategory(shuffledPictures, categories);
 
   return {
-    categories: shuffledCategories.map((categ) => [categ.id, categ.name]),
+    categories: categories.map((categ) => [categ.id, categ.name]),
     pictures: shuffledPictures,
     galeryChoice: state.galerie.galeryChoice,
     techniques: state.technique.techniques.map((tech) => [tech.id, tech.type]),
