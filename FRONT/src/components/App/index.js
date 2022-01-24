@@ -20,10 +20,10 @@ import './app.scss';
 
 // == Composant
 const App = ({
-  loadHomePage,
+  loadElements,
 }) => {
   useEffect(() => {
-    loadHomePage();
+    loadElements();
   }, []);
 
   return (
@@ -39,7 +39,7 @@ const App = ({
 };
 
 App.propTypes = {
-  loadHomePage: PropTypes.func.isRequired,
+  loadElements: PropTypes.func.isRequired,
 };
 
 // == Export

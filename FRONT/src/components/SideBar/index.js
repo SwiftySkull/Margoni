@@ -13,7 +13,6 @@ const SideBar = ({
   categories,
   pictures,
 }) => {
-  const displayVignettes = categories.length > 0 && pictures.length > 0;
   const spacing = pictures.length > 0 ? '80%' : '0%';
 
   return (
@@ -24,13 +23,12 @@ const SideBar = ({
       <ul style={{ height: spacing }}>
         {categories.map((categ) => {
           let pictureFile = '';
-          if (displayVignettes) {
-            pictures.filter((pic) => {
-              if (pic.id === categ.id) {
-                pictureFile = pic.painting.picture.file;
-              }
-            });
-          }
+          pictures.filter((pic) => {
+            if (pic.id === categ.id) {
+              pictureFile = pic.painting.picture.file;
+            }
+          });
+
           return (
             <Vignette
               key={categ.id}

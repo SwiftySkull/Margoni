@@ -1,7 +1,7 @@
 // ACTIONS TYPES
 
 export const DISPLAY_PAINTINGS = 'DISPLAY_PAINTINGS';
-export const LOAD_HOME_PAGE = 'LOAD_HOME_PAGE';
+export const LOAD_ELEMENTS = 'LOAD_ELEMENTS';
 export const XXX = 'XXX';
 
 // ACTIONS CREATORS
@@ -10,8 +10,8 @@ export const displayPaintings = () => ({
   type: DISPLAY_PAINTINGS,
 });
 
-export const loadHomePage = () => ({
-  type: LOAD_HOME_PAGE,
+export const loadElements = () => ({
+  type: LOAD_ELEMENTS,
 });
 
 export const xxx = (result) => ({

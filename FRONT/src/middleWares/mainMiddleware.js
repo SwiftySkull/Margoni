@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import {
   DISPLAY_PAINTINGS,
-  LOAD_HOME_PAGE,
+  LOAD_ELEMENTS,
 } from 'src/actions/mainActions';
 
 import {
@@ -35,11 +35,19 @@ const mainMiddleware = (store) => (next) => (action) => {
       next(action);
       break;
 
-    case LOAD_HOME_PAGE:
+    case LOAD_ELEMENTS:
       axios.get(`${URL}/categories`)
         .then((response) => {
           console.log(response.data);
           store.dispatch(loadShuffledPictures(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      axios.get(`${URL}/techniques`)
+        .then((response) => {
+          console.log(response.data);
+          // store.dispatch(loadShuffledPictures(response.data));
         })
         .catch((error) => {
           console.log(error);
