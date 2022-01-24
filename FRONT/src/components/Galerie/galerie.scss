@@ -83,14 +83,35 @@
 
   .size-div {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    
+
     >select {
       border: vars.$boxBorder;
       border-radius: vars.$boxBorderRadius;
       padding: 0.5rem 1rem;
       margin: -1rem auto 1rem;
     }
+
+    >a {
+      display: flex;
+      justify-content: center;
+  
+      .size-search {
+        background-color: white;
+        border: vars.$boxBorder;
+        border-radius: vars.$boxBorderRadius;
+        padding: 0.6rem;
+        margin: 0.5rem auto;
+
+        &:hover {
+          color: vars.$textHoverColor;
+          text-decoration: vars.$textHoverDecoration;
+          box-shadow: vars.$boxHoverShadow;
+        }
+      }
+    }
+    
   }
 
   .tableaux-list {

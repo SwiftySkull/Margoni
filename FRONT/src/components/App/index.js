@@ -14,6 +14,7 @@ import GalerieHeader from 'src/components/Header/galerieHeader';
 import Home from 'src/containers/Home';
 import Biography from 'src/containers/Biography';
 import Galerie from 'src/containers/Galerie';
+import TEST from 'src/components/TEST';
 import Footer from 'src/containers/Footer';
 
 import './app.scss';
@@ -29,9 +30,12 @@ const App = ({
   return (
     <div className="app">
       <Routes>
-        <Route path="/" element={<><Header /><Home /></>} />
         <Route path="/biographie" element={<><Header /><Biography /></>} />
         <Route path="/galerie" element={<><GalerieHeader /><Galerie /></>} />
+
+        <Route path="/galerie/:choice/:select" element={<TEST />} />
+
+        <Route path="/" element={<><Header /><Home /></>} />
       </Routes>
       <Footer />
     </div>

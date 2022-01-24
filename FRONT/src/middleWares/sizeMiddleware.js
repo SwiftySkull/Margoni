@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 import {
-  SIZE_CHOICE,
+  SAVE_SIZE_SEARCH,
   saveSizeChoice,
 } from 'src/actions/sizeActions';
 
@@ -16,8 +16,9 @@ const mainMiddleware = (store) => (next) => (action) => {
   const state = store.getState();
 
   switch (action.type) {
-    case SIZE_CHOICE:
-      axios.get(`${URL}/size/${action.id}`)
+    case SAVE_SIZE_SEARCH:
+      console.log(`${URL}/size/${state.size.sizeChosen.id}`);
+      axios.get(`${URL}/size/${state.size.sizeChosen.id}`)
         .then((response) => {
           console.log(response.data);
           store.dispatch(saveSizeChoice(response.data[0], response.data[1]['total results'], response.data[2]));

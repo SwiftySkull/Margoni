@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { shuffleCategories, getPictureFromCategory } from 'src/utils/utils';
 
 import { chooseGalerie } from 'src/actions/galerieActions';
-import { sizeChoice } from 'src/actions/sizeActions';
+import { sizeChoice, saveSizeSearch } from 'src/actions/sizeActions';
 
 import Galerie from 'src/components/Galerie';
 
@@ -17,10 +17,10 @@ const mapStateToProps = (state) => {
   const limitedPictures = getPictureFromCategory(shuffledPictures, categories);
 
   return {
-    categories: shuffledCategories,
-    pictures: limitedPictures,
+    categories: shuffledCategories.map((categ) => [categ.id, categ.name]),
+    pictures: shuffledPictures,
     galeryChoice: state.galerie.galeryChoice,
-    techniques: state.technique.techniques,
+    techniques: state.technique.techniques.map((tech) => [tech.id, tech.type]),
     sizes: state.size.sizes,
     picturesBySize: state.size.paintings,
     sizeChosen: state.size.sizeChosen.format,
@@ -37,6 +37,10 @@ const mapDispatchToProps = (dispatch) => ({
 
   sizeChoice: (id) => {
     dispatch(sizeChoice(id));
+  },
+
+  saveSizeSearch: () => {
+    dispatch(saveSizeSearch());
   },
 });
 

@@ -1,5 +1,6 @@
 import {
   SAVE_SIZES,
+  SIZE_CHOICE,
   SAVE_SIZE_CHOICE,
 } from 'src/actions/sizeActions';
 
@@ -19,6 +20,12 @@ function sizeReducer(state = initialState, action) {
       return {
         ...state,
         sizes: action.sizes,
+      };
+
+    case SIZE_CHOICE:
+      return {
+        ...state,
+        sizeChosen: state.sizes[action.id],
       };
 
     case SAVE_SIZE_CHOICE:

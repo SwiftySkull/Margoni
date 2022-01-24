@@ -3,6 +3,7 @@
 export const SAVE_SIZES = 'SAVE_SIZES';
 export const SIZE_CHOICE = 'SIZE_CHOICE';
 export const SAVE_SIZE_CHOICE = 'SAVE_SIZE_CHOICE';
+export const SAVE_SIZE_SEARCH = 'SAVE_SIZE_SEARCH';
 
 // ACTIONS CREATORS
 
@@ -21,4 +22,8 @@ export const saveSizeChoice = (sizeChosen, results, paintings) => ({
   sizeChosen,
   results,
   paintings,
+});
+
+export const saveSizeSearch = () => ({
+  type: SAVE_SIZE_SEARCH,
 });
