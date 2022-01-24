@@ -4,12 +4,12 @@
   border: vars.$boxBorder;
   border-radius: vars.$boxBorderRadius;
   padding: 2rem;
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: space-around;
-
-  @media (max-width: vars.$inter) {
-    display: none;
+  
+  @media (min-width: vars.$inter) {
+    display: flex;
   }
 
   >p {
@@ -42,6 +42,9 @@
   ul {
     text-align: center;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 
     li {
       margin: 2rem 0;

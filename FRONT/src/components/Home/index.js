@@ -1,5 +1,6 @@
 // == Import npm
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // == Import
 import Avis from 'src/containers/Avis';
@@ -16,10 +17,10 @@ const Home = () => (
     <div className="resume">
       <div className="entete">
         <div className="biographie">
-          <a href="">
+          <Link to="/biographie">
             <img src={Autoportrait} alt="" className="bio-img" />
             <p>Biographie</p>
-          </a>
+          </Link>
         </div>
         <div className="oeuvres">
           <h2>Denise Margoni</h2>

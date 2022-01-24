@@ -1,6 +1,7 @@
 // == Import npm
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 // == Import
 import Vignette from './vignette';
@@ -13,13 +14,14 @@ const Galerie = ({
   pictures,
 }) => {
   const displayVignettes = categories.length > 0 && pictures.length > 0;
+  const spacing = pictures.length > 0 ? '80%' : '0%';
 
   return (
     <div id="galerie">
-      <p><a href="">Accueil</a></p>
-      <p><a href="">Biographie</a></p>
+      <p><Link to="/">Accueil</Link></p>
+      <p><Link to="/biographie">Biographie</Link></p>
       <p><a href="">Galerie</a></p>
-      <ul>
+      <ul style={{ height: spacing }}>
         {categories.map((categ) => {
           let pictureFile = '';
           if (displayVignettes) {
@@ -31,6 +33,7 @@ const Galerie = ({
           }
           return (
             <Vignette
+              key={categ.id}
               name={categ.name}
               picture={pictureFile} // utiliser filter
               altPicture={`Vignette ${categ.name}`}
