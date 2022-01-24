@@ -1,6 +1,7 @@
 // == Import npm
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 // == Import
 import './sideBar.scss';
@@ -21,10 +22,10 @@ const Vignette = ({
   href,
 }) => (
   <li>
-    <a href={href}>
+    <Link to={href}>
       <img src={`data:image/jpeg;base64,${picture}`} alt={altPicture} />
       <p>{name}</p>
-    </a>
+    </Link>
   </li>
 );
 

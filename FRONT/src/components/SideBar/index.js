@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { stringForUrl } from 'src/utils/utils';
 
 // == Import
 import Vignette from './vignette';
@@ -28,14 +29,14 @@ const SideBar = ({
               pictureFile = pic.painting.picture.file;
             }
           });
-
+          console.log(categ);
           return (
             <Vignette
               key={categ.id}
               name={categ.name}
               picture={pictureFile} // utiliser filter
               altPicture={`Vignette ${categ.name}`}
-              href=""
+              href={`/galerie/${stringForUrl(categ.name)}`}
             />
           );
         })}

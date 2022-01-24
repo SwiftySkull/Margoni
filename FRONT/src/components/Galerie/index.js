@@ -24,7 +24,11 @@ const Galerie = ({
   saveSizeSearch,
 }) => {
   const { choice } = useParams();
-  console.log(choice);
+  console.log(sizeChosen);
+
+  if (sizeChosen === 'NULL') {
+    sizeChosen = 'Sans formats';
+  }
 
   return (
     <div id="galerie">
@@ -37,16 +41,20 @@ const Galerie = ({
       {galeryChoice === 3 && (
         <div className="size-div">
           <select onChange={(e) => sizeChoice(e.target.value)}>
-            <option value="">- Sélectionnez un format -</option>
+            <option value="0">- Sélectionnez un format -</option>
             {sizes.map((size) => (
               <option value={size.id} key={size.id}>{size.format == 'NULL' ? 'Peinture n\'ayant pas de format' : size.format}</option>
             ))}
           </select>
-          <Link to={`/galerie/format/${stringForUrl(sizeChosen)}`}>
-            <button type="button" className="size-search" onClick={saveSizeSearch}>
-              Valider Recherche
-            </button>
-          </Link>
+          {sizeChosen !== undefined && (
+            <div>
+              <Link to={`/galerie/format/${stringForUrl(sizeChosen)}`}>
+                <button type="button" className="size-search" onClick={saveSizeSearch}>
+                  Valider Recherche
+                </button>
+              </Link>
+            </div>
+          )}
         </div>
       )}
       <div className="tableaux-list">
