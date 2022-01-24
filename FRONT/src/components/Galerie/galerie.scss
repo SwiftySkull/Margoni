@@ -81,6 +81,18 @@
     }
   }
 
+  .size-div {
+    display: flex;
+    justify-content: center;
+    
+    >select {
+      border: vars.$boxBorder;
+      border-radius: vars.$boxBorderRadius;
+      padding: 0.5rem 1rem;
+      margin: -1rem auto 1rem;
+    }
+  }
+
   .tableaux-list {
     display: flex;
     flex-wrap: wrap;
@@ -111,7 +123,7 @@
 
         &:hover {
           border: orange solid 4px;
-          border-radius: 20px;
+          border-radius: vars.$boxBorderRadius;
           box-shadow: 3px 3px 3px black;
           transition: 0.5s 0.5s;
         }

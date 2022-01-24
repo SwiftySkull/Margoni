@@ -33,7 +33,7 @@ const mainMiddleware = (store) => (next) => (action) => {
     case DISPLAY_PAINTINGS:
       axios.get(`${URL}/paintings`)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           // store.dispatch(xxx(response.data));
         })
         .catch((error) => {
@@ -46,7 +46,7 @@ const mainMiddleware = (store) => (next) => (action) => {
     case LOAD_ELEMENTS:
       axios.get(`${URL}/categories`)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           store.dispatch(loadShuffledPictures(response.data));
         })
         .catch((error) => {
@@ -55,7 +55,7 @@ const mainMiddleware = (store) => (next) => (action) => {
 
       axios.get(`${URL}/techniques`)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           store.dispatch(saveTechniques(response.data));
         })
         .catch((error) => {
@@ -64,7 +64,7 @@ const mainMiddleware = (store) => (next) => (action) => {
 
       axios.get(`${URL}/sizes`)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           store.dispatch(saveSizes(response.data));
         })
         .catch((error) => {
@@ -77,7 +77,7 @@ const mainMiddleware = (store) => (next) => (action) => {
     case LOAD_SHUFFLED_PICTURES:
       axios.get(`${URL}/getone/category`)
         .then((responseBis) => {
-          console.log(responseBis.data);
+          // console.log(responseBis.data);
           store.dispatch(shuffledPictures(responseBis.data, action.categories));
         })
         .catch((errorBis) => {
