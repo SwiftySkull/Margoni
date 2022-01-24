@@ -1,0 +1,36 @@
+@use 'src/styles/_vars';
+
+#expositions {
+  border: vars.$boxBorder;
+  border-radius: vars.$boxBorderRadius;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-around;
+
+  @media (max-width: vars.$medium) {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  p {
+    font-weight: bold;
+
+    @media (max-width: vars.$medium) {
+      margin-bottom: 1rem;
+    }
+  }
+
+  a {
+    @media (max-width: vars.$medium) {
+      &:not(:last-child) {
+        margin-bottom: 1rem;
+      }
+    }
+
+    &:hover {
+      color: vars.$textHoverColor;
+      text-decoration: vars.$textHoverDecoration;
+    }
+  }
+}

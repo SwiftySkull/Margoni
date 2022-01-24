@@ -3,11 +3,17 @@ import axios from 'axios';
 
 import {
   DISPLAY_PAINTINGS,
-  xxx,
+  LOAD_HOME_PAGE,
 } from 'src/actions/mainActions';
 
+import {
+  shuffledPictures,
+  loadShuffledPictures,
+  LOAD_SHUFFLED_PICTURES,
+} from 'src/actions/categoryActions';
+
 // URL for the Axios requests
-const URL = 'http://localhost:8000/api/paintings';
+const URL = 'http://localhost:8888/api';
 
 /**
  * MiddleWare for the main and authentification area.
@@ -17,10 +23,10 @@ const mainMiddleware = (store) => (next) => (action) => {
 
   switch (action.type) {
     case DISPLAY_PAINTINGS:
-      axios.get(URL)
+      axios.get(`${URL}/paintings`)
         .then((response) => {
           console.log(response.data);
-          store.dispatch(xxx(response.data));
+          // store.dispatch(xxx(response.data));
         })
         .catch((error) => {
           console.log(error);
@@ -29,6 +35,31 @@ const mainMiddleware = (store) => (next) => (action) => {
       next(action);
       break;
 
+    case LOAD_HOME_PAGE:
+      axios.get(`${URL}/categories`)
+        .then((response) => {
+          console.log(response.data);
+          store.dispatch(loadShuffledPictures(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      next(action);
+      break;
+
+    case LOAD_SHUFFLED_PICTURES:
+      axios.get(`${URL}/getone/category`)
+        .then((responseBis) => {
+          console.log(responseBis.data);
+          store.dispatch(shuffledPictures(responseBis.data, action.categories));
+        })
+        .catch((errorBis) => {
+          console.log(errorBis);
+        });
+
+      next(action);
+      break;
     // Default action.
     default:
       next(action);

@@ -22,6 +22,21 @@ class PaintingRepository extends ServiceEntityRepository
         $this->limitPerPage = $limitPerPage;
     }
 
+    public function getOneFromCategory($categ)
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT p, c 
+            FROM App\Entity\Painting p
+            LEFT JOIN p.categories c
+            WHERE c = :categ'
+
+        )->setParameter('categ', $categ);
+
+        return $query->getResult();
+    }
+
     public function findBySearch($search)
     {
         $qb = $this->createQueryBuilder('p')
