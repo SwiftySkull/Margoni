@@ -1,10 +1,9 @@
 import {
-  SHUFFLED_PICTURES,
+  SAVE_TECHNIQUES,
 } from 'src/actions/techniqueActions';
 
 const initialState = {
-  categories: [],
-  shuffledPictures: [],
+  techniques: [],
 };
 
 /**
@@ -12,11 +11,10 @@ const initialState = {
  */
 function techniqueReducer(state = initialState, action) {
   switch (action.type) {
-    case SHUFFLED_PICTURES:
+    case SAVE_TECHNIQUES:
       return {
         ...state,
-        categories: action.categories,
-        shuffledPictures: action.picture,
+        techniques: action.techniques,
       };
 
     default:
