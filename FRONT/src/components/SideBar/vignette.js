@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // == Import
-import './galerie.scss';
+import './sideBar.scss';
 
 // == Composant
 /**

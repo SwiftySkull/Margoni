@@ -3,7 +3,7 @@
 import React from 'react';
 
 // == Import
-import Galerie from 'src/containers/Galerie';
+import SideBar from 'src/containers/SideBar';
 import Expositions from 'src/containers/Expositions';
 
 import Denise1 from 'src/assets/images/denise_photo_1.jpg';
@@ -53,7 +53,7 @@ const Biography = () => (
       </div>
       <Expositions />
     </div>
-    <Galerie />
+    <SideBar />
   </div>
 );
 

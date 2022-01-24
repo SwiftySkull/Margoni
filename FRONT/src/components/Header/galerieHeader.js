@@ -6,15 +6,15 @@ import { Link } from 'react-router-dom';
 import './header.scss';
 
 // == Composant
-const Header = () => (
+const GalerieHeader = () => (
   <div id="header">
     <nav>
       <h1><Link to="/">Denise Margoni</Link></h1>
       <p><Link to="/biographie">Biographie</Link></p>
-      <p><Link to="/galerie">Galerie</Link></p>
+      <p><Link to="/">Accueil</Link></p>
     </nav>
   </div>
 );
 
 // == Export
-export default Header;
+export default GalerieHeader;
