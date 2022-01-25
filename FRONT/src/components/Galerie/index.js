@@ -80,7 +80,7 @@ Galerie.propTypes = {
   sizes: PropTypes.array.isRequired,
   sizeChoice: PropTypes.func.isRequired,
   picturesBySize: PropTypes.array.isRequired,
-  sizeChosen: PropTypes.string.isRequired,
+  sizeChosen: PropTypes.array.isRequired,
 };
 
 // == Export
