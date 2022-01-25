@@ -3,6 +3,7 @@
 export const SAVE_TECHNIQUES = 'SAVE_TECHNIQUES';
 export const LOAD_PAINTINGS_OF_TECHNIQUE = 'LOAD_PAINTINGS_OF_TECHNIQUE';
 export const SAVE_PAINTINGS_OF_TECHNIQUE = 'SAVE_PAINTINGS_OF_TECHNIQUE';
+export const LOAD_PAINTINGS_BY_TECHNIQUE_TYPE = 'LOAD_PAINTINGS_BY_TECHNIQUE_TYPE';
 
 // ACTIONS CREATORS
 
@@ -22,4 +23,9 @@ export const savePaintingsOfTechnique = (techniqueChosen, results, paintings) =>
   techniqueChosen,
   results,
   paintings,
+});
+
+export const loadPaintingsByTechniqueType = (select) => ({
+  type: LOAD_PAINTINGS_BY_TECHNIQUE_TYPE,
+  select,
 });

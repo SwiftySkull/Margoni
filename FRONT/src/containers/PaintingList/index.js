@@ -4,7 +4,12 @@ import {
   loadPaintingsOfCategory,
   loadPaintingsByCategoryName,
 } from 'src/actions/categoryActions';
-import { loadPaintingsOfTechnique } from 'src/actions/techniqueActions';
+
+import {
+  loadPaintingsOfTechnique,
+  loadPaintingsByTechniqueType,
+} from 'src/actions/techniqueActions';
+
 import { loadPaintingsOfSize } from 'src/actions/sizeActions';
 
 import PaintingList from 'src/components/PaintingList';
@@ -80,6 +85,10 @@ const mapDispatchToProps = (dispatch) => ({
 
   loadPaintingsOfTechnique: (id, select) => {
     dispatch(loadPaintingsOfTechnique(id, select));
+  },
+
+  loadPaintingsByTechniqueType: (select) => {
+    dispatch(loadPaintingsByTechniqueType(select));
   },
 
   loadPaintingsOfSize: (id, select) => {

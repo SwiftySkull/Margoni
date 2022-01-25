@@ -6,6 +6,7 @@ import { stringForUrl } from 'src/utils/utils';
 import {
   LOAD_PAINTINGS_OF_TECHNIQUE,
   savePaintingsOfTechnique,
+  LOAD_PAINTINGS_BY_TECHNIQUE_TYPE,
 } from 'src/actions/techniqueActions';
 
 // URL for the Axios requests
@@ -38,6 +39,17 @@ const techniqueMiddleware = (store) => (next) => (action) => {
       next(action);
       break;
 
+    case LOAD_PAINTINGS_BY_TECHNIQUE_TYPE:
+      axios.get(`${URL}/techniquebytype/${action.select}`)
+        .then((response) => {
+          window.location = `/galerie/technique/${stringForUrl(response.data.type)}/${response.data.id}`;
+        })
+        .catch((error) => {
+          console.log(error);
+          window.location = '/error';
+        });
+      next(action);
+      break;
     // Default action.
     default:
       next(action);

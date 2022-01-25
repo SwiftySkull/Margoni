@@ -13,6 +13,7 @@ const PaintingList = ({
   loadPaintingsOfCategory,
   loadPaintingsByCategoryName,
   loadPaintingsOfTechnique,
+  loadPaintingsByTechniqueType,
   loadPaintingsOfSize,
   searchChosen,
   results,
@@ -36,7 +37,12 @@ const PaintingList = ({
       }
     }
     if (choice === 'technique') {
-      loadPaintingsOfTechnique(id, select);
+      if (id === undefined) {
+        loadPaintingsByTechniqueType(select);
+      }
+      else {
+        loadPaintingsOfTechnique(id, select);
+      }
     }
     if (choice === 'format') {
       loadPaintingsOfSize(id, select);
@@ -67,6 +73,7 @@ PaintingList.propTypes = {
   loadPaintingsOfCategory: PropTypes.func.isRequired,
   loadPaintingsByCategoryName: PropTypes.func.isRequired,
   loadPaintingsOfTechnique: PropTypes.func.isRequired,
+  loadPaintingsByTechniqueType: PropTypes.func.isRequired,
   loadPaintingsOfSize: PropTypes.func.isRequired,
   searchChosen: PropTypes.string.isRequired,
   results: PropTypes.string.isRequired,
