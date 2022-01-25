@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { shuffleCategories, getPictureFromCategory } from 'src/utils/utils';
 
 import { chooseGalerie } from 'src/actions/galerieActions';
-import { sizeChoice, saveSizeSearch } from 'src/actions/sizeActions';
+import { sizeChoice } from 'src/actions/sizeActions';
 
 import Galerie from 'src/components/Galerie';
 
@@ -37,10 +37,6 @@ const mapDispatchToProps = (dispatch) => ({
 
   sizeChoice: (id) => {
     dispatch(sizeChoice(id));
-  },
-
-  saveSizeSearch: () => {
-    dispatch(saveSizeSearch());
   },
 });
 

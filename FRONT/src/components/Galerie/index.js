@@ -20,12 +20,12 @@ const Galerie = ({
   sizeChoice,
   picturesBySize,
   sizeChosen,
-  saveSizeSearch,
 }) => {
-  if (sizeChosen.format === 'NULL') {
-    sizeChosen.format = 'Sans formats';
-  }
+  // if (sizeChosen.format === 'NULL') {
+  //   sizeChosen.format = 'Peinture n\'ayant pas de format';
+  // }
 
+  console.log(sizeChosen.format);
   return (
     <div id="galerie">
       <h2>Galerie</h2>
@@ -39,13 +39,13 @@ const Galerie = ({
           <select onChange={(e) => sizeChoice(e.target.value)}>
             <option value="0">- Sélectionnez un format -</option>
             {sizes.map((size) => (
-              <option value={size.id} key={size.id}>{size.format == 'NULL' ? 'Peinture n\'ayant pas de format' : size.format}</option>
+              <option value={size.id} key={size.id}>{size.format === 'NULL' ? 'Peinture n\'ayant pas de format' : size.format}</option>
             ))}
           </select>
           {sizeChosen !== undefined && (
             <div>
               <Link to={`/galerie/format/${stringForUrl(sizeChosen.format)}/${sizeChosen.id}`}>
-                <button type="button" className="size-search" onClick={saveSizeSearch}>
+                <button type="button" className="size-search">
                   Valider Recherche
                 </button>
               </Link>
@@ -81,7 +81,6 @@ Galerie.propTypes = {
   sizeChoice: PropTypes.func.isRequired,
   picturesBySize: PropTypes.array.isRequired,
   sizeChosen: PropTypes.string.isRequired,
-  saveSizeSearch: PropTypes.func.isRequired,
 };
 
 // == Export

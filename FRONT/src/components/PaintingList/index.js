@@ -5,6 +5,7 @@ import { useParams } from 'react-router';
 import PropTypes from 'prop-types';
 
 // == Import
+import { stringForUrl } from 'src/utils/utils';
 
 import './paintingList.scss';
 
@@ -15,6 +16,7 @@ const PaintingList = ({
   loadPaintingsOfTechnique,
   loadPaintingsByTechniqueType,
   loadPaintingsOfSize,
+  loadPaintingsBySizeFormat,
   searchChosen,
   results,
   paintings,
@@ -45,7 +47,17 @@ const PaintingList = ({
       }
     }
     if (choice === 'format') {
-      loadPaintingsOfSize(id, select);
+      if (id === undefined) {
+        if (stringForUrl(select) === stringForUrl('Peinture à l\'eau')) {
+          loadPaintingsBySizeFormat('peinture a l\'eau');
+        }
+        else {
+          loadPaintingsBySizeFormat(select);
+        }
+      }
+      else {
+        loadPaintingsOfSize(id, select);
+      }
     }
   }, []);
 
@@ -55,7 +67,7 @@ const PaintingList = ({
       <h3 className="subtitle">Nombre de peintures trouvées : {results}</h3>
       <div className="list">
         {paintings.map((paint) => (
-          <div className="tableau">
+          <div className="tableau" key={paint.id}>
             <a className="card" href="#">
               <div>
                 <img src={`data:image/jpeg;base64,${paint.picture.file}`} alt="" />
@@ -75,6 +87,7 @@ PaintingList.propTypes = {
   loadPaintingsOfTechnique: PropTypes.func.isRequired,
   loadPaintingsByTechniqueType: PropTypes.func.isRequired,
   loadPaintingsOfSize: PropTypes.func.isRequired,
+  loadPaintingsBySizeFormat: PropTypes.func.isRequired,
   searchChosen: PropTypes.string.isRequired,
   results: PropTypes.string.isRequired,
   paintings: PropTypes.array.isRequired,

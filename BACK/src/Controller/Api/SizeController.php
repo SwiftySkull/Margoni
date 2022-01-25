@@ -57,4 +57,21 @@ class SizeController extends AbstractController
 
         return $this->json($results, 200, [], ['groups' => ['paintings_browse', 'sizes_browse']]);
     }
+
+    /**
+     * @Route("/api/sizebyformat/{format}", name="api_size_by_format", methods={"GET"})
+     */
+    public function getSizeByFormat(Size $size = null, $format)
+    {
+        if (null === $size) {
+            $message = [
+                'status' => Response::HTTP_NOT_FOUND,
+                'error' => 'Format non trouvé.',
+            ];
+
+            return $this->json($message, Response::HTTP_NOT_FOUND);
+        }
+
+        return $this->json($size, 200, [], ['groups' => ['sizes_browse']]);
+    }
 }

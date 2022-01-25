@@ -4,6 +4,7 @@ export const SAVE_SIZES = 'SAVE_SIZES';
 export const SIZE_CHOICE = 'SIZE_CHOICE';
 export const LOAD_PAINTINGS_OF_SIZE = 'LOAD_PAINTINGS_OF_SIZE';
 export const SAVE_PAINTINGS_OF_SIZE = 'SAVE_PAINTINGS_OF_SIZE';
+export const LOAD_PAINTINGS_BY_SIZE_FORMAT = 'LOAD_PAINTINGS_BY_SIZE_FORMAT';
 
 // ACTIONS CREATORS
 
@@ -28,4 +29,9 @@ export const savePaintingsOfSize = (sizeChosen, results, paintings) => ({
   sizeChosen,
   results,
   paintings,
+});
+
+export const loadPaintingsBySizeFormat = (select) => ({
+  type: LOAD_PAINTINGS_BY_SIZE_FORMAT,
+  select,
 });

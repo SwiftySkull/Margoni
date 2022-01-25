@@ -40,7 +40,7 @@ const techniqueMiddleware = (store) => (next) => (action) => {
       break;
 
     case LOAD_PAINTINGS_BY_TECHNIQUE_TYPE:
-      axios.get(`${URL}/techniquebytype/${action.select}`)
+      axios.get(`${URL}/techniquebytype/${action.select.replace('-', ' ')}`)
         .then((response) => {
           window.location = `/galerie/technique/${stringForUrl(response.data.type)}/${response.data.id}`;
         })
@@ -50,6 +50,7 @@ const techniqueMiddleware = (store) => (next) => (action) => {
         });
       next(action);
       break;
+
     // Default action.
     default:
       next(action);

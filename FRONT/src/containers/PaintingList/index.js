@@ -10,7 +10,10 @@ import {
   loadPaintingsByTechniqueType,
 } from 'src/actions/techniqueActions';
 
-import { loadPaintingsOfSize } from 'src/actions/sizeActions';
+import {
+  loadPaintingsOfSize,
+  loadPaintingsBySizeFormat,
+} from 'src/actions/sizeActions';
 
 import PaintingList from 'src/components/PaintingList';
 
@@ -93,6 +96,10 @@ const mapDispatchToProps = (dispatch) => ({
 
   loadPaintingsOfSize: (id, select) => {
     dispatch(loadPaintingsOfSize(id, select));
+  },
+
+  loadPaintingsBySizeFormat: (select) => {
+    dispatch(loadPaintingsBySizeFormat(select));
   },
 });
 

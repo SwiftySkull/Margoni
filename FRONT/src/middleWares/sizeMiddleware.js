@@ -6,6 +6,7 @@ import { stringForUrl } from 'src/utils/utils';
 import {
   LOAD_PAINTINGS_OF_SIZE,
   savePaintingsOfSize,
+  LOAD_PAINTINGS_BY_SIZE_FORMAT,
 } from 'src/actions/sizeActions';
 
 // URL for the Axios requests
@@ -35,6 +36,18 @@ const sizeMiddleware = (store) => (next) => (action) => {
           window.location = '/error';
         });
 
+      next(action);
+      break;
+
+    case LOAD_PAINTINGS_BY_SIZE_FORMAT:
+      axios.get(`${URL}/sizebyformat/${action.select}`)
+        .then((response) => {
+          window.location = `/galerie/format/${stringForUrl(response.data.format)}/${response.data.id}`;
+        })
+        .catch((error) => {
+          console.log(error);
+          window.location = '/error';
+        });
       next(action);
       break;
 
