@@ -12,7 +12,7 @@ const URL = 'http://localhost:8888/api';
 /**
  * MiddleWare for the main and authentification area.
  */
-const mainMiddleware = (store) => (next) => (action) => {
+const sizeMiddleware = (store) => (next) => (action) => {
   const state = store.getState();
 
   switch (action.type) {
@@ -36,4 +36,4 @@ const mainMiddleware = (store) => (next) => (action) => {
   }
 };
 
-export default mainMiddleware;
+export default sizeMiddleware;

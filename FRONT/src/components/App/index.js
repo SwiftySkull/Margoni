@@ -10,12 +10,13 @@ import { Route, Routes } from 'react-router-dom';
 // == Import
 
 import Header from 'src/containers/Header';
-import GalerieHeader from 'src/components/Header/galerieHeader';
+// import GalerieHeader from 'src/components/Header/galerieHeader';
 import Home from 'src/containers/Home';
 import Biography from 'src/containers/Biography';
 import Galerie from 'src/containers/Galerie';
-import TEST from 'src/components/TEST';
+import PaintingList from 'src/containers/PaintingList';
 import Footer from 'src/containers/Footer';
+import Error from 'src/components/Error';
 
 import './app.scss';
 
@@ -29,13 +30,13 @@ const App = ({
 
   return (
     <div className="app">
+      <Header />
       <Routes>
-        <Route path="/biographie" element={<><Header /><Biography /></>} />
-        <Route path="/galerie" element={<><GalerieHeader /><Galerie /></>} />
-
-        <Route path="/galerie/:choice/:select" element={<TEST />} />
-
-        <Route path="/" element={<><Header /><Home /></>} />
+        <Route path="/biographie" element={<Biography />} />
+        <Route path="/galerie/:choice/:select/:id/*" element={<PaintingList />} />
+        <Route path="/galerie/*" element={<Galerie />} />
+        <Route path="/" element={<Home />} />
+        <Route path="*" element={<Error />} />
       </Routes>
       <Footer />
     </div>

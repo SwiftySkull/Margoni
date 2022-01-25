@@ -26,7 +26,7 @@ const Choosing = ({
 
       if (pictureFile !== '') {
         return (
-          <Link to={`/galerie/${urlRefer}/${stringForUrl(itera[1])}`} className="tableau" key={itera[0]}>
+          <Link to={`/galerie/${urlRefer}/${stringForUrl(itera[1])}/${itera[0]}`} className="tableau" key={itera[0]}>
             <div className="card">
               <div>
                 <img src={`data:image/jpeg;base64,${pictureFile}`} alt={`Peinture aléatoire de la ${altType} ${itera[1]}`} />

@@ -2,7 +2,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useParams } from 'react-router';
 
 // == Import
 import { stringForUrl } from 'src/utils/utils';
@@ -23,9 +22,6 @@ const Galerie = ({
   sizeChosen,
   saveSizeSearch,
 }) => {
-  const { choice } = useParams();
-  console.log(sizeChosen);
-
   if (sizeChosen === 'NULL') {
     sizeChosen = 'Sans formats';
   }

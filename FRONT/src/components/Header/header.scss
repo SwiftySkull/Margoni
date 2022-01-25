@@ -1,7 +1,7 @@
 @use 'src/styles/_vars';
 
 #header {
-  color: rgb(231, 117, 9);
+  color: vars.$mainColor;
   margin-bottom: 1rem;
   border: vars.$boxBorder;
   border-radius: vars.$boxBorderRadius;

@@ -36,7 +36,7 @@ const SideBar = ({
               name={categ.name}
               picture={pictureFile} // utiliser filter
               altPicture={`Vignette ${categ.name}`}
-              href={`/galerie/${stringForUrl(categ.name)}`}
+              href={`/galerie/categorie/${stringForUrl(categ.name)}`}
             />
           );
         })}

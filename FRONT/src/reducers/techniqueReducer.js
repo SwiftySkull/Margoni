@@ -1,9 +1,13 @@
 import {
   SAVE_TECHNIQUES,
+  SAVE_PAINTINGS_OF_TECHNIQUE,
 } from 'src/actions/techniqueActions';
 
 const initialState = {
   techniques: [],
+  techniqueChosen: {},
+  results: '0',
+  paintings: [],
 };
 
 /**
@@ -15,6 +19,14 @@ function techniqueReducer(state = initialState, action) {
       return {
         ...state,
         techniques: action.techniques,
+      };
+
+    case SAVE_PAINTINGS_OF_TECHNIQUE:
+      return {
+        ...state,
+        techniqueChosen: action.techniqueChosen,
+        results: action.results,
+        paintings: action.paintings,
       };
 
     default:
