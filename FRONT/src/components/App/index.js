@@ -33,7 +33,8 @@ const App = ({
       <Header />
       <Routes>
         <Route path="/biographie" element={<Biography />} />
-        <Route path="/galerie/:choice/:select/:id/*" element={<PaintingList />} />
+        <Route path="/galerie/:choice/:select/:id" element={<PaintingList />} />
+        <Route path="/galerie/:choice/:select" element={<PaintingList />} />
         <Route path="/galerie/*" element={<Galerie />} />
         <Route path="/" element={<Home />} />
         <Route path="*" element={<Error />} />

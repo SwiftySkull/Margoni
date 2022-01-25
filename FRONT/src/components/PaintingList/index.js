@@ -11,6 +11,7 @@ import './paintingList.scss';
 // == Composant
 const PaintingList = ({
   loadPaintingsOfCategory,
+  loadPaintingsByCategoryName,
   loadPaintingsOfTechnique,
   loadPaintingsOfSize,
   searchChosen,
@@ -18,7 +19,6 @@ const PaintingList = ({
   paintings,
 }) => {
   const { choice, select, id } = useParams();
-  // console.log(choice);
 
   const choicePossibilities = ['categorie', 'technique', 'format'];
 
@@ -28,7 +28,12 @@ const PaintingList = ({
 
   useEffect(() => {
     if (choice === 'categorie') {
-      loadPaintingsOfCategory(id, select);
+      if (id === undefined) {
+        loadPaintingsByCategoryName(select);
+      }
+      else {
+        loadPaintingsOfCategory(id, select);
+      }
     }
     if (choice === 'technique') {
       loadPaintingsOfTechnique(id, select);
@@ -60,6 +65,7 @@ const PaintingList = ({
 
 PaintingList.propTypes = {
   loadPaintingsOfCategory: PropTypes.func.isRequired,
+  loadPaintingsByCategoryName: PropTypes.func.isRequired,
   loadPaintingsOfTechnique: PropTypes.func.isRequired,
   loadPaintingsOfSize: PropTypes.func.isRequired,
   searchChosen: PropTypes.string.isRequired,

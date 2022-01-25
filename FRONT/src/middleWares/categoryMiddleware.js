@@ -6,6 +6,7 @@ import { stringForUrl } from 'src/utils/utils';
 import {
   LOAD_PAINTINGS_OF_CATEGORY,
   savePaintingsOfCategory,
+  LOAD_PAINTINGS_BY_CATEGORY_NAME,
 } from 'src/actions/categoryActions';
 
 // URL for the Axios requests
@@ -35,6 +36,18 @@ const categoryMiddleware = (store) => (next) => (action) => {
           window.location = '/error';
         });
 
+      next(action);
+      break;
+
+    case LOAD_PAINTINGS_BY_CATEGORY_NAME:
+      axios.get(`${URL}/categbyname/${action.select}`)
+        .then((response) => {
+          window.location = `/galerie/categorie/${stringForUrl(response.data.name)}/${response.data.id}`;
+        })
+        .catch((error) => {
+          console.log(error);
+          window.location = '/error';
+        });
       next(action);
       break;
 

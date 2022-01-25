@@ -5,6 +5,7 @@ export const SHUFFLED_PICTURES = 'SHUFFLED_PICTURES';
 export const LOAD_SHUFFLED_PICTURES = 'LOAD_SHUFFLED_PICTURES';
 export const LOAD_PAINTINGS_OF_CATEGORY = 'LOAD_PAINTINGS_OF_CATEGORY';
 export const SAVE_PAINTINGS_OF_CATEGORY = 'SAVE_PAINTINGS_OF_CATEGORY';
+export const LOAD_PAINTINGS_BY_CATEGORY_NAME = 'LOAD_PAINTINGS_BY_CATEGORY_NAME';
 
 // ACTIONS CREATORS
 
@@ -35,4 +36,9 @@ export const savePaintingsOfCategory = (categoryChosen, results, paintings) => (
   categoryChosen,
   results,
   paintings,
+});
+
+export const loadPaintingsByCategoryName = (select) => ({
+  type: LOAD_PAINTINGS_BY_CATEGORY_NAME,
+  select,
 });

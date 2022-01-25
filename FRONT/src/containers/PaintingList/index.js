@@ -1,6 +1,9 @@
 import { connect } from 'react-redux';
 
-import { loadPaintingsOfCategory } from 'src/actions/categoryActions';
+import {
+  loadPaintingsOfCategory,
+  loadPaintingsByCategoryName,
+} from 'src/actions/categoryActions';
 import { loadPaintingsOfTechnique } from 'src/actions/techniqueActions';
 import { loadPaintingsOfSize } from 'src/actions/sizeActions';
 
@@ -10,11 +13,6 @@ import PaintingList from 'src/components/PaintingList';
  * To display data in the component
  */
 const mapStateToProps = (state) => {
-  // const {
-  //   categoryChosen,
-  //   results: categoryResults,
-  //   paintings: categoryPaintings,
-  // } = state.category;
   const { searchingType } = state.main;
 
   const {
@@ -35,11 +33,6 @@ const mapStateToProps = (state) => {
     paintings: sizePaintings,
   } = state.size;
 
-  // console.log('techniqueChosen', techniqueChosen);
-  // console.log('techniquePaintings', techniquePaintings);
-  // console.log('sizePaintings', sizePaintings);
-  // console.log('sizeChosen', sizeChosen);
-
   let paintings = [];
   let results = '0';
   let searchChosen = 'Aucune recherche en cours';
@@ -56,8 +49,6 @@ const mapStateToProps = (state) => {
     searchChosen = `Tableaux de la technique ${techniqueChosen.type}`;
   }
 
-  // console.log('PaintingList container -> sizeChosen :', sizeChosen);
-
   if (searchingType === 3) {
     paintings = sizePaintings;
     results = sizeResults;
@@ -67,10 +58,6 @@ const mapStateToProps = (state) => {
       searchChosen = 'Tableaux sans format particulier';
     }
   }
-
-  console.log('PaintingList container -> searchChosen :', searchChosen);
-  console.log('PaintingList container -> results :', results);
-  console.log('PaintingList container -> paintings :', paintings);
 
   return {
     searchChosen,
@@ -85,6 +72,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   loadPaintingsOfCategory: (id, select) => {
     dispatch(loadPaintingsOfCategory(id, select));
+  },
+
+  loadPaintingsByCategoryName: (select) => {
+    dispatch(loadPaintingsByCategoryName(select));
   },
 
   loadPaintingsOfTechnique: (id, select) => {
