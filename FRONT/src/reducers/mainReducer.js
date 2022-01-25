@@ -10,6 +10,10 @@ import {
   SAVE_PAINTINGS_OF_TECHNIQUE,
 } from 'src/actions/techniqueActions';
 
+import {
+  SAVE_PAINTINGS_OF_SIZE,
+} from 'src/actions/sizeActions';
+
 const initialState = {
   xxx: true,
   totalPaintings: 0,
@@ -42,6 +46,12 @@ function mainReducer(state = initialState, action) {
       return {
         ...state,
         searchingType: 2,
+      };
+
+    case SAVE_PAINTINGS_OF_SIZE:
+      return {
+        ...state,
+        searchingType: 3,
       };
 
     default:

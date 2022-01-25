@@ -12,6 +12,7 @@ import './paintingList.scss';
 const PaintingList = ({
   loadPaintingsOfCategory,
   loadPaintingsOfTechnique,
+  loadPaintingsOfSize,
   searchChosen,
   results,
   paintings,
@@ -31,6 +32,9 @@ const PaintingList = ({
     }
     if (choice === 'technique') {
       loadPaintingsOfTechnique(id, select);
+    }
+    if (choice === 'format') {
+      loadPaintingsOfSize(id, select);
     }
   }, []);
 
@@ -57,6 +61,7 @@ const PaintingList = ({
 PaintingList.propTypes = {
   loadPaintingsOfCategory: PropTypes.func.isRequired,
   loadPaintingsOfTechnique: PropTypes.func.isRequired,
+  loadPaintingsOfSize: PropTypes.func.isRequired,
   searchChosen: PropTypes.string.isRequired,
   results: PropTypes.string.isRequired,
   paintings: PropTypes.array.isRequired,

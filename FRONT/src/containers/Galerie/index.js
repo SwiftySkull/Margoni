@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
     techniques: state.technique.techniques.map((tech) => [tech.id, tech.type]),
     sizes: state.size.sizes,
     picturesBySize: state.size.paintings,
-    sizeChosen: state.size.sizeChosen.format,
+    sizeChosen: state.size.sizeChosen,
   };
 };
 

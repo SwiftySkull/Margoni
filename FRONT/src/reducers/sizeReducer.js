@@ -1,7 +1,7 @@
 import {
   SAVE_SIZES,
   SIZE_CHOICE,
-  SAVE_SIZE_CHOICE,
+  SAVE_PAINTINGS_OF_SIZE,
 } from 'src/actions/sizeActions';
 
 const initialState = {
@@ -28,7 +28,7 @@ function sizeReducer(state = initialState, action) {
         sizeChosen: state.sizes[action.id],
       };
 
-    case SAVE_SIZE_CHOICE:
+    case SAVE_PAINTINGS_OF_SIZE:
       return {
         ...state,
         sizeChosen: action.sizeChosen,

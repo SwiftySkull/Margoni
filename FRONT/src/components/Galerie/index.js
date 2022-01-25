@@ -22,8 +22,8 @@ const Galerie = ({
   sizeChosen,
   saveSizeSearch,
 }) => {
-  if (sizeChosen === 'NULL') {
-    sizeChosen = 'Sans formats';
+  if (sizeChosen.format === 'NULL') {
+    sizeChosen.format = 'Sans formats';
   }
 
   return (
@@ -44,7 +44,7 @@ const Galerie = ({
           </select>
           {sizeChosen !== undefined && (
             <div>
-              <Link to={`/galerie/format/${stringForUrl(sizeChosen)}`}>
+              <Link to={`/galerie/format/${stringForUrl(sizeChosen.format)}/${sizeChosen.id}`}>
                 <button type="button" className="size-search" onClick={saveSizeSearch}>
                   Valider Recherche
                 </button>

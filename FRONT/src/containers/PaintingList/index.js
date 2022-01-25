@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 
 import { loadPaintingsOfCategory } from 'src/actions/categoryActions';
 import { loadPaintingsOfTechnique } from 'src/actions/techniqueActions';
+import { loadPaintingsOfSize } from 'src/actions/sizeActions';
 
 import PaintingList from 'src/components/PaintingList';
 
@@ -67,9 +68,9 @@ const mapStateToProps = (state) => {
     }
   }
 
-  console.log('PaintingList container -> categoryChosen :', categoryChosen);
-  console.log('PaintingList container -> categoryResults :', categoryResults);
-  console.log('PaintingList container -> categoryPaintings :', categoryPaintings);
+  console.log('PaintingList container -> searchChosen :', searchChosen);
+  console.log('PaintingList container -> results :', results);
+  console.log('PaintingList container -> paintings :', paintings);
 
   return {
     searchChosen,
@@ -88,6 +89,10 @@ const mapDispatchToProps = (dispatch) => ({
 
   loadPaintingsOfTechnique: (id, select) => {
     dispatch(loadPaintingsOfTechnique(id, select));
+  },
+
+  loadPaintingsOfSize: (id, select) => {
+    dispatch(loadPaintingsOfSize(id, select));
   },
 });
 
