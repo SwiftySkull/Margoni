@@ -23,7 +23,6 @@ const categoryMiddleware = (store) => (next) => (action) => {
       console.log(`${URL}/category/${action.id}`);
       axios.get(`${URL}/category/${action.id}`)
         .then((response) => {
-          console.log(response.data);
           if (stringForUrl(response.data[0].name) !== action.select) {
             window.location = `/galerie/categorie/${stringForUrl(response.data[0].name)}/${response.data[0].id}`;
           }

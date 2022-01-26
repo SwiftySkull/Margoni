@@ -76,3 +76,11 @@ export const stringForUrl = (string = '') => {
 
   return newString;
 };
+
+export const urlToString = (url) => {
+  const stringFromUrl = url
+    .replace(/-/g, ' ')
+    .replace(/-l-/g, ' l\'');
+
+  return stringFromUrl;
+};

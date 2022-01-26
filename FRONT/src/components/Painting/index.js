@@ -12,11 +12,22 @@ import './painting.scss';
 const Painting = ({
   painting,
   loadPainting,
+  loadPaintingByName,
 }) => {
   const { id, name } = useParams();
 
+  const check = name.match(/[a-zA-Z-]/g);
+
   useEffect(() => {
-    loadPainting(id);
+    if (id === undefined && check === null) {
+      loadPainting(id);
+    }
+    else if (id === undefined && check !== null) {
+      loadPaintingByName(name);
+    }
+    else {
+      loadPainting(id);
+    }
   }, []);
 
   return (
@@ -59,6 +70,7 @@ const Painting = ({
 Painting.propTypes = {
   painting: PropTypes.array.isRequired,
   loadPainting: PropTypes.func.isRequired,
+  loadPaintingByName: PropTypes.func.isRequired,
 };
 
 // == Export

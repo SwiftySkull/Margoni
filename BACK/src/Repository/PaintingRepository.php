@@ -22,6 +22,15 @@ class PaintingRepository extends ServiceEntityRepository
         $this->limitPerPage = $limitPerPage;
     }
 
+    public function getPaintingByTitle($title)
+    {
+        $qb = $this->createQueryBuilder('p')
+        ->orwhere('p.title LIKE :title')
+        ->setParameter('title', '%'.$title.'%');
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function getOneFromCategory($categ)
     {
         $entityManager = $this->getEntityManager();

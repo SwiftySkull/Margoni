@@ -34,6 +34,7 @@ const App = ({
       <Header />
       <Routes>
         <Route path="/peinture/:id/:name" element={<Painting />} />
+        <Route path="/peinture/:name" element={<Painting />} />
         <Route path="/biographie" element={<Biography />} />
         <Route path="/galerie/:choice/:select/:id" element={<PaintingList />} />
         <Route path="/galerie/:choice/:select" element={<PaintingList />} />

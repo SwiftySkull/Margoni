@@ -4,6 +4,7 @@ export const DISPLAY_PAINTINGS = 'DISPLAY_PAINTINGS';
 export const LOAD_ELEMENTS = 'LOAD_ELEMENTS';
 export const LOAD_PAINTING = 'LOAD_PAINTING';
 export const SAVE_PAINTING = 'SAVE_PAINTING';
+export const LOAD_PAINTING_BY_NAME = 'LOAD_PAINTING_BY_NAME';
 export const XXX = 'XXX';
 
 // ACTIONS CREATORS
@@ -30,4 +31,9 @@ export const loadPainting = (id) => ({
 export const savePainting = (painting) => ({
   type: SAVE_PAINTING,
   painting,
+});
+
+export const loadPaintingByName = (paintingName) => ({
+  type: LOAD_PAINTING_BY_NAME,
+  paintingName,
 });

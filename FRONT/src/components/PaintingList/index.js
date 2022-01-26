@@ -66,16 +66,21 @@ const PaintingList = ({
       <h2>{searchChosen}</h2>
       <h3 className="subtitle">Nombre de peintures trouvées : {results}</h3>
       <div className="list">
-        {paintings.map((paint) => (
-          <div className="tableau" key={paint.id}>
-            <Link className="card" to={`/peinture/${paint.id}/${stringForUrl(paint.title) ?? stringForUrl(paint.dbName)}`}>
-              <div>
-                <img src={`data:image/jpeg;base64,${paint.picture.file}`} alt="" />
-              </div>
-              <h4>{paint.title ?? paint.dbName}</h4>
-            </Link>
-          </div>
-        ))}
+        {paintings.map((paint) => {
+          const endUrl = paint.title ? stringForUrl(paint.title) : stringForUrl(paint.dbName);
+          const url = `/peinture/${paint.id}/${endUrl}`;
+
+          return (
+            <div className="tableau" key={paint.id}>
+              <Link className="card" to={url}>
+                <div>
+                  <img src={`data:image/jpeg;base64,${paint.picture.file}`} alt="" />
+                </div>
+                <h4>{paint.title ?? paint.dbName}</h4>
+              </Link>
+            </div>
+          );
+        })}
         {results == 0 && (
           <Link to="/galerie"><button type="button">Retour à la galerie</button></Link>
         )}

@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 
 import {
   loadPainting,
+  loadPaintingByName,
 } from 'src/actions/mainActions';
 
 import Painting from 'src/components/Painting';
@@ -20,6 +21,14 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   loadPainting: (id) => {
     dispatch(loadPainting(id));
+  },
+
+  loadPaintingByName: (paintingName) => {
+    dispatch(loadPaintingByName(paintingName));
+  },
+
+  loadPaintingById: (id) => {
+    dispatch(loadPaintingById(id));
   },
 });
 
