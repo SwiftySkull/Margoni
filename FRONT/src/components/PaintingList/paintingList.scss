@@ -61,7 +61,7 @@
           transition: 0.5s 0.5s;
         }
 
-        >div {
+        div {
           margin: auto 0;
 
           >img {
@@ -78,14 +78,19 @@
         }  
       }
     }
+  }
 
+  .button {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    
     button {
       background-color: white;
       border: vars.$boxBorder;
       border-radius: vars.$boxBorderRadius;
       padding: 0.6rem;
-      width: fit-content;
-      margin: 0.5rem auto;
+      margin: 1rem auto;
     
       @media (min-width: vars.$small) {
         font-size: 1.1rem;

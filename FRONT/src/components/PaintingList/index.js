@@ -81,9 +81,9 @@ const PaintingList = ({
             </div>
           );
         })}
-        {results == 0 && (
-          <Link to="/galerie"><button type="button">Retour à la galerie</button></Link>
-        )}
+      </div>
+      <div className="button">
+        <Link to="/galerie"><button type="button">Retour à la galerie</button></Link>
       </div>
     </div>
   );

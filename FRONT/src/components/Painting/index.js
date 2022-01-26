@@ -1,7 +1,7 @@
 // == Import npm
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 // == Import
 import SideBar from 'src/containers/SideBar';
@@ -60,6 +60,7 @@ const Painting = ({
             </div>
           )}
         </div>
+        <button type="button" onClick={() => window.history.back()}>Retour</button>
       </div>
       )}
       <SideBar />
