@@ -1,6 +1,7 @@
 import {
   SAVE_PAINTING,
   MODAL_STATUS,
+  SELECT_PAGE,
 } from 'src/actions/mainActions';
 
 import {
@@ -21,6 +22,7 @@ const initialState = {
   paintings: [],
   searchingType: 0,
   painting: {},
+  actualPage: 1,
 };
 
 /**
@@ -56,6 +58,12 @@ function mainReducer(state = initialState, action) {
       return {
         ...state,
         modalStatus: !state.modalStatus,
+      };
+
+    case SELECT_PAGE:
+      return {
+        ...state,
+        actualPage: action.page,
       };
 
     default:

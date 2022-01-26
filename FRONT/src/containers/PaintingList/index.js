@@ -15,6 +15,10 @@ import {
   loadPaintingsBySizeFormat,
 } from 'src/actions/sizeActions';
 
+import {
+  selectPage,
+} from 'src/actions/mainActions';
+
 import PaintingList from 'src/components/PaintingList';
 
 /**
@@ -71,6 +75,8 @@ const mapStateToProps = (state) => {
     searchChosen,
     results,
     paintings,
+    actualPage: state.main.actualPage,
+    numberOfPages: Math.round(results / 5),
   };
 };
 
@@ -100,6 +106,19 @@ const mapDispatchToProps = (dispatch) => ({
 
   loadPaintingsBySizeFormat: (select) => {
     dispatch(loadPaintingsBySizeFormat(select));
+  },
+
+  selectPage: (page, max) => {
+    let nextPage = page;
+
+    if (page === 0) {
+      nextPage = 1;
+    }
+    if (page >= max) {
+      nextPage = max;
+    }
+
+    dispatch(selectPage(nextPage));
   },
 });
 

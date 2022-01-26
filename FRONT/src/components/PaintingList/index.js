@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 // == Import
 import { stringForUrl } from 'src/utils/utils';
 
+import Navigation from './Navigation';
+
 import './paintingList.scss';
 
 // == Composant
@@ -20,8 +22,16 @@ const PaintingList = ({
   searchChosen,
   results,
   paintings,
+  actualPage,
+  selectPage,
+  numberOfPages,
 }) => {
-  const { choice, select, id } = useParams();
+  const {
+    choice,
+    select,
+    id,
+    page,
+  } = useParams();
 
   const choicePossibilities = ['categorie', 'technique', 'format'];
 
@@ -61,6 +71,21 @@ const PaintingList = ({
     }
   }, []);
 
+  const rows = [];
+
+  if (numberOfPages <= 5) {
+    for (let index = 1; index <= numberOfPages; index++) {
+      rows[index] = (<button type="button" className={actualPage == index ? 'page-active' : ''} onClick={() => selectPage(index, numberOfPages)}>{index}</button>);
+    }
+  }
+  else {
+    rows[0] = (<button type="button" className={actualPage == 1 ? 'page-active' : ''} onClick={() => selectPage(1, numberOfPages)}>1</button>);
+    rows[1] = (<button type="button" className={actualPage == 2 ? 'page-active' : ''} onClick={() => selectPage(2, numberOfPages)}>2</button>);
+    rows[2] = (<button type="button" className={actualPage > 2 && actualPage < numberOfPages - 1 ? 'page-active' : ''}>{actualPage > 2 && actualPage < numberOfPages - 1 ? actualPage : '...'}</button>);
+    rows[3] = (<button type="button" className={actualPage == numberOfPages - 1 ? 'page-active' : ''} onClick={() => selectPage(numberOfPages - 1, numberOfPages)}>{numberOfPages - 1}</button>);
+    rows[4] = (<button type="button" className={actualPage == numberOfPages ? 'page-active' : ''} onClick={() => selectPage(numberOfPages, numberOfPages)}>{numberOfPages}</button>);
+  }
+
   return (
     <div id="paintingList">
       <h2>{searchChosen}</h2>
@@ -82,7 +107,25 @@ const PaintingList = ({
           );
         })}
       </div>
-      <div className="button">
+      {numberOfPages > 1 && (
+        <nav className="navigation">
+          <button type="button" onClick={() => selectPage(actualPage - 1, numberOfPages)}>Précédent</button>
+          {numberOfPages <= 5 && (
+            <div>
+              {rows.map((raw) => (raw))}
+            </div>
+          )}
+          {numberOfPages > 5 && (
+          <Navigation
+            actualPage={actualPage}
+            selectPage={selectPage}
+            numberOfPages={numberOfPages}
+          />
+          )}
+          <button type="button" onClick={() => selectPage(actualPage + 1, numberOfPages)}>Suivant</button>
+        </nav>
+      )}
+      <div className="back-button">
         <Link to="/galerie"><button type="button">Retour à la galerie</button></Link>
       </div>
     </div>
@@ -99,6 +142,9 @@ PaintingList.propTypes = {
   searchChosen: PropTypes.string.isRequired,
   results: PropTypes.string.isRequired,
   paintings: PropTypes.array.isRequired,
+  actualPage: PropTypes.number.isRequired,
+  selectPage: PropTypes.func.isRequired,
+  numberOfPages: PropTypes.number.isRequired,
 };
 
 // == Export

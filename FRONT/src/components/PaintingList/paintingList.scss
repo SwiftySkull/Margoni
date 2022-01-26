@@ -80,7 +80,7 @@
     }
   }
 
-  .button {
+  .back-button {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -119,6 +119,79 @@
         color: vars.$textHoverColor;
         text-decoration: vars.$textHoverDecoration;
         box-shadow: vars.$boxHoverShadow;
+      }
+    }
+  }
+
+  .navigation {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    margin: 0 auto;
+  
+    >button {
+      background-color: white;
+      border: vars.$boxBorder;
+      border-radius: vars.$boxBorderRadius;
+      padding: 0.6rem;
+      margin: 1rem auto;
+      width: 15%;
+      align-self: center;
+
+      &:hover {
+        color: vars.$textHoverColor;
+        text-decoration: vars.$textHoverDecoration;
+        box-shadow: vars.$boxHoverShadow;
+      }
+    }
+
+    div {
+      display: flex;
+      justify-content: center;
+      width: 70%;
+      
+      button {
+        background-color: white;
+        border: vars.$boxBorder;
+        padding: 0.6rem;
+        width: 100%;
+        text-align: center;
+        align-self: center;
+
+        &:first-child {
+          border-radius: vars.$boxBorderRadius;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+          margin-left: 1rem;
+        }
+
+        &:last-child {
+          border-radius: vars.$boxBorderRadius;
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+          margin-right: 1rem;
+        }
+
+        &:hover {
+          color: vars.$textHoverColor;
+          text-decoration: vars.$textHoverDecoration;
+          box-shadow: vars.$boxHoverShadow;
+        }
+
+        &.page-active {
+          background-color: vars.$mainColor;
+          font-weight: bold;
+          border: 1px solid vars.$secondaryColor;
+        }
+      }
+
+      select {
+        background-color: white;
+        border: vars.$boxBorder;
+        padding: 0.6rem;
+        width: 100%;
+        text-align: center;
+        align-self: center;
       }
     }
   }
