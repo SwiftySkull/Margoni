@@ -1,7 +1,5 @@
 import { connect } from 'react-redux';
 
-import { shuffleCategories, getPictureFromCategory } from 'src/utils/utils';
-
 import { chooseGalerie } from 'src/actions/galerieActions';
 import { sizeChoice } from 'src/actions/sizeActions';
 
@@ -12,9 +10,6 @@ import Galerie from 'src/components/Galerie';
  */
 const mapStateToProps = (state) => {
   const { categories, shuffledPictures } = state.category;
-  const shuffledCategories = shuffleCategories(categories, 6);
-
-  const limitedPictures = getPictureFromCategory(shuffledPictures, categories);
 
   return {
     categories: categories.map((categ) => [categ.id, categ.name]),
@@ -22,7 +17,6 @@ const mapStateToProps = (state) => {
     galeryChoice: state.galerie.galeryChoice,
     techniques: state.technique.techniques.map((tech) => [tech.id, tech.type]),
     sizes: state.size.sizes,
-    picturesBySize: state.size.paintings,
     sizeChosen: state.size.sizeChosen,
   };
 };

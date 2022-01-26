@@ -1,7 +1,7 @@
 // == Import npm
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 // == Import
 import SideBar from 'src/containers/SideBar';
@@ -13,6 +13,8 @@ const Painting = ({
   painting,
   loadPainting,
   loadPaintingByName,
+  displayModal,
+  modalStatus,
 }) => {
   const { id, name } = useParams();
 
@@ -35,7 +37,13 @@ const Painting = ({
       {painting.id !== undefined && (
       <div className="tableau">
         <h2>{painting.title ?? painting.dbName}</h2>
-        <div className="image"><img src={`data:image/jpeg;base64,${painting.picture.file}`} alt={painting.title ?? painting.dbName} /></div>
+        <div className="image">
+          <img
+            src={`data:image/jpeg;base64,${painting.picture.file}`}
+            alt={painting.title ?? painting.dbName}
+            onClick={displayModal}
+          />
+        </div>
         <div className="painting-infos">
           <p><span>Date</span> : {painting.date != null ? painting.date : 'non renseignée'}</p>
           <p>
@@ -61,6 +69,19 @@ const Painting = ({
           )}
         </div>
         <button type="button" onClick={() => window.history.back()}>Retour</button>
+        <div className="modal-box" style={{ display: modalStatus ? 'block' : 'none' }}>
+          <div className="image-modal">
+            <img
+              src={`data:image/jpeg;base64,${painting.picture.file}`}
+              alt={painting.title ?? painting.dbName}
+              onClick={displayModal}
+            />
+          </div>
+          <div className="close-modal-button" onClick={displayModal}>
+            <p>+</p>
+            <p>Fermer</p>
+          </div>
+        </div>
       </div>
       )}
       <SideBar />
@@ -72,6 +93,8 @@ Painting.propTypes = {
   painting: PropTypes.array.isRequired,
   loadPainting: PropTypes.func.isRequired,
   loadPaintingByName: PropTypes.func.isRequired,
+  displayModal: PropTypes.func.isRequired,
+  modalStatus: PropTypes.string.isRequired,
 };
 
 // == Export

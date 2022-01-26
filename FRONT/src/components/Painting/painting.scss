@@ -3,7 +3,7 @@
 #painting {
   display: flex;
   justify-content: space-between;
-
+  
   .tableau {
     border: vars.$boxBorder;
     border-radius: vars.$boxBorderRadius;
@@ -48,6 +48,10 @@
       img {
         max-height: 50vh;
         max-width: 100%;
+
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
 
@@ -112,6 +116,70 @@
         color: vars.$textHoverColor;
         text-decoration: vars.$textHoverDecoration;
         box-shadow: vars.$boxHoverShadow;
+      }
+    }
+
+    .modal-box {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      padding: 3rem;
+      background-color: rgb(0, 0, 0);
+
+      .image-modal {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+  
+        img {
+          max-height: 100%;
+          max-width: 100%;
+          align-self: center;
+          
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+      }
+
+      .close-modal-button {
+        color: vars.$mainColor;
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 0.15rem 1.8rem 0;
+
+        @media (min-width: vars.$big) {
+          right: 2rem;
+          top: 2rem;
+        }
+
+        >p:first-child {
+          font-size: 2rem;
+          transform: rotate(45deg);
+
+          @media (min-width: vars.$big) {
+            font-size: 3rem;
+          }
+        }
+
+        >p:last-child {
+          display: none;
+        }
+
+        &:hover {
+          border: 1px solid vars.$mainColor;
+          padding: 0 1rem 1rem;
+          cursor: pointer;
+
+          >p:last-child {
+            display: inline;
+          }
+        }
       }
     }
   }

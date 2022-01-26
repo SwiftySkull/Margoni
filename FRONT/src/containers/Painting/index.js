@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {
   loadPainting,
   loadPaintingByName,
+  displayModal,
 } from 'src/actions/mainActions';
 
 import Painting from 'src/components/Painting';
@@ -13,6 +14,7 @@ import Painting from 'src/components/Painting';
 
 const mapStateToProps = (state) => ({
   painting: state.main.painting,
+  modalStatus: state.main.modalStatus,
 });
 
 /**
@@ -27,8 +29,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(loadPaintingByName(paintingName));
   },
 
-  loadPaintingById: (id) => {
-    dispatch(loadPaintingById(id));
+  displayModal: () => {
+    dispatch(displayModal());
   },
 });
 

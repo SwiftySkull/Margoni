@@ -1,6 +1,6 @@
 import {
-  XXX,
   SAVE_PAINTING,
+  MODAL_STATUS,
 } from 'src/actions/mainActions';
 
 import {
@@ -16,7 +16,7 @@ import {
 } from 'src/actions/sizeActions';
 
 const initialState = {
-  xxx: true,
+  modalStatus: false,
   totalPaintings: 0,
   paintings: [],
   searchingType: 0,
@@ -28,16 +28,6 @@ const initialState = {
  */
 function mainReducer(state = initialState, action) {
   switch (action.type) {
-    /**
-     * Display or hide the sidebar menu
-     */
-    case XXX:
-      return {
-        ...state,
-        totalPaintings: action.totalPaintings,
-        paintings: action.paintings,
-      };
-
     case SAVE_PAINTINGS_OF_CATEGORY:
       return {
         ...state,
@@ -60,6 +50,12 @@ function mainReducer(state = initialState, action) {
       return {
         ...state,
         painting: action.painting,
+      };
+
+    case MODAL_STATUS:
+      return {
+        ...state,
+        modalStatus: !state.modalStatus,
       };
 
     default:

@@ -18,7 +18,6 @@ const Galerie = ({
   techniques,
   sizes,
   sizeChoice,
-  picturesBySize,
   sizeChosen,
 }) => {
   // if (sizeChosen.format === 'NULL') {
@@ -56,16 +55,6 @@ const Galerie = ({
       <div className="tableaux-list">
         {galeryChoice === 1 && <Choosing array={categories} pictures={pictures} altType="catégorie" urlRefer="categorie" />}
         {galeryChoice === 2 && <Choosing array={techniques} pictures={pictures} altType="technique" urlRefer="technique" />}
-        {/* {galeryChoice === 3 && picturesBySize.map((pic) => (
-          <Link to="" className="tableau" key={pic.id}>
-            <div className="card">
-              <div>
-                <img src={`data:image/jpeg;base64,${pic.picture.file}`} alt={`Peinture ${pic.title ?? pic.dbName} au format ${sizeChosen}`} />
-              </div>
-              <h3>{pic.title ?? pic.dbName}</h3>
-            </div>
-          </Link>
-        ))} */}
       </div>
     </div>
   );
@@ -79,7 +68,6 @@ Galerie.propTypes = {
   techniques: PropTypes.array.isRequired,
   sizes: PropTypes.array.isRequired,
   sizeChoice: PropTypes.func.isRequired,
-  picturesBySize: PropTypes.array.isRequired,
   sizeChosen: PropTypes.array.isRequired,
 };
 

@@ -5,7 +5,7 @@ export const LOAD_ELEMENTS = 'LOAD_ELEMENTS';
 export const LOAD_PAINTING = 'LOAD_PAINTING';
 export const SAVE_PAINTING = 'SAVE_PAINTING';
 export const LOAD_PAINTING_BY_NAME = 'LOAD_PAINTING_BY_NAME';
-export const XXX = 'XXX';
+export const MODAL_STATUS = 'MODAL_STATUS';
 
 // ACTIONS CREATORS
 
@@ -15,12 +15,6 @@ export const displayPaintings = () => ({
 
 export const loadElements = () => ({
   type: LOAD_ELEMENTS,
-});
-
-export const xxx = (result) => ({
-  type: XXX,
-  totalPaintings: result[0],
-  paintings: result[1],
 });
 
 export const loadPainting = (id) => ({
@@ -36,4 +30,8 @@ export const savePainting = (painting) => ({
 export const loadPaintingByName = (paintingName) => ({
   type: LOAD_PAINTING_BY_NAME,
   paintingName,
+});
+
+export const displayModal = () => ({
+  type: MODAL_STATUS,
 });
