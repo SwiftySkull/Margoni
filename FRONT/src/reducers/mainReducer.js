@@ -1,5 +1,6 @@
 import {
   XXX,
+  SAVE_PAINTING,
 } from 'src/actions/mainActions';
 
 import {
@@ -19,6 +20,7 @@ const initialState = {
   totalPaintings: 0,
   paintings: [],
   searchingType: 0,
+  painting: {},
 };
 
 /**
@@ -52,6 +54,12 @@ function mainReducer(state = initialState, action) {
       return {
         ...state,
         searchingType: 3,
+      };
+
+    case SAVE_PAINTING:
+      return {
+        ...state,
+        painting: action.painting,
       };
 
     default:

@@ -4,6 +4,8 @@ import axios from 'axios';
 import {
   DISPLAY_PAINTINGS,
   LOAD_ELEMENTS,
+  LOAD_PAINTING,
+  savePainting,
 } from 'src/actions/mainActions';
 
 import {
@@ -17,7 +19,7 @@ import {
 } from 'src/actions/techniqueActions';
 
 import {
-  saveSizes,  
+  saveSizes,
 } from 'src/actions/sizeActions';
 
 // URL for the Axios requests
@@ -76,16 +78,30 @@ const mainMiddleware = (store) => (next) => (action) => {
 
     case LOAD_SHUFFLED_PICTURES:
       axios.get(`${URL}/getone/category`)
-        .then((responseBis) => {
+        .then((response) => {
           // console.log(responseBis.data);
-          store.dispatch(shuffledPictures(responseBis.data, action.categories));
+          store.dispatch(shuffledPictures(response.data, action.categories));
         })
-        .catch((errorBis) => {
-          console.log(errorBis);
+        .catch((error) => {
+          console.log(error);
         });
 
       next(action);
       break;
+
+    case LOAD_PAINTING:
+      axios.get(`${URL}/painting/${action.id}`)
+        .then((response) => {
+          // console.log(responseBis.data);
+          store.dispatch(savePainting(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      next(action);
+      break;
+
     // Default action.
     default:
       next(action);

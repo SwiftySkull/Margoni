@@ -68,12 +68,12 @@ const PaintingList = ({
       <div className="list">
         {paintings.map((paint) => (
           <div className="tableau" key={paint.id}>
-            <a className="card" href="#">
+            <Link className="card" to={`/peinture/${paint.id}/${stringForUrl(paint.title) ?? stringForUrl(paint.dbName)}`}>
               <div>
                 <img src={`data:image/jpeg;base64,${paint.picture.file}`} alt="" />
               </div>
               <h4>{paint.title ?? paint.dbName}</h4>
-            </a>
+            </Link>
           </div>
         ))}
         {results == 0 && (

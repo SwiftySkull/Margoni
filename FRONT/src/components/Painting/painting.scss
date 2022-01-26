@@ -1,0 +1,91 @@
+@use 'src/styles/_vars';
+
+#painting {
+  display: flex;
+  justify-content: space-between;
+
+  .tableau {
+    border: vars.$boxBorder;
+    border-radius: vars.$boxBorderRadius;
+    padding: 1rem 1rem;
+    min-height: 200px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @media (min-width: vars.$small) {
+      padding: 1rem 2rem;
+    }
+
+    @media (min-width: 900px) {
+      margin-right: 1rem;
+    }
+  
+    h2 {
+      color: vars.$mainColor;
+      font-size: 2rem;
+      font-style: italic;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: 1px 1px 1px black;
+      width: 100%;
+      margin-bottom: 1rem;
+    }  
+
+    .image {
+      width: 100%;
+      text-align: center;
+      background-color: black;
+      padding: 2rem;
+      border-radius: vars.$boxBorderRadius;
+      margin-bottom: 1rem;
+
+      img {
+        max-height: 50vh;
+        max-width: 100%;
+      }
+    }
+
+    span {
+      font-weight: bold;
+    }
+
+    .painting-infos {
+      height: 100%;
+      line-height: 2rem;
+      
+      @media (min-width: vars.$small) {
+        margin-left: 2rem;
+      }
+
+      @media (min-width: vars.$medium) {
+        font-size: 1.3rem;
+      }
+
+      >p {
+        margin-bottom: 0.5rem;
+      }
+
+      ul {
+        margin-bottom: 0.5rem;
+
+        li {
+          list-style: disc;
+          margin-left: 2rem;
+          color: vars.$mainColor;
+  
+          p {
+            color: black;
+          }
+        }  
+      }
+
+      >div {
+        >p:last-child {
+          margin-left: 2rem;
+        }
+      }
+    }
+  }
+}

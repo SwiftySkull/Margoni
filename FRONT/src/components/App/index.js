@@ -15,6 +15,7 @@ import Home from 'src/containers/Home';
 import Biography from 'src/containers/Biography';
 import Galerie from 'src/containers/Galerie';
 import PaintingList from 'src/containers/PaintingList';
+import Painting from 'src/containers/Painting';
 import Footer from 'src/containers/Footer';
 import Error from 'src/components/Error';
 
@@ -32,6 +33,7 @@ const App = ({
     <div className="app">
       <Header />
       <Routes>
+        <Route path="/peinture/:id/:name" element={<Painting />} />
         <Route path="/biographie" element={<Biography />} />
         <Route path="/galerie/:choice/:select/:id" element={<PaintingList />} />
         <Route path="/galerie/:choice/:select" element={<PaintingList />} />
