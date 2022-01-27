@@ -57,3 +57,30 @@ export const getPictureFromCategory = (pictures, categories) => {
     return picturesFilterder;
   }
 };
+
+/**
+ * Change a string so it's URL friendly
+ *
+ * @param {string} string The string to change
+ * @returns A new string IRL friendly
+ */
+export const stringForUrl = (string = '') => {
+  const newString = string
+    .toLowerCase()
+    .replace(/[ '/,]/g, '-')
+    .replace('à', 'a')
+    .replace(/[éèê]/g, 'e')
+    .replace('ù', 'u')
+    .replace('ô', 'o')
+    .replace('ç', 'c');
+
+  return newString;
+};
+
+export const urlToString = (url) => {
+  const stringFromUrl = url
+    .replace(/-/g, ' ')
+    .replace(/-l-/g, ' l\'');
+
+  return stringFromUrl;
+};

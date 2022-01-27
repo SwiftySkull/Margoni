@@ -31,7 +31,7 @@ class Size
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=12)
      * 
      * @Groups("paintings_browse")
      * @Groups("sizes_browse")

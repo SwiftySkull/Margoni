@@ -1,10 +1,14 @@
 import {
   SHUFFLED_PICTURES,
+  SAVE_PAINTINGS_OF_CATEGORY,
 } from 'src/actions/categoryActions';
 
 const initialState = {
   categories: [],
   shuffledPictures: [],
+  categoryChosen: {},
+  results: '0',
+  paintings: [],
 };
 
 /**
@@ -17,6 +21,14 @@ function categoryReducer(state = initialState, action) {
         ...state,
         categories: action.categories,
         shuffledPictures: action.picture,
+      };
+
+    case SAVE_PAINTINGS_OF_CATEGORY:
+      return {
+        ...state,
+        categoryChosen: action.categoryChosen,
+        results: action.results,
+        paintings: action.paintings,
       };
 
     default:

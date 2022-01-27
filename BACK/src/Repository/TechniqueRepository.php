@@ -36,6 +36,21 @@ class TechniqueRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function findByType($type)
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT t 
+            FROM App\Entity\Technique t
+            WHERE t.type = :techType'
+
+        )->setParameter('techType', $type);
+
+        return $query->getOneOrNullResult();
+
+    }
+
     // /**
     //  * @return Technique[] Returns an array of Technique objects
     //  */

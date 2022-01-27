@@ -54,10 +54,33 @@ class PaintingController extends AbstractController
     }
 
     /**
-     * @Route("/api/painting/{id<\d+>}", name="api_painting_read", methods={"GET"})
+     * @Route("/api/painting/id/{id<\d+>}", name="api_painting_read", methods={"GET"})
      */
     public function read(Painting $painting = null)
     {
+        if (null === $painting) {
+            $message = [
+                'status' => Response::HTTP_NOT_FOUND,
+                'error' => 'Tableau non trouvé.',
+            ];
+
+            return $this->json($message, Response::HTTP_NOT_FOUND);
+        }
+
+        return $this->json($painting, 200, [], ['groups' => ['paintings_browse', 'painting_read']]);
+    }
+
+    /**
+     * @Route("/api/painting/title/{title}", name="api_painting_read_by_title", methods={"GET"})
+     */
+    public function readByTitle(Painting $painting = null, PaintingRepository $pr, $title)
+    {
+        if (null !== $title) {
+            $stringFromUrl = str_replace(['-l-', '-'], [' l\'', ' '], $title);
+        }
+
+        $painting = $pr->getPaintingByTitle($stringFromUrl);
+
         if (null === $painting) {
             $message = [
                 'status' => Response::HTTP_NOT_FOUND,

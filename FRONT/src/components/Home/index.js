@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 // == Import
 import Avis from 'src/containers/Avis';
 import Expositions from 'src/containers/Expositions';
-import Galerie from 'src/containers/Galerie';
+import SideBar from 'src/containers/SideBar';
 
 import Autoportrait from 'src/assets/images/denise_margoni_autoportrait.jpg';
 
@@ -35,7 +35,7 @@ const Home = () => (
       <Avis />
       <Expositions />
     </div>
-    <Galerie />
+    <SideBar />
   </div>
 );
 

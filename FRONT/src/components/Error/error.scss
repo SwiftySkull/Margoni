@@ -1,0 +1,9 @@
+@use 'src/styles/_vars';
+
+#error {
+  border: vars.$boxBorder;
+  border-radius: vars.$boxBorderRadius;
+  padding: 1rem 2rem;
+  margin-top: 1rem;
+
+}

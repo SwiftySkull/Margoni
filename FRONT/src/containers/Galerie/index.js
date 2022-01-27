@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
-import { shuffleCategories, getPictureFromCategory } from 'src/utils/utils';
-import { displayPaintings } from 'src/actions/mainActions';
+import { chooseGalerie } from 'src/actions/galerieActions';
+import { sizeChoice } from 'src/actions/sizeActions';
 
 import Galerie from 'src/components/Galerie';
 
@@ -10,13 +10,14 @@ import Galerie from 'src/components/Galerie';
  */
 const mapStateToProps = (state) => {
   const { categories, shuffledPictures } = state.category;
-  const shuffledCategories = shuffleCategories(categories, 3);
-
-  const limitedPictures = getPictureFromCategory(shuffledPictures, shuffledCategories);
 
   return {
-    categories: shuffledCategories,
-    pictures: limitedPictures !== undefined ? limitedPictures : [],
+    categories: categories.map((categ) => [categ.id, categ.name]),
+    pictures: shuffledPictures,
+    galeryChoice: state.galerie.galeryChoice,
+    techniques: state.technique.techniques.map((tech) => [tech.id, tech.type]),
+    sizes: state.size.sizes,
+    sizeChosen: state.size.sizeChosen,
   };
 };
 
@@ -24,8 +25,12 @@ const mapStateToProps = (state) => {
  * To dispatch function in the component
  */
 const mapDispatchToProps = (dispatch) => ({
-  displayPaintings: () => {
-    dispatch(displayPaintings());
+  chooseGalerie: (id) => {
+    dispatch(chooseGalerie(id));
+  },
+
+  sizeChoice: (id) => {
+    dispatch(sizeChoice(id));
   },
 });
 

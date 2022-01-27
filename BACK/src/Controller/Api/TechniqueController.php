@@ -24,7 +24,7 @@ class TechniqueController extends AbstractController
      */
     public function browse(TechniqueRepository $techniqueRepository): Response
     {
-        $techniques = $techniqueRepository->findAll();
+        $techniques = $techniqueRepository->findAllAsc();
 
         return $this->json($techniques, 200, [], ['groups' => 'techniques_browse']);
     }
@@ -56,5 +56,24 @@ class TechniqueController extends AbstractController
         $results = [$technique, ['total results' => $total], $paintings];
 
         return $this->json($results, 200, [], ['groups' => ['paintings_browse', 'techniques_browse']]);
+    }
+
+    /**
+     * @Route("/api/techniquebytype/{type}", name="api_technique_by_type", methods={"GET"})
+     */
+    public function getTechniqueByType(Technique $technique = null, $type, TechniqueRepository $techniqueRepository)
+    {
+        $technique = $techniqueRepository->findByType($type);
+
+        if (null === $technique) {
+            $message = [
+                'status' => Response::HTTP_NOT_FOUND,
+                'error' => 'Technique non trouvée.',
+            ];
+
+            return $this->json($message, Response::HTTP_NOT_FOUND);
+        }
+
+        return $this->json($technique, 200, [], ['groups' => ['techniques_browse']]);
     }
 }

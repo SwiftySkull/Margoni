@@ -81,4 +81,21 @@ class CategoryController extends AbstractController
 
         return $this->json($shuffledPictures, 200, [], ['groups' => ['paintings_browse', 'categories_browse']]);
     }
+
+    /**
+     * @Route("/api/categbyname/{name}", name="api_category_by_name", methods={"GET"})
+     */
+    public function getCategoryByName(Category $category = null)
+    {
+        if (null === $category) {
+            $message = [
+                'status' => Response::HTTP_NOT_FOUND,
+                'error' => 'Catégorie non trouvée.',
+            ];
+
+            return $this->json($message, Response::HTTP_NOT_FOUND);
+        }
+
+        return $this->json($category, 200, [], ['groups' => ['categories_browse']]);
+    }
 }
