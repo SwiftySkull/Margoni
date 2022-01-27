@@ -7,6 +7,7 @@ export const SAVE_PAINTING = 'SAVE_PAINTING';
 export const LOAD_PAINTING_BY_NAME = 'LOAD_PAINTING_BY_NAME';
 export const MODAL_STATUS = 'MODAL_STATUS';
 export const SELECT_PAGE = 'SELECT_PAGE';
+export const PAINTING_OF_PAGE = 'PAINTING_OF_PAGE';
 
 // ACTIONS CREATORS
 
@@ -40,4 +41,12 @@ export const displayModal = () => ({
 export const selectPage = (page) => ({
   type: SELECT_PAGE,
   page,
+});
+
+export const paintingOfPage = (page, choice, select, selectId) => ({
+  type: PAINTING_OF_PAGE,
+  page,
+  choice,
+  select,
+  selectId,
 });

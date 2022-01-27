@@ -67,6 +67,12 @@
           transition: 0.5s 0.5s;
         }
 
+        &:active {
+          box-shadow: 5px 5px 5px vars.$secondaryColor;
+          color: vars.$secondaryColor;
+          background-color: vars.$clickBackgroundColor;
+        }
+
         div {
           margin: auto 0;
 
@@ -126,56 +132,57 @@
         text-decoration: vars.$textHoverDecoration;
         box-shadow: vars.$boxHoverShadow;
       }
+
+      &:active {
+        color: vars.$secondaryColor;
+        background-color: vars.$clickBackgroundColor;
+      }
     }
   }
 
   .navigation {
     display: flex;
-    justify-content: center;
-    width: 50%;
+    justify-content: space-around;
+    width: 100%;
     margin: 0 auto;
+    flex-wrap: wrap;
   
-    >button {
-      background-color: white;
-      border: vars.$boxBorder;
-      border-radius: vars.$boxBorderRadius;
-      padding: 0.6rem;
-      margin: 1rem auto;
-      width: 15%;
+    @media (min-width: vars.$medium) {
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      width: 80%;
+    }
+  
+    >a {
       align-self: center;
 
-      &:hover {
-        color: vars.$textHoverColor;
-        text-decoration: vars.$textHoverDecoration;
-        box-shadow: vars.$boxHoverShadow;
-      }
-    }
+      &:first-child {
+        order: -2;
 
-    div {
-      display: flex;
-      justify-content: center;
-      width: 70%;
+        @media (min-width: vars.$medium) {
+          order: 0;
+        }
+      }
       
-      button {
+      &:last-child {
+        order: -1;
+
+        @media (min-width: vars.$medium) {
+          order: 0;
+        }
+      }
+
+      >button {
         background-color: white;
         border: vars.$boxBorder;
+        border-radius: vars.$boxBorderRadius;
         padding: 0.6rem;
-        width: 100%;
-        text-align: center;
-        align-self: center;
+        margin: 1rem auto;      
+        width: 100px;
 
-        &:first-child {
-          border-radius: vars.$boxBorderRadius;
-          border-top-right-radius: 0;
-          border-bottom-right-radius: 0;
-          margin-left: 1rem;
-        }
-
-        &:last-child {
-          border-radius: vars.$boxBorderRadius;
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
-          margin-right: 1rem;
+        @media (min-width: vars.$big) {
+          width: 100px;
+          font-weight: bold;
         }
 
         &:hover {
@@ -184,13 +191,70 @@
           box-shadow: vars.$boxHoverShadow;
         }
 
+        &:active {
+          background-color: vars.$clickBackgroundColor;
+        }
+      }
+    }
+
+    div {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      flex-wrap: wrap;
+      margin: 0.5rem 0;
+
+      @media (min-width: vars.$medium) {
+        width: 70%;
+        flex-wrap: nowrap;
+        margin: unset;
+      }
+
+      >a {
+        background-color: white;
+        border: vars.$boxBorder;
+        padding: 0.6rem;
+        width: 20%;
+        text-align: center;
+        align-self: center;
+
+        &:first-child {
+          border-radius: vars.$boxBorderRadius;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+
+          @media (min-width: vars.$medium) {
+            margin-left: 1rem;
+          }
+        }
+  
+        &:last-child {
+          border-radius: vars.$boxBorderRadius;
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+
+          @media (min-width: vars.$medium) {
+            margin-right: 1rem;
+          }
+        }
+
+        &:hover {
+          color: vars.$textHoverColor;
+          text-decoration: vars.$textHoverDecoration;
+          box-shadow: vars.$boxHoverShadow;
+        }
+  
+        &:active {
+          background-color: vars.$clickBackgroundColor;
+        }
+
         &.page-active {
           background-color: vars.$mainColor;
           font-weight: bold;
           border: 1px solid vars.$secondaryColor;
         }
       }
-
+    
       select {
         background-color: white;
         border: vars.$boxBorder;

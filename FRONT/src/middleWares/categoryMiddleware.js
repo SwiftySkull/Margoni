@@ -11,6 +11,10 @@ import {
   saveCategoryShuffledPictures,
 } from 'src/actions/categoryActions';
 
+import {
+  PAINTING_OF_PAGE,
+} from 'src/actions/mainActions';
+
 // URL for the Axios requests
 const URL = 'http://localhost:8888/api';
 
@@ -48,6 +52,27 @@ const categoryMiddleware = (store) => (next) => (action) => {
           console.log(error);
           window.location = '/error';
         });
+
+      next(action);
+      break;
+
+    case PAINTING_OF_PAGE:
+      if (action.choice === 'categorie') {
+        console.log(`${URL}/category/${action.selectId}/page/${action.page}`);
+        axios.get(`${URL}/category/${action.selectId}/page/${action.page}`)
+          .then((response) => {
+            if (stringForUrl(response.data[0].name) !== action.select) {
+              window.location = `/galerie/categorie/${stringForUrl(response.data[0].name)}/${response.data[0].id}/page/${action.page}`;
+            }
+            else {
+              store.dispatch(savePaintingsOfCategory(response.data[0], response.data[1]['total results'], response.data[2]));
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            window.location = '/error';
+          });
+      }
 
       next(action);
       break;

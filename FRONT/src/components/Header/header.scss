@@ -34,6 +34,11 @@
       &:hover {
         text-shadow: 3px 3px 3px black;
       }
+
+      &:active {
+        text-shadow: 2px 2px 2px black;
+        color: vars.$secondaryColor;
+      }
     }
 
     p {
@@ -50,7 +55,12 @@
 
       &:hover {
         text-decoration: vars.$textHoverDecoration;
+        text-shadow: 1px 1px 1px black;
+      }
+
+      &:active {
         text-shadow: 0.5px 0.5px 0.5px black;
+        color: vars.$secondaryColor;
       }
     }
   }

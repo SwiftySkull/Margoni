@@ -37,7 +37,7 @@ const Galerie = ({
       </select>
       {sizeChosen !== undefined && (
       <div>
-        <Link to={`/galerie/format/${stringForUrl(sizeChosen.format)}/${sizeChosen.id}`}>
+        <Link to={`/galerie/format/${stringForUrl(sizeChosen.format)}/${sizeChosen.id}/page/1`}>
           <button type="button" className="size-search">
             Valider Recherche
           </button>

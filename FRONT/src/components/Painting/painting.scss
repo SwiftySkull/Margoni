@@ -90,6 +90,11 @@
               text-decoration: vars.$textHoverDecoration;
               color: vars.$textHoverColor;
             }
+
+            &:active {
+              text-shadow: 0.5px 0.5px 0.5px black;
+              color: vars.$secondaryColor;
+            }
           }
         }  
       }
@@ -121,6 +126,11 @@
         color: vars.$textHoverColor;
         text-decoration: vars.$textHoverDecoration;
         box-shadow: vars.$boxHoverShadow;
+      }
+
+      &:active {
+        color: vars.$secondaryColor;
+        background-color: vars.$clickBackgroundColor;
       }
     }
 

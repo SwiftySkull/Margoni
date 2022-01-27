@@ -17,6 +17,7 @@ import {
 
 import {
   selectPage,
+  paintingOfPage,
 } from 'src/actions/mainActions';
 
 import PaintingList from 'src/components/PaintingList';
@@ -82,7 +83,7 @@ const mapStateToProps = (state) => {
     results,
     paintings,
     actualPage: state.main.actualPage,
-    numberOfPages: Math.round(results / 12),
+    numberOfPages: Math.ceil(results / 12),
   };
 };
 
@@ -125,6 +126,29 @@ const mapDispatchToProps = (dispatch) => ({
     }
 
     dispatch(selectPage(nextPage));
+  },
+
+  paintingOfPage: (page, max, choice, select, selectId) => {
+    let nextPage = page;
+
+    if (page >= max) {
+      nextPage = max;
+    }
+
+    if (page <= 0) {
+      nextPage = 1;
+    }
+
+    dispatch(paintingOfPage(nextPage, choice, select, selectId));
+  },
+
+  paintingOfNewPage: (page, choice, select, selectId) => {
+    let nextPage = page;
+    if (page <= 0) {
+      nextPage = 1;
+    }
+
+    dispatch(paintingOfPage(nextPage, choice, select, selectId));
   },
 });
 

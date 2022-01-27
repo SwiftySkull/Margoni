@@ -81,9 +81,14 @@
           }
 
           &:hover {
-            color: vars.$textHoverColor;
+            color: vars.$mainColor;
             text-decoration: vars.$textHoverDecoration;
             box-shadow: vars.$boxHoverShadow;
+          }
+
+          &:active {
+            background-color: vars.$clickBackgroundColor;
+            color: vars.$secondaryColor;
           }
         }  
       }

@@ -28,14 +28,10 @@
       text-decoration: vars.$textHoverDecoration;
       box-shadow: vars.$boxHoverShadow;
     }
-  }
 
-  >p {
-    margin: 0 auto;
-
-    &:hover {
-      color: vars.$textHoverColor;
-      text-decoration: vars.$textHoverDecoration;
+    &:active {
+      background-color: vars.$clickBackgroundColor;
+      color: vars.$secondaryColor;
     }
   }
 
@@ -69,6 +65,16 @@
             box-shadow: 3px 3px 3px vars.$secondaryColor;
           }
         }
+
+        &:active {
+          p {
+            color: vars.$secondaryColor;
+          }
+
+          img {
+            box-shadow: 1.5px 1.5px 1.5px vars.$secondaryColor;
+          }
+        }  
       }
     }
   }

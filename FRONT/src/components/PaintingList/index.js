@@ -26,13 +26,15 @@ const PaintingList = ({
   selectPage,
   numberOfPages,
   specDate,
+  paintingOfPage,
+  paintingOfNewPage,
 }) => {
   const {
     choice,
     select,
     id,
-    page,
   } = useParams();
+  let { page } = useParams();
 
   const choicePossibilities = ['categorie', 'technique', 'format'];
 
@@ -46,7 +48,10 @@ const PaintingList = ({
         loadPaintingsByCategoryName(select);
       }
       else {
-        loadPaintingsOfCategory(id, select);
+        if (page === undefined) {
+          page = 1;
+        }
+        paintingOfNewPage(page, choice, select, id);
       }
     }
     if (choice === 'technique') {
@@ -54,7 +59,10 @@ const PaintingList = ({
         loadPaintingsByTechniqueType(select);
       }
       else {
-        loadPaintingsOfTechnique(id, select);
+        if (page === undefined) {
+          page = 1;
+        }
+        paintingOfNewPage(page, choice, select, id);
       }
     }
     if (choice === 'format') {
@@ -67,18 +75,33 @@ const PaintingList = ({
         }
       }
       else {
-        loadPaintingsOfSize(id, select);
+        if (page === undefined) {
+          page = 1;
+        }
+        paintingOfNewPage(page, choice, select, id);
       }
     }
   }, []);
 
   const rows = [];
 
-  if (numberOfPages <= 5) {
-    for (let index = 1; index <= numberOfPages; index++) {
-      rows[index] = (<button type="button" className={actualPage == index ? 'page-active' : ''} onClick={() => selectPage(index, numberOfPages)} key={index}>{index}</button>);
-    }
+  // if (numberOfPages <= 5) {
+  for (let index = 1; index <= numberOfPages; index++) {
+    rows[index] = (
+      <Link
+        to={`/galerie/${choice}/${select}/${id}/page/${index}`}
+        className={actualPage == index ? 'page-active' : ''}
+        onClick={() => {
+          selectPage(index, numberOfPages);
+          paintingOfPage(index, numberOfPages, choice, select, id);
+        }}
+        key={index}
+      >
+        <p>{index}</p>
+      </Link>
+    );
   }
+  // }
 
   return (
     <div id="paintingList">
@@ -106,20 +129,41 @@ const PaintingList = ({
       </div>
       {numberOfPages > 1 && (
         <nav className="navigation">
-          <button type="button" onClick={() => selectPage(actualPage - 1, numberOfPages)}>Précédent</button>
-          {numberOfPages <= 5 && (
-            <div>
-              {rows.map((raw) => (raw))}
-            </div>
-          )}
-          {numberOfPages > 5 && (
+          <Link to={`/galerie/${choice}/${select}/${id}/page/${actualPage - 1}`} className="previous-button">
+            <button
+              type="button"
+              onClick={() => {
+                selectPage(actualPage - 1, numberOfPages);
+                paintingOfPage(actualPage - 1, numberOfPages, choice, select, id);
+              }}
+            >Précédent
+            </button>
+          </Link>
+          {/* {numberOfPages <= 5 && ( */}
+          <div>
+            {rows.map((raw) => (raw))}
+          </div>
+          {/* )} */}
+          {/* {numberOfPages > 5 && (
           <Navigation
             actualPage={actualPage}
             selectPage={selectPage}
             numberOfPages={numberOfPages}
+            choice={choice}
+            select={select}
+            selectId={id}
           />
-          )}
-          <button type="button" onClick={() => selectPage(actualPage + 1, numberOfPages)}>Suivant</button>
+          )} */}
+          <Link to={`/galerie/${choice}/${select}/${id}/page/${actualPage + 1}`} className="next-button">
+            <button
+              type="button"
+              onClick={() => {
+                selectPage(actualPage + 1, numberOfPages);
+                paintingOfPage(actualPage + 1, numberOfPages, choice, select, id);
+              }}
+            >Suivant
+            </button>
+          </Link>
         </nav>
       )}
       <div className="back-button">
@@ -143,6 +187,8 @@ PaintingList.propTypes = {
   selectPage: PropTypes.func.isRequired,
   numberOfPages: PropTypes.number.isRequired,
   specDate: PropTypes.array.isRequired,
+  paintingOfPage: PropTypes.func.isRequired,
+  paintingOfNewPage: PropTypes.func.isRequired,
 };
 
 // == Export

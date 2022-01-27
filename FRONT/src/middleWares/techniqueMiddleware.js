@@ -11,6 +11,10 @@ import {
   saveTechniqueShuffledPictures,
 } from 'src/actions/techniqueActions';
 
+import {
+  PAINTING_OF_PAGE,
+} from 'src/actions/mainActions';
+
 // URL for the Axios requests
 const URL = 'http://localhost:8888/api';
 
@@ -51,6 +55,26 @@ const techniqueMiddleware = (store) => (next) => (action) => {
           window.location = '/error';
         });
 
+      next(action);
+      break;
+
+    case PAINTING_OF_PAGE:
+      if (action.choice === 'technique') {
+        axios.get(`${URL}/technique/${action.selectId}/page/${action.page}`)
+          .then((response) => {
+            console.log(response.data);
+            if (stringForUrl(response.data[0].type) !== action.select) {
+              window.location = `/galerie/technique/${stringForUrl(response.data[0].type)}/${response.data[0].id}/page/${action.page}`;
+            }
+            else {
+              store.dispatch(savePaintingsOfTechnique(response.data[0], response.data[1]['total results'], response.data[2]));
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            window.location = '/error';
+          });
+      }
       next(action);
       break;
 
