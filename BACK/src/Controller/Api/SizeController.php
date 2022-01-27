@@ -6,6 +6,7 @@ use App\Entity\Size;
 use App\Service\PagesNavigator;
 use App\Repository\SizeRepository;
 use App\Repository\PaintingRepository;
+use App\Repository\PaintingRepositoryWeb;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,18 +23,26 @@ class SizeController extends AbstractController
     /**
      * @Route("/api/sizes", name="api_sizes_browse", methods={"GET"})
      */
-    public function browse(SizeRepository $sizeRepository): Response
+    public function browse(SizeRepository $sizeRepository, PaintingRepositoryWeb $prw): Response
     {
         $sizes = $sizeRepository->findAll();
 
-        return $this->json($sizes, 200, [], ['groups' => 'sizes_browse']);
+        $sendSizes = [];
+
+        foreach ($sizes as $key => $value) {
+            if ([] !== $prw->findBySize($value)) {
+                $sendSizes[] = $value;
+            }
+        }
+
+        return $this->json($sendSizes, 200, [], ['groups' => 'sizes_browse']);
     }
 
     /**
      * @Route("/api/size/{id<\d+>}", name="api_size_read_main", methods={"GET"})
      * @Route("/api/size/{id<\d+>}/page/{page<\d+>}", name="api_size_read", methods={"GET"})
      */
-    public function read(Size $size = null, PaintingRepository $paintingRepository, $page = 0)
+    public function read(Size $size = null, PaintingRepositoryWeb $paintingRepository, $page = 0)
     {
         if (null === $size) {
             $message = [

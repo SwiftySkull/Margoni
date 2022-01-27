@@ -14,6 +14,7 @@ const mapStateToProps = (state) => {
 
   const limitedPictures = getPictureFromCategory(shuffledPictures, shuffledCategories);
 
+  // console.log(limitedPictures);
   return {
     categories: shuffledCategories,
     pictures: limitedPictures !== undefined ? limitedPictures : [],

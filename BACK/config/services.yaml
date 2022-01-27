@@ -30,3 +30,6 @@ services:
     App\Repository\PaintingRepository:
         arguments:
             $limitPerPage: '%app.limit_per_page%'
+    App\Repository\PaintingRepositoryWeb:
+        arguments:
+            $limitPerPage: '%app.limit_per_page%'

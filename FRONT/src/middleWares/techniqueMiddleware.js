@@ -7,6 +7,8 @@ import {
   LOAD_PAINTINGS_OF_TECHNIQUE,
   savePaintingsOfTechnique,
   LOAD_PAINTINGS_BY_TECHNIQUE_TYPE,
+  LOAD_TECHNIQUE_SHUFFLED_PICTURES,
+  saveTechniqueShuffledPictures,
 } from 'src/actions/techniqueActions';
 
 // URL for the Axios requests
@@ -19,6 +21,19 @@ const techniqueMiddleware = (store) => (next) => (action) => {
   const state = store.getState();
 
   switch (action.type) {
+    case LOAD_TECHNIQUE_SHUFFLED_PICTURES:
+      axios.get(`${URL}/getone/technique`)
+        .then((response) => {
+          console.log(response.data);
+          store.dispatch(saveTechniqueShuffledPictures(response.data, action.techniques));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      next(action);
+      break;
+
     case LOAD_PAINTINGS_OF_TECHNIQUE:
       console.log(`${URL}/technique/${action.id}`);
       axios.get(`${URL}/technique/${action.id}`)

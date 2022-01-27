@@ -25,6 +25,7 @@ const PaintingList = ({
   actualPage,
   selectPage,
   numberOfPages,
+  specDate,
 }) => {
   const {
     choice,
@@ -75,21 +76,17 @@ const PaintingList = ({
 
   if (numberOfPages <= 5) {
     for (let index = 1; index <= numberOfPages; index++) {
-      rows[index] = (<button type="button" className={actualPage == index ? 'page-active' : ''} onClick={() => selectPage(index, numberOfPages)}>{index}</button>);
+      rows[index] = (<button type="button" className={actualPage == index ? 'page-active' : ''} onClick={() => selectPage(index, numberOfPages)} key={index}>{index}</button>);
     }
-  }
-  else {
-    rows[0] = (<button type="button" className={actualPage == 1 ? 'page-active' : ''} onClick={() => selectPage(1, numberOfPages)}>1</button>);
-    rows[1] = (<button type="button" className={actualPage == 2 ? 'page-active' : ''} onClick={() => selectPage(2, numberOfPages)}>2</button>);
-    rows[2] = (<button type="button" className={actualPage > 2 && actualPage < numberOfPages - 1 ? 'page-active' : ''}>{actualPage > 2 && actualPage < numberOfPages - 1 ? actualPage : '...'}</button>);
-    rows[3] = (<button type="button" className={actualPage == numberOfPages - 1 ? 'page-active' : ''} onClick={() => selectPage(numberOfPages - 1, numberOfPages)}>{numberOfPages - 1}</button>);
-    rows[4] = (<button type="button" className={actualPage == numberOfPages ? 'page-active' : ''} onClick={() => selectPage(numberOfPages, numberOfPages)}>{numberOfPages}</button>);
   }
 
   return (
     <div id="paintingList">
       <h2>{searchChosen}</h2>
       <h3 className="subtitle">Nombre de peintures trouvées : {results}</h3>
+      {specDate.length > 0 && (
+        <h4>Tableaux peints entre {specDate[0]} et {specDate[1]}</h4>
+      )}
       <div className="list">
         {paintings.map((paint) => {
           const endUrl = paint.title ? stringForUrl(paint.title) : stringForUrl(paint.dbName);
@@ -145,6 +142,7 @@ PaintingList.propTypes = {
   actualPage: PropTypes.number.isRequired,
   selectPage: PropTypes.func.isRequired,
   numberOfPages: PropTypes.number.isRequired,
+  specDate: PropTypes.array.isRequired,
 };
 
 // == Export

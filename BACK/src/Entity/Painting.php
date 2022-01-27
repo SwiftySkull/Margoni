@@ -133,6 +133,11 @@ class Painting
      */
     private $picture;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $webDisplay;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -403,6 +408,18 @@ class Painting
     public function removeTechnique(Technique $technique): self
     {
         $this->techniques->removeElement($technique);
+
+        return $this;
+    }
+
+    public function getWebDisplay(): ?bool
+    {
+        return $this->webDisplay;
+    }
+
+    public function setWebDisplay(?bool $webDisplay): self
+    {
+        $this->webDisplay = $webDisplay;
 
         return $this;
     }

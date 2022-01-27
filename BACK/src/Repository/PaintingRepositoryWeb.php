@@ -12,7 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Painting[]    findAll()
  * @method Painting[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PaintingRepository extends ServiceEntityRepository
+class PaintingRepositoryWeb extends ServiceEntityRepository
 {
     private $limitPerPage;
 
@@ -26,7 +26,8 @@ class PaintingRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('p')
         ->orwhere('p.title LIKE :title')
-        ->setParameter('title', '%'.$title.'%');
+        ->setParameter('title', '%'.$title.'%')
+        ->andWhere('p.webDisplay = 1');
 
         return $qb->getQuery()->getResult();
     }
@@ -39,9 +40,26 @@ class PaintingRepository extends ServiceEntityRepository
             'SELECT p, c 
             FROM App\Entity\Painting p
             LEFT JOIN p.categories c
-            WHERE c = :categ'
+            WHERE c = :categ
+            AND p.webDisplay=1'
 
         )->setParameter('categ', $categ);
+
+        return $query->getResult();
+    }
+
+    public function getOneFromTechnique($tech)
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT p, t 
+            FROM App\Entity\Painting p
+            LEFT JOIN p.techniques t
+            WHERE t = :tech
+            AND p.webDisplay=1'
+
+        )->setParameter('tech', $tech);
 
         return $query->getResult();
     }
@@ -79,6 +97,7 @@ class PaintingRepository extends ServiceEntityRepository
                 ->setParameter('search', '%'.$search.'%')
                 ->orwhere('pic.title LIKE :search')
                 ->setParameter('search', '%'.$search.'%')
+                ->andWhere('p.webDisplay = 1')
                 ;
         }
 
@@ -121,6 +140,7 @@ class PaintingRepository extends ServiceEntityRepository
                 ->setParameter('search', '%'.$search.'%')
                 ->orwhere('pic.title LIKE :search')
                 ->setParameter('search', '%'.$search.'%')
+                ->andWhere('p.webDisplay = 1')
                 ;
         }
 
@@ -149,6 +169,7 @@ class PaintingRepository extends ServiceEntityRepository
             // ->addSelect('c')
             ->leftJoin('p.picture', 'pic')
             ->addSelect('pic')
+            ->andWhere('p.webDisplay = 1')
             ->orderBy('p.id')
             ->setFirstResult($offset)
             ->setMaxResults($this->limitPerPage)
@@ -168,6 +189,7 @@ class PaintingRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->select('count(p.id)')
+            ->andWhere('p.webDisplay = 1')
             ->getQuery()
             ->getSingleScalarResult()
         ;
@@ -188,7 +210,8 @@ class PaintingRepository extends ServiceEntityRepository
             LEFT JOIN p.situation situation
             LEFT JOIN p.size size
             LEFT JOIN p.techniques t
-            LEFT JOIN p.categories c'
+            LEFT JOIN p.categories c
+            WHERE p.webDisplay=1'
 
         );
 
@@ -214,7 +237,8 @@ class PaintingRepository extends ServiceEntityRepository
             LEFT JOIN p.size size
             LEFT JOIN p.techniques t
             LEFT JOIN p.categories c
-            WHERE c = :categ'
+            WHERE c = :categ
+            AND p.webDisplay=1'
 
         )->setParameter('categ', $category);
 
@@ -244,7 +268,7 @@ class PaintingRepository extends ServiceEntityRepository
             // ->addSelect('c')
             ->where('c = :cat')
             ->setParameter('cat', $category)
-            // ->andWhere('p.webDisplay = 1')
+            ->andWhere('p.webDisplay = 1')
             ->orderBy('p.id')
             ->setFirstResult($offset)
             ->setMaxResults($this->limitPerPage)
@@ -269,7 +293,7 @@ class PaintingRepository extends ServiceEntityRepository
             ->leftJoin('p.categories', 'c')
             ->where('c = :cat')
             ->setParameter('cat', $category)
-            // ->andWhere('p.webDisplay = 1')
+            ->andWhere('p.webDisplay = 1')
             ->orderBy('p.id', 'ASC')
             ->getQuery()
             ->getSingleScalarResult()
@@ -294,7 +318,8 @@ class PaintingRepository extends ServiceEntityRepository
             LEFT JOIN p.size size
             LEFT JOIN p.techniques t
             LEFT JOIN p.categories c
-            WHERE f = :frame'
+            WHERE f = :frame
+            AND p.webDisplay=1'
 
         )->setParameter('frame', $frame);
 
@@ -315,6 +340,7 @@ class PaintingRepository extends ServiceEntityRepository
             ->leftJoin('p.frame', 'f')
             ->where('f = :frame')
             ->setParameter('frame', $frame)
+            ->andWhere('p.webDisplay = 1')
             ->orderBy('p.id', 'ASC')
             ->getQuery()
             ->getSingleScalarResult()
@@ -344,6 +370,7 @@ class PaintingRepository extends ServiceEntityRepository
             // ->addSelect('c')
             ->where('f = :frame')
             ->setParameter('frame', $frame)
+            ->andWhere('p.webDisplay = 1')
             ->orderBy('p.id')
             // ->groupBy('p')
             ->setFirstResult($offset)
@@ -373,7 +400,8 @@ class PaintingRepository extends ServiceEntityRepository
             LEFT JOIN p.size size
             LEFT JOIN p.techniques t
             LEFT JOIN p.categories c
-            WHERE situation = :situation'
+            WHERE situation = :situation
+            AND p.webDisplay=1'
 
         )->setParameter('situation', $situation);
 
@@ -394,6 +422,7 @@ class PaintingRepository extends ServiceEntityRepository
             ->leftJoin('p.situation', 's')
             ->where('s = :situation')
             ->setParameter('situation', $situation)
+            ->andWhere('p.webDisplay = 1')
             ->orderBy('p.id', 'ASC')
             ->getQuery()
             ->getSingleScalarResult()
@@ -423,6 +452,7 @@ class PaintingRepository extends ServiceEntityRepository
             // ->addSelect('c')
             ->where('sit = :situation')
             ->setParameter('situation', $situation)
+            ->andWhere('p.webDisplay = 1')
             ->orderBy('p.id')
             // ->groupBy('p')
             ->setFirstResult($offset)
@@ -452,7 +482,8 @@ class PaintingRepository extends ServiceEntityRepository
             LEFT JOIN p.size size
             LEFT JOIN p.techniques t
             LEFT JOIN p.categories c
-            WHERE size = :size'
+            WHERE size = :size
+            AND p.webDisplay=1'
 
         )->setParameter('size', $size);
 
@@ -473,6 +504,7 @@ class PaintingRepository extends ServiceEntityRepository
             ->leftJoin('p.size', 's')
             ->where('s = :size')
             ->setParameter('size', $size)
+            ->andWhere('p.webDisplay = 1')
             ->orderBy('p.id', 'ASC')
             ->getQuery()
             ->getSingleScalarResult()
@@ -502,6 +534,7 @@ class PaintingRepository extends ServiceEntityRepository
             // ->addSelect('c')
             ->where('size = :size')
             ->setParameter('size', $size)
+            ->andWhere('p.webDisplay = 1')
             ->orderBy('p.id')
             // ->groupBy('p')
             ->setFirstResult($offset)
@@ -531,7 +564,8 @@ class PaintingRepository extends ServiceEntityRepository
             LEFT JOIN p.size size
             LEFT JOIN p.techniques t
             LEFT JOIN p.categories c
-            WHERE t = :technique'
+            WHERE t = :technique
+            AND p.webDisplay=1'
 
         )->setParameter('technique', $technique);
 
@@ -552,6 +586,7 @@ class PaintingRepository extends ServiceEntityRepository
             ->leftJoin('p.techniques', 't')
             ->where('t = :t')
             ->setParameter('t', $technique)
+            ->andWhere('p.webDisplay = 1')
             ->orderBy('p.id', 'ASC')
             ->getQuery()
             ->getSingleScalarResult()
@@ -581,6 +616,7 @@ class PaintingRepository extends ServiceEntityRepository
             // ->addSelect('c')
             ->where('t = :technique')
             ->setParameter('technique', $technique)
+            ->andWhere('p.webDisplay = 1')
             ->orderBy('p.id')
             ->setFirstResult($offset)
             ->setMaxResults($this->limitPerPage)

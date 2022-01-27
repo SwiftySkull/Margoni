@@ -19,6 +19,15 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
+    public function getPaintingByCategoryName($name)
+    {
+        $qb = $this->createQueryBuilder('c')
+        ->orwhere('c.name LIKE :name')
+        ->setParameter('name', '%'.$name.'%');
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
     /**
      * Fin all the categories order by the name from A to Z
      */
@@ -27,26 +36,10 @@ class CategoryRepository extends ServiceEntityRepository
         $entityManager = $this->getEntityManager();
         
         $query = $entityManager->createQuery(
-            'SELECT c 
+            'SELECT c
             FROM App\Entity\Category c
             ORDER BY c.name ASC'
 
-        );
-
-        return $query->getResult();
-    }
-
-    public function getOneFromCategory($categ)
-    {
-        $entityManager = $this->getEntityManager();
-        
-        $query = $entityManager->createQuery(
-            'SELECT c, pc, p
-            FROM App\Entity\Category c
-            INNER JOIN c.id pc.categoryId
-            INNER JOIN pc.paintingId p
-            ORDER BY RAND()
-            LIMIT 1'
         );
 
         return $query->getResult();

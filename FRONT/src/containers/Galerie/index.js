@@ -9,13 +9,31 @@ import Galerie from 'src/components/Galerie';
  * To display data in the component
  */
 const mapStateToProps = (state) => {
-  const { categories, shuffledPictures } = state.category;
+  const {
+    categories,
+    shuffledPictures: categoryShuffledPicture,
+  } = state.category;
+
+  const {
+    techniques,
+    shuffledPictures: techniqueShuffledPicture,
+  } = state.technique;
+
+  let shuffledPictures = [];
+  const { galeryChoice } = state.galerie;
+
+  if (galeryChoice == 1) {
+    shuffledPictures = categoryShuffledPicture;
+  }
+  if (galeryChoice == 2) {
+    shuffledPictures = techniqueShuffledPicture;
+  }
 
   return {
     categories: categories.map((categ) => [categ.id, categ.name]),
     pictures: shuffledPictures,
-    galeryChoice: state.galerie.galeryChoice,
-    techniques: state.technique.techniques.map((tech) => [tech.id, tech.type]),
+    galeryChoice,
+    techniques: techniques.map((tech) => [tech.id, tech.type]),
     sizes: state.size.sizes,
     sizeChosen: state.size.sizeChosen,
   };

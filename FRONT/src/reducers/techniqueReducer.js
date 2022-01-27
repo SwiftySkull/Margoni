@@ -1,10 +1,11 @@
 import {
-  SAVE_TECHNIQUES,
+  SAVE_TECHNIQUE_SHUFFLED_PICTURES,
   SAVE_PAINTINGS_OF_TECHNIQUE,
 } from 'src/actions/techniqueActions';
 
 const initialState = {
   techniques: [],
+  shuffledPictures: [],
   techniqueChosen: {},
   results: '0',
   paintings: [],
@@ -15,10 +16,11 @@ const initialState = {
  */
 function techniqueReducer(state = initialState, action) {
   switch (action.type) {
-    case SAVE_TECHNIQUES:
+    case SAVE_TECHNIQUE_SHUFFLED_PICTURES:
       return {
         ...state,
         techniques: action.techniques,
+        shuffledPictures: action.picture,
       };
 
     case SAVE_PAINTINGS_OF_TECHNIQUE:

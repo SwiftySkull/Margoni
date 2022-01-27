@@ -48,11 +48,16 @@ const mapStateToProps = (state) => {
   let paintings = [];
   let results = '0';
   let searchChosen = 'Aucune recherche en cours';
+  let specDate = [];
 
   if (searchingType === 1) {
     paintings = categoryPaintings;
     results = categoryResults;
     searchChosen = `Tableaux de la catégorie ${categoryChosen.name}`;
+
+    // if (categoryChosen.name === 'Animaux') {
+    //   specDate = [1950, 1975];
+    // }
   }
 
   if (searchingType === 2) {
@@ -72,11 +77,12 @@ const mapStateToProps = (state) => {
   }
 
   return {
+    specDate,
     searchChosen,
     results,
     paintings,
     actualPage: state.main.actualPage,
-    numberOfPages: Math.round(results / 5),
+    numberOfPages: Math.round(results / 12),
   };
 };
 

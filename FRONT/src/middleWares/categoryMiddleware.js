@@ -7,6 +7,8 @@ import {
   LOAD_PAINTINGS_OF_CATEGORY,
   savePaintingsOfCategory,
   LOAD_PAINTINGS_BY_CATEGORY_NAME,
+  LOAD_CATEGORY_SHUFFLED_PICTURES,
+  saveCategoryShuffledPictures,
 } from 'src/actions/categoryActions';
 
 // URL for the Axios requests
@@ -19,8 +21,20 @@ const categoryMiddleware = (store) => (next) => (action) => {
   const state = store.getState();
 
   switch (action.type) {
+    case LOAD_CATEGORY_SHUFFLED_PICTURES:
+      axios.get(`${URL}/getone/category`)
+        .then((response) => {
+          // console.log(responseBis.data);
+          store.dispatch(saveCategoryShuffledPictures(response.data, action.categories));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      next(action);
+      break;
+
     case LOAD_PAINTINGS_OF_CATEGORY:
-      console.log(`${URL}/category/${action.id}`);
       axios.get(`${URL}/category/${action.id}`)
         .then((response) => {
           if (stringForUrl(response.data[0].name) !== action.select) {

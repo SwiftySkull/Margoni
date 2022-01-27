@@ -18,6 +18,7 @@ const Choosing = ({
   <>
     {array.map((itera) => {
       let pictureFile = '';
+
       pictures.filter((pic) => {
         if (pic.id === itera[0]) {
           pictureFile = pic.painting.picture.file;

@@ -1,5 +1,5 @@
 import {
-  SHUFFLED_PICTURES,
+  SAVE_CATEGORY_SHUFFLED_PICTURES,
   SAVE_PAINTINGS_OF_CATEGORY,
 } from 'src/actions/categoryActions';
 
@@ -16,7 +16,7 @@ const initialState = {
  */
 function categoryReducer(state = initialState, action) {
   switch (action.type) {
-    case SHUFFLED_PICTURES:
+    case SAVE_CATEGORY_SHUFFLED_PICTURES:
       return {
         ...state,
         categories: action.categories,

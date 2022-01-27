@@ -45,6 +45,8 @@ export const shuffleCategories = (array, nbEntries = null) => {
 export const getPictureFromCategory = (pictures, categories) => {
   const arrayNotEmpty = categories.length > 0 && pictures.length > 0;
 
+  console.log(pictures);
+
   if (arrayNotEmpty) {
     const picturesFilterder = pictures.filter((pic) => {
       for (const iterator of categories) {
@@ -53,6 +55,8 @@ export const getPictureFromCategory = (pictures, categories) => {
         }
       }
     });
+
+    console.log(picturesFilterder);
 
     return picturesFilterder;
   }

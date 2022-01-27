@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Service\PagesNavigator;
 use App\Repository\CategoryRepository;
 use App\Repository\PaintingRepository;
+use App\Repository\PaintingRepositoryWeb;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,18 +23,26 @@ class CategoryController extends AbstractController
     /**
      * @Route("/api/categories", name="api_categories_browse", methods={"GET"})
      */
-    public function browse(CategoryRepository $categoryRepository): Response
+    public function browse(CategoryRepository $categoryRepository, PaintingRepositoryWeb $prw): Response
     {
         $categories = $categoryRepository->findAllAsc();
 
-        return $this->json($categories, 200, [], ['groups' => 'categories_browse']);
+        $sendCategories = [];
+
+        foreach ($categories as $key => $value) {
+            if ([] !== $prw->findByCategory($value)) {
+                $sendCategories[] = $value;
+            }
+        }
+        
+        return $this->json($sendCategories, 200, [], ['groups' => 'categories_browse']);
     }
 
     /**
      * @Route("/api/category/{id<\d+>}", name="api_category_read_main", methods={"GET"})
      * @Route("/api/category/{id<\d+>}/page/{page<\d+>}", name="api_category_read", methods={"GET"})
      */
-    public function read(Category $category = null, PaintingRepository $paintingRepository, $page = 0)
+    public function read(Category $category = null, PaintingRepositoryWeb $paintingRepository, $page = 0)
     {
         if (null === $category) {
             $message = [
@@ -61,13 +70,21 @@ class CategoryController extends AbstractController
     /**
      * @Route("/api/getone/category", name="api_category_get_one_element", methods={"GET"})
      */
-    public function getOneFromCategory(CategoryRepository $categoryRepository, PaintingRepository $paintingRepository)
+    public function getOneFromCategory(CategoryRepository $categoryRepository, PaintingRepositoryWeb $paintingRepository)
     {
         $categories = $categoryRepository->findAll();
 
-        $shuffledPictures = [];
+        $sendCategories = [];
 
         foreach ($categories as $key => $value) {
+            if ([] !== $paintingRepository->findByCategory($value)) {
+                $sendCategories[] = $value;
+            }
+        }
+
+        $shuffledPictures = [];
+
+        foreach ($sendCategories as $key => $value) {
             $random = $paintingRepository->getOneFromCategory($value->getId());
 
             shuffle($random);
@@ -85,8 +102,14 @@ class CategoryController extends AbstractController
     /**
      * @Route("/api/categbyname/{name}", name="api_category_by_name", methods={"GET"})
      */
-    public function getCategoryByName(Category $category = null)
+    public function getCategoryByName(Category $category = null, $name, CategoryRepository $cr)
     {
+        if (null !== $name) {
+            $stringFromUrl = str_replace(['-l-', '-'], [' l\'', ' '], $name);
+        }
+
+        $category = $cr->getPaintingByCategoryName($stringFromUrl);
+
         if (null === $category) {
             $message = [
                 'status' => Response::HTTP_NOT_FOUND,

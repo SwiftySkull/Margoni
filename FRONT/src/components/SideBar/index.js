@@ -29,7 +29,7 @@ const SideBar = ({
               pictureFile = pic.painting.picture.file;
             }
           });
-          console.log(categ);
+
           return (
             <Vignette
               key={categ.id}

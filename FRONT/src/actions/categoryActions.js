@@ -1,8 +1,8 @@
 // ACTIONS TYPES
 
 export const SAVE_CATEGORIES = 'SAVE_CATEGORIES';
-export const SHUFFLED_PICTURES = 'SHUFFLED_PICTURES';
-export const LOAD_SHUFFLED_PICTURES = 'LOAD_SHUFFLED_PICTURES';
+export const SAVE_CATEGORY_SHUFFLED_PICTURES = 'SAVE_CATEGORY_SHUFFLED_PICTURES';
+export const LOAD_CATEGORY_SHUFFLED_PICTURES = 'LOAD_CATEGORY_SHUFFLED_PICTURES';
 export const LOAD_PAINTINGS_OF_CATEGORY = 'LOAD_PAINTINGS_OF_CATEGORY';
 export const SAVE_PAINTINGS_OF_CATEGORY = 'SAVE_PAINTINGS_OF_CATEGORY';
 export const LOAD_PAINTINGS_BY_CATEGORY_NAME = 'LOAD_PAINTINGS_BY_CATEGORY_NAME';
@@ -14,14 +14,14 @@ export const saveCategories = (categories) => ({
   categories,
 });
 
-export const shuffledPictures = (picture, categories) => ({
-  type: SHUFFLED_PICTURES,
+export const saveCategoryShuffledPictures = (picture, categories) => ({
+  type: SAVE_CATEGORY_SHUFFLED_PICTURES,
   picture,
   categories,
 });
 
-export const loadShuffledPictures = (categories) => ({
-  type: LOAD_SHUFFLED_PICTURES,
+export const loadCategoryShuffledPictures = (categories) => ({
+  type: LOAD_CATEGORY_SHUFFLED_PICTURES,
   categories,
 });
 

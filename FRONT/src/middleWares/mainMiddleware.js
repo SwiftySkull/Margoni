@@ -10,13 +10,14 @@ import {
 } from 'src/actions/mainActions';
 
 import {
-  shuffledPictures,
-  loadShuffledPictures,
-  LOAD_SHUFFLED_PICTURES,
+  // shuffledPictures,
+  loadCategoryShuffledPictures,
+  // LOAD_CATEGORY_SHUFFLED_PICTURES,
 } from 'src/actions/categoryActions';
 
 import {
   saveTechniques,
+  loadTechniqueShuffledPictures,
 } from 'src/actions/techniqueActions';
 
 import {
@@ -54,7 +55,7 @@ const mainMiddleware = (store) => (next) => (action) => {
       axios.get(`${URL}/categories`)
         .then((response) => {
           // console.log(response.data);
-          store.dispatch(loadShuffledPictures(response.data));
+          store.dispatch(loadCategoryShuffledPictures(response.data));
         })
         .catch((error) => {
           console.log(error);
@@ -63,7 +64,8 @@ const mainMiddleware = (store) => (next) => (action) => {
       axios.get(`${URL}/techniques`)
         .then((response) => {
           // console.log(response.data);
-          store.dispatch(saveTechniques(response.data));
+          // store.dispatch(saveTechniques(response.data));
+          store.dispatch(loadTechniqueShuffledPictures(response.data));
         })
         .catch((error) => {
           console.log(error);
@@ -81,18 +83,18 @@ const mainMiddleware = (store) => (next) => (action) => {
       next(action);
       break;
 
-    case LOAD_SHUFFLED_PICTURES:
-      axios.get(`${URL}/getone/category`)
-        .then((response) => {
-          // console.log(responseBis.data);
-          store.dispatch(shuffledPictures(response.data, action.categories));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    // case LOAD_CATEGORY_SHUFFLED_PICTURES:
+    //   axios.get(`${URL}/getone/category`)
+    //     .then((response) => {
+    //       // console.log(responseBis.data);
+    //       store.dispatch(shuffledPictures(response.data, action.categories));
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
 
-      next(action);
-      break;
+    //   next(action);
+    //   break;
 
     case LOAD_PAINTING:
       axios.get(`${URL}/painting/id/${action.id}`)

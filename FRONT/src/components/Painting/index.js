@@ -1,10 +1,12 @@
 // == Import npm
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 // == Import
 import SideBar from 'src/containers/SideBar';
+
+import { stringForUrl } from 'src/utils/utils';
 
 import './painting.scss';
 
@@ -45,20 +47,22 @@ const Painting = ({
           />
         </div>
         <div className="painting-infos">
-          <p><span>Date</span> : {painting.date != null ? painting.date : 'non renseignée'}</p>
+          {painting.date !== null && (
+            <p><span>Date</span> : {painting.date !== null ? painting.date : 'non renseignée'}</p>
+          )}
           <p>
             <span>Dimension</span> : {painting.height}x{painting.width} {painting.size.format !== 'Sans format' ? ` (${painting.size.format})` : ''}
           </p>
           <ul>
             <span>Catégorie(s)</span> :
             {painting.categories.map((cat) => (
-              <li key={cat.id}><p>{cat.name}</p></li>
+              <li key={cat.id}><Link to={`/galerie/technique/${stringForUrl(cat.name)}/${cat.id}`}>{cat.name}</Link></li>
             ))}
           </ul>
           <ul>
             <span>Technique(s)</span> :
             {painting.techniques.map((tec) => (
-              <li key={tec.id}><p>{tec.type}</p></li>
+              <li key={tec.id}><Link to={`/galerie/technique/${stringForUrl(tec.type)}/${tec.id}`}>{tec.type}</Link></li>
             ))}
           </ul>
           {painting.information !== null && (

@@ -20,13 +20,13 @@ const Navigation = ({
 
   return (
     <div>
-      <button type="button" className={actualPage == 1 ? 'page-active' : ''} onClick={() => selectPage(1, numberOfPages)}>1</button>
-      <button type="button" className={actualPage == 2 ? 'page-active' : ''} onClick={() => selectPage(2, numberOfPages)}>2</button>
+      <button type="button" className={actualPage == 1 ? 'page-active' : ''} onClick={() => selectPage(1, numberOfPages)} key="1">1</button>
+      <button type="button" className={actualPage == 2 ? 'page-active' : ''} onClick={() => selectPage(2, numberOfPages)} key="2">2</button>
       <select value={actualPage} onChange={(evt) => selectPage(evt.target.value, numberOfPages)}>
         {rows.map((ite) => (ite))}
       </select>
-      <button type="button" className={actualPage == numberOfPages - 1 ? 'page-active' : ''} onClick={() => selectPage(numberOfPages - 1, numberOfPages)}>{numberOfPages - 1}</button>
-      <button type="button" className={actualPage == numberOfPages ? 'page-active' : ''} onClick={() => selectPage(numberOfPages, numberOfPages)}>{numberOfPages}</button>
+      <button type="button" className={actualPage == numberOfPages - 1 ? 'page-active' : ''} onClick={() => selectPage(numberOfPages - 1, numberOfPages)} key={numberOfPages - 1}>{numberOfPages - 1}</button>
+      <button type="button" className={actualPage == numberOfPages ? 'page-active' : ''} onClick={() => selectPage(numberOfPages, numberOfPages)} key={numberOfPages}>{numberOfPages}</button>
     </div>
   );
 };

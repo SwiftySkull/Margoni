@@ -83,8 +83,13 @@
           margin-left: 2rem;
           color: vars.$mainColor;
   
-          p {
+          a {
             color: black;
+
+            &:hover {
+              text-decoration: vars.$textHoverDecoration;
+              color: vars.$textHoverColor;
+            }
           }
         }  
       }
