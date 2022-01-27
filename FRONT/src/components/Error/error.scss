@@ -1,9 +1,61 @@
 @use 'src/styles/_vars';
 
 #error {
-  border: vars.$boxBorder;
-  border-radius: vars.$boxBorderRadius;
-  padding: 1rem 2rem;
-  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
 
+  .resume {
+    margin-right: 1rem;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  
+    @media (max-width: vars.$inter) {
+      width: 100%;
+      margin-right: unset;
+    }
+
+    .entete {
+      border: vars.$boxBorder;
+      border-radius: vars.$boxBorderRadius;
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      min-height: 200px;
+      position: relative;
+      overflow: hidden;
+
+      @media (min-width: vars.$medium) {
+        flex-direction: initial;
+      }
+
+      @media (min-width: 900px) {
+        height: 100%;
+      }
+
+      img {
+        height: 100%;
+        width: 100%;
+        transform: scale(1.7);
+      }
+
+      h2 {
+        position: absolute;
+        font-size: 3rem;
+        font-weight: bold;
+        color: vars.$secondaryColor;
+        text-shadow: 2px 2px 2px black;
+        left: 1rem;
+
+        @media (min-width: vars.$small) {
+          top: 20%;
+        }
+
+        @media (min-width: vars.$medium) {
+          top: 40%;
+        }
+      }
+    }
+  }
 }
