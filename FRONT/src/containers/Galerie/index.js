@@ -49,7 +49,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
 
   sizeChoice: (id) => {
-    console.log(id);
     dispatch(sizeChoice(id));
   },
 });

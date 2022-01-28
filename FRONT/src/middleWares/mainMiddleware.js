@@ -76,7 +76,6 @@ const mainMiddleware = (store) => (next) => (action) => {
     case LOAD_PAINTING_BY_NAME:
       axios.get(`${URL}/painting/title/${action.paintingName}`)
         .then((response) => {
-          console.log(response.data);
           if (response.data.length > 1) {
             setTimeout(() => {
               store.dispatch(saveMultiplePaintings(response.data));

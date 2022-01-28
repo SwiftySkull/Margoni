@@ -55,7 +55,7 @@ const Galerie = ({
             </option>
           ))}
         </select>
-        {sizeChosen !== undefined && (
+        {sizeChosen.length > 0 && (
         <div>
           <Link to={`/galerie/format/${stringForUrl(sizeChosen[0].format)}/${sizeChosen[0].id}/page/1`}>
             <button type="button" className="size-search">
