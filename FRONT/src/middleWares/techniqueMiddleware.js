@@ -4,7 +4,6 @@ import axios from 'axios';
 import { stringForUrl } from 'src/utils/utils';
 
 import {
-  LOAD_PAINTINGS_OF_TECHNIQUE,
   savePaintingsOfTechnique,
   LOAD_PAINTINGS_BY_TECHNIQUE_TYPE,
   LOAD_TECHNIQUE_SHUFFLED_PICTURES,
@@ -29,7 +28,6 @@ const techniqueMiddleware = (store) => (next) => (action) => {
     case LOAD_TECHNIQUE_SHUFFLED_PICTURES:
       axios.get(`${URL}/getone/technique`)
         .then((response) => {
-          console.log(response.data);
           store.dispatch(saveTechniqueShuffledPictures(response.data, action.techniques));
         })
         .catch((error) => {
@@ -39,38 +37,18 @@ const techniqueMiddleware = (store) => (next) => (action) => {
       next(action);
       break;
 
-    case LOAD_PAINTINGS_OF_TECHNIQUE:
-      console.log(`${URL}/technique/${action.id}`);
-      axios.get(`${URL}/technique/${action.id}`)
-        .then((response) => {
-          console.log(response.data);
-          if (stringForUrl(response.data[0].type) !== action.select) {
-            window.location = `/galerie/technique/${stringForUrl(response.data[0].type)}/${response.data[0].id}`;
-          }
-          else {
-            store.dispatch(loaderOff());
-            store.dispatch(savePaintingsOfTechnique(response.data[0], response.data[1]['total results'], response.data[2]));
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          window.location = '/error';
-        });
-
-      next(action);
-      break;
-
     case PAINTING_OF_PAGE:
       if (action.choice === 'technique') {
         axios.get(`${URL}/technique/${action.selectId}/page/${action.page}`)
           .then((response) => {
-            console.log(response.data);
             if (stringForUrl(response.data[0].type) !== action.select) {
               window.location = `/galerie/technique/${stringForUrl(response.data[0].type)}/${response.data[0].id}/page/${action.page}`;
             }
             else {
-              store.dispatch(loaderOff());
-              store.dispatch(savePaintingsOfTechnique(response.data[0], response.data[1]['total results'], response.data[2]));
+              setTimeout(() => {
+                store.dispatch(loaderOff());
+                store.dispatch(savePaintingsOfTechnique(response.data[0], response.data[1]['total results'], response.data[2]));
+              }, 1000);
             }
           })
           .catch((error) => {

@@ -6,6 +6,7 @@ import {
   LOAD_PAINTING,
   savePainting,
   LOAD_PAINTING_BY_NAME,
+  saveMultiplePaintings,
 } from 'src/actions/mainActions';
 
 import {
@@ -61,7 +62,9 @@ const mainMiddleware = (store) => (next) => (action) => {
     case LOAD_PAINTING:
       axios.get(`${URL}/painting/id/${action.id}`)
         .then((response) => {
-          store.dispatch(savePainting(response.data));
+          setTimeout(() => {
+            store.dispatch(savePainting(response.data));
+          }, 1000);
         })
         .catch((error) => {
           console.log(error);
@@ -71,12 +74,19 @@ const mainMiddleware = (store) => (next) => (action) => {
       break;
 
     case LOAD_PAINTING_BY_NAME:
-      console.log(`${URL}/painting/title/${action.paintingName}`);
       axios.get(`${URL}/painting/title/${action.paintingName}`)
         .then((response) => {
           console.log(response.data);
-          // TODO: Si plusieurs résultats pour une recherche URL comme "la colline"
-          store.dispatch(savePainting(response.data[0]));
+          if (response.data.length > 1) {
+            setTimeout(() => {
+              store.dispatch(saveMultiplePaintings(response.data));
+            }, 1000);
+          }
+          else {
+            setTimeout(() => {
+              store.dispatch(savePainting(response.data[0]));
+            }, 1000);
+          }
         })
         .catch((error) => {
           console.log(error);

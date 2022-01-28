@@ -4,7 +4,6 @@ import axios from 'axios';
 import { stringForUrl } from 'src/utils/utils';
 
 import {
-  // LOAD_PAINTINGS_OF_CATEGORY,
   savePaintingsOfCategory,
   LOAD_PAINTINGS_BY_CATEGORY_NAME,
   LOAD_CATEGORY_SHUFFLED_PICTURES,
@@ -29,7 +28,6 @@ const categoryMiddleware = (store) => (next) => (action) => {
     case LOAD_CATEGORY_SHUFFLED_PICTURES:
       axios.get(`${URL}/getone/category`)
         .then((response) => {
-          // console.log(responseBis.data);
           store.dispatch(saveCategoryShuffledPictures(response.data, action.categories));
         })
         .catch((error) => {
@@ -39,37 +37,18 @@ const categoryMiddleware = (store) => (next) => (action) => {
       next(action);
       break;
 
-    // case LOAD_PAINTINGS_OF_CATEGORY:
-    //   axios.get(`${URL}/category/${action.id}`)
-    //     .then((response) => {
-    //       if (stringForUrl(response.data[0].name) !== action.select) {
-    //         window.location = `/galerie/categorie/${stringForUrl(response.data[0].name)}/${response.data[0].id}`;
-    //       }
-    //       else {
-    //         store.dispatch(loaderOff());
-    //         console.log('ici');
-    //         window.setTimeout(store.dispatch(savePaintingsOfCategory(response.data[0], response.data[1]['total results'], response.data[2])), 5000);
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //       window.location = '/error';
-    //     });
-
-    //   next(action);
-    //   break;
-
     case PAINTING_OF_PAGE:
       if (action.choice === 'categorie') {
-        console.log(`${URL}/category/${action.selectId}/page/${action.page}`);
         axios.get(`${URL}/category/${action.selectId}/page/${action.page}`)
           .then((response) => {
             if (stringForUrl(response.data[0].name) !== action.select) {
               window.location = `/galerie/categorie/${stringForUrl(response.data[0].name)}/${response.data[0].id}/page/${action.page}`;
             }
             else {
-              store.dispatch(loaderOff());
-              store.dispatch(savePaintingsOfCategory(response.data[0], response.data[1]['total results'], response.data[2]));
+              setTimeout(() => {
+                store.dispatch(savePaintingsOfCategory(response.data[0], response.data[1]['total results'], response.data[2]));
+                store.dispatch(loaderOff());
+              }, 1000);
             }
           })
           .catch((error) => {

@@ -77,6 +77,12 @@ export const stringForUrl = (string = '') => {
   return newString;
 };
 
+/**
+ * Convert a url string into a readable String, especially for the axios request
+ *
+ * @param {string} url URL to transform
+ * @returns a readable string, not url format
+ */
 export const urlToString = (url) => {
   const stringFromUrl = url
     .replace(/-/g, ' ')

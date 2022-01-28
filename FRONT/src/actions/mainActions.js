@@ -11,6 +11,7 @@ export const PAINTING_OF_PAGE = 'PAINTING_OF_PAGE';
 export const LOADER_ON = 'LOADER_ON';
 export const LOADER_OFF = 'LOADER_OFF';
 export const CLEAR_PAINTING = 'CLEAR_PAINTING';
+export const SAVE_MULTIPLE_PAINTINGS = 'SAVE_MULTIPLE_PAINTINGS';
 
 // ACTIONS CREATORS
 
@@ -64,4 +65,9 @@ export const loaderOff = () => ({
 
 export const clearPainting = () => ({
   type: CLEAR_PAINTING,
+});
+
+export const saveMultiplePaintings = (paintings) => ({
+  type: SAVE_MULTIPLE_PAINTINGS,
+  paintings,
 });

@@ -7,7 +7,7 @@ import { useParams, Link } from 'react-router-dom';
 import SideBar from 'src/containers/SideBar';
 import Loader from 'src/components/Loader';
 
-import { stringForUrl } from 'src/utils/utils';
+import { stringForUrl, urlToString } from 'src/utils/utils';
 
 import './painting.scss';
 
@@ -19,6 +19,8 @@ const Painting = ({
   displayModal,
   modalStatus,
   loading,
+  multiplePaintingsName,
+  multiplePaintings,
 }) => {
   const { id, name } = useParams();
 
@@ -39,7 +41,7 @@ const Painting = ({
   return (
     <div id="painting">
       {loading && <Loader />}
-      {painting.id !== undefined && (
+      {painting.id !== undefined && !multiplePaintings && (
       <div className="tableau">
         <h2>{painting.title ?? painting.dbName}</h2>
         <div className="image">
@@ -91,18 +93,46 @@ const Painting = ({
         </div>
       </div>
       )}
+      {!loading && multiplePaintings && (
+      <div className="multiple-paintings">
+        <h2>Tableaux portant le titre "{urlToString(name)}"</h2>
+        <div className="multiple-paintings-list">
+          {multiplePaintingsName.map((paint) => {
+            const endUrl = paint.title ? stringForUrl(paint.title) : stringForUrl(paint.dbName);
+            const url = `/peinture/${paint.id}/${endUrl}`;
+
+            const redirectTo = () => {
+              window.location = url;
+            };
+
+            return (
+              <div className="tableau" key={paint.id}>
+                <div className="card" onClick={() => redirectTo()}>
+                  <div>
+                    <img src={`data:image/jpeg;base64,${paint.picture.file}`} alt="" />
+                  </div>
+                  <h4>{paint.title ?? paint.dbName}</h4>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      )}
       <SideBar />
     </div>
   );
 };
 
 Painting.propTypes = {
-  painting: PropTypes.array.isRequired,
+  painting: PropTypes.object.isRequired,
   loadPainting: PropTypes.func.isRequired,
   loadPaintingByName: PropTypes.func.isRequired,
   displayModal: PropTypes.func.isRequired,
-  modalStatus: PropTypes.string.isRequired,
+  modalStatus: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
+  multiplePaintingsName: PropTypes.array.isRequired,
+  multiplePaintings: PropTypes.bool.isRequired,
 };
 
 // == Export

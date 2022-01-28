@@ -3,7 +3,6 @@
 export const SAVE_CATEGORIES = 'SAVE_CATEGORIES';
 export const SAVE_CATEGORY_SHUFFLED_PICTURES = 'SAVE_CATEGORY_SHUFFLED_PICTURES';
 export const LOAD_CATEGORY_SHUFFLED_PICTURES = 'LOAD_CATEGORY_SHUFFLED_PICTURES';
-// export const LOAD_PAINTINGS_OF_CATEGORY = 'LOAD_PAINTINGS_OF_CATEGORY';
 export const SAVE_PAINTINGS_OF_CATEGORY = 'SAVE_PAINTINGS_OF_CATEGORY';
 export const LOAD_PAINTINGS_BY_CATEGORY_NAME = 'LOAD_PAINTINGS_BY_CATEGORY_NAME';
 
@@ -24,12 +23,6 @@ export const loadCategoryShuffledPictures = (categories) => ({
   type: LOAD_CATEGORY_SHUFFLED_PICTURES,
   categories,
 });
-
-// export const loadPaintingsOfCategory = (id, select) => ({
-//   type: LOAD_PAINTINGS_OF_CATEGORY,
-//   id,
-//   select,
-// });
 
 export const savePaintingsOfCategory = (categoryChosen, results, paintings) => ({
   type: SAVE_PAINTINGS_OF_CATEGORY,

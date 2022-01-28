@@ -5,6 +5,7 @@ import {
   LOADER_ON,
   LOADER_OFF,
   CLEAR_PAINTING,
+  SAVE_MULTIPLE_PAINTINGS,
 } from 'src/actions/mainActions';
 
 import {
@@ -27,6 +28,8 @@ const initialState = {
   painting: {},
   actualPage: 1,
   loading: false,
+  multiplePaintings: false,
+  multiplePaintingsName: [],
 };
 
 /**
@@ -87,6 +90,14 @@ function mainReducer(state = initialState, action) {
     case LOADER_OFF:
       return {
         ...state,
+        loading: false,
+      };
+
+    case SAVE_MULTIPLE_PAINTINGS:
+      return {
+        ...state,
+        multiplePaintings: true,
+        multiplePaintingsName: action.paintings,
         loading: false,
       };
 

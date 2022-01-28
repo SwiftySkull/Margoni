@@ -17,6 +17,8 @@ const mapStateToProps = (state) => ({
   painting: state.main.painting,
   modalStatus: state.main.modalStatus,
   loading: state.main.loading,
+  multiplePaintingsName: state.main.multiplePaintingsName,
+  multiplePaintings: state.main.multiplePaintings,
 });
 
 /**

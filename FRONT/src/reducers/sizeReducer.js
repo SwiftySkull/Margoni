@@ -6,7 +6,7 @@ import {
 
 const initialState = {
   sizes: [],
-  sizeChosen: [],
+  sizeChosen: {},
   results: 0,
   paintings: [],
 };

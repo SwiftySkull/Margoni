@@ -1,17 +1,14 @@
 import { connect } from 'react-redux';
 
 import {
-  loadPaintingsOfCategory,
   loadPaintingsByCategoryName,
 } from 'src/actions/categoryActions';
 
 import {
-  loadPaintingsOfTechnique,
   loadPaintingsByTechniqueType,
 } from 'src/actions/techniqueActions';
 
 import {
-  loadPaintingsOfSize,
   loadPaintingsBySizeFormat,
 } from 'src/actions/sizeActions';
 
@@ -97,25 +94,13 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(loaderOn());
   },
 
-  // loadPaintingsOfCategory: (id, select) => {
-  //   dispatch(loadPaintingsOfCategory(id, select));
-  // },
-
   loadPaintingsByCategoryName: (select) => {
     dispatch(loadPaintingsByCategoryName(select));
   },
 
-  // loadPaintingsOfTechnique: (id, select) => {
-  //   dispatch(loadPaintingsOfTechnique(id, select));
-  // },
-
   loadPaintingsByTechniqueType: (select) => {
     dispatch(loadPaintingsByTechniqueType(select));
   },
-
-  // loadPaintingsOfSize: (id, select) => {
-  //   dispatch(loadPaintingsOfSize(id, select));
-  // },
 
   loadPaintingsBySizeFormat: (select) => {
     dispatch(loadPaintingsBySizeFormat(select));

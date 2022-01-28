@@ -65,7 +65,7 @@ Galerie.propTypes = {
   techniques: PropTypes.array.isRequired,
   sizes: PropTypes.array.isRequired,
   sizeChoice: PropTypes.func.isRequired,
-  sizeChosen: PropTypes.array.isRequired,
+  sizeChosen: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
 };
 

@@ -1,6 +1,6 @@
 // == Import npm
 import React, { useEffect } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
 import PropTypes from 'prop-types';
 
@@ -8,17 +8,13 @@ import PropTypes from 'prop-types';
 import { stringForUrl } from 'src/utils/utils';
 
 import Loader from 'src/components/Loader';
-import Navigation from './Navigation';
 
 import './paintingList.scss';
 
 // == Composant
 const PaintingList = ({
-  // loadPaintingsOfCategory,
   loadPaintingsByCategoryName,
-  // loadPaintingsOfTechnique,
   loadPaintingsByTechniqueType,
-  // loadPaintingsOfSize,
   loadPaintingsBySizeFormat,
   searchChosen,
   results,
@@ -89,7 +85,6 @@ const PaintingList = ({
 
   const rows = [];
 
-  // if (numberOfPages <= 5) {
   for (let index = 1; index <= numberOfPages; index++) {
     rows[index] = (
       <Link
@@ -105,7 +100,6 @@ const PaintingList = ({
       </Link>
     );
   }
-  // }
 
   return (
     <div id="paintingList">
@@ -138,7 +132,7 @@ const PaintingList = ({
         })}
       </div>
       )}
-      {numberOfPages > 1 && (
+      {!loading && numberOfPages > 1 && (
         <nav className="navigation">
           <Link to={`/galerie/${choice}/${select}/${id}/page/${actualPage - 1}`} className="previous-button">
             <button
@@ -150,21 +144,9 @@ const PaintingList = ({
             >Précédent
             </button>
           </Link>
-          {/* {numberOfPages <= 5 && ( */}
           <div>
             {rows.map((raw) => (raw))}
           </div>
-          {/* )} */}
-          {/* {numberOfPages > 5 && (
-          <Navigation
-            actualPage={actualPage}
-            selectPage={selectPage}
-            numberOfPages={numberOfPages}
-            choice={choice}
-            select={select}
-            selectId={id}
-          />
-          )} */}
           <Link to={`/galerie/${choice}/${select}/${id}/page/${actualPage + 1}`} className="next-button">
             <button
               type="button"
@@ -185,11 +167,8 @@ const PaintingList = ({
 };
 
 PaintingList.propTypes = {
-  // loadPaintingsOfCategory: PropTypes.func.isRequired,
   loadPaintingsByCategoryName: PropTypes.func.isRequired,
-  // loadPaintingsOfTechnique: PropTypes.func.isRequired,
   loadPaintingsByTechniqueType: PropTypes.func.isRequired,
-  // loadPaintingsOfSize: PropTypes.func.isRequired,
   loadPaintingsBySizeFormat: PropTypes.func.isRequired,
   searchChosen: PropTypes.string.isRequired,
   results: PropTypes.string.isRequired,
