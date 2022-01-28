@@ -115,10 +115,7 @@
       background-color: #fff;
 
       @media (min-width: vars.$medium) {
-        margin: 0;
-        position: absolute;
-        right: 2rem;
-        bottom: 1.5rem;
+        margin-top: 3rem;
         font-size: 1.2rem;
       }
 
@@ -166,7 +163,7 @@
         right: 0;
         top: 0;
         padding: 0 1rem 1rem;
-        border: 1px solid black;
+        border: 1px solid transparent;
         text-align: center;
 
         @media (min-width: vars.$big) {
@@ -184,7 +181,7 @@
         }
 
         >p:last-child {
-          color: black;
+          color: transparent;
         }
 
         &:hover {

@@ -46,13 +46,15 @@ const mapStateToProps = (state) => {
 
   let paintings = [];
   let results = '0';
+  let searchName = 'Chargement en cours';
   let searchChosen = 'Aucune recherche en cours';
   let specDate = [];
 
   if (searchingType === 1) {
     paintings = categoryPaintings;
     results = categoryResults;
-    searchChosen = `Tableaux de la catégorie ${categoryChosen.name}`;
+    searchName = `Catégorie : ${categoryChosen.name}`;
+    searchChosen = `Tableaux de la catégorie : ${searchName}`;
 
     // if (categoryChosen.name === 'Animaux') {
     //   specDate = [1950, 1975];
@@ -62,13 +64,15 @@ const mapStateToProps = (state) => {
   if (searchingType === 2) {
     paintings = techniquePaintings;
     results = techniqueResults;
-    searchChosen = `Tableaux de la technique ${techniqueChosen.type}`;
+    searchName = `Technique : ${techniqueChosen.type}`;
+    searchChosen = `Tableaux de la technique : ${searchName}`;
   }
 
   if (searchingType === 3) {
     paintings = sizePaintings;
     results = sizeResults;
-    searchChosen = `Tableaux au format ${sizeChosen.format}`;
+    searchName = `Format : ${sizeChosen.format}`;
+    searchChosen = `Tableaux au format : ${searchName}`;
 
     if (sizeChosen.id === 0) {
       searchChosen = 'Tableaux sans format particulier';
@@ -77,6 +81,7 @@ const mapStateToProps = (state) => {
 
   return {
     specDate,
+    searchName,
     searchChosen,
     results,
     paintings,

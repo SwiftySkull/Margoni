@@ -6,7 +6,7 @@ import {
 
 const initialState = {
   sizes: [],
-  sizeChosen: {},
+  sizeChosen: 0,
   results: 0,
   paintings: [],
 };
@@ -25,7 +25,7 @@ function sizeReducer(state = initialState, action) {
     case SIZE_CHOICE:
       return {
         ...state,
-        sizeChosen: state.sizes[action.id],
+        sizeChosen: action.id,
       };
 
     case SAVE_PAINTINGS_OF_SIZE:

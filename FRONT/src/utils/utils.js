@@ -1,3 +1,11 @@
+import {
+  heights,
+  widths,
+  figure as F,
+  paysage as P,
+  marine as M,
+} from './formatConversion';
+
 /**
  * Shuffles an array and returns an amount of entry specified or all the array shuffled
  *
@@ -89,4 +97,39 @@ export const urlToString = (url) => {
     .replace(/-l-/g, ' l\'');
 
   return stringFromUrl;
+};
+
+/**
+ * Convert the format of a painting into it's height and width
+ *
+ * @param {string} format Size of the painting
+ * @returns String for the heifht and width of the painting
+ */
+export const formatConversion = (format) => {
+  const { length } = format;
+
+  let formatConverted = ' --- ';
+
+  if (format === 'Sans format') {
+    return '';
+  }
+
+  const letter = format.slice(length - 1);
+  const number = format.slice(0, length - 1);
+
+  if (letter === 'F') {
+    formatConverted += `${F[number].height} x ${F[number].width}`;
+  }
+
+  if (letter === 'P') {
+    formatConverted += `${P[number].height} x ${P[number].width}`;
+  }
+
+  if (letter === 'M') {
+    formatConverted += `${M[number].height} x ${M[number].width}`;
+  }
+
+  formatConverted += ' cm';
+
+  return formatConverted;
 };

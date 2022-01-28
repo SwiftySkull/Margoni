@@ -29,6 +29,8 @@ const App = ({
     loadElements();
   }, []);
 
+  document.title = 'Denise Margoni';
+
   return (
     <div className="app">
       <Header />

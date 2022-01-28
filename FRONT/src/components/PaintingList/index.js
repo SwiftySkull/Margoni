@@ -35,6 +35,7 @@ const PaintingList = ({
   loadPaintingsByCategoryName,
   loadPaintingsByTechniqueType,
   loadPaintingsBySizeFormat,
+  searchName,
   searchChosen,
   results,
   paintings,
@@ -53,7 +54,9 @@ const PaintingList = ({
     id,
   } = useParams();
   let { page } = useParams();
-console.log(numberOfPages);
+
+  document.title = searchName;
+
   const choicePossibilities = ['categorie', 'technique', 'format'];
 
   if (!choicePossibilities.includes(choice)) {
@@ -212,6 +215,7 @@ PaintingList.propTypes = {
   loadPaintingsByCategoryName: PropTypes.func.isRequired,
   loadPaintingsByTechniqueType: PropTypes.func.isRequired,
   loadPaintingsBySizeFormat: PropTypes.func.isRequired,
+  searchName: PropTypes.string.isRequired,
   searchChosen: PropTypes.string.isRequired,
   results: PropTypes.string.isRequired,
   paintings: PropTypes.array.isRequired,

@@ -35,7 +35,7 @@ const mapStateToProps = (state) => {
     galeryChoice,
     techniques: techniques.map((tech) => [tech.id, tech.type]),
     sizes: state.size.sizes,
-    sizeChosen: state.size.sizeChosen,
+    sizeChosen: state.size.sizes.filter((size) => size.id == state.size.sizeChosen),
     loading: state.main.loading,
   };
 };
@@ -49,6 +49,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
 
   sizeChoice: (id) => {
+    console.log(id);
     dispatch(sizeChoice(id));
   },
 });

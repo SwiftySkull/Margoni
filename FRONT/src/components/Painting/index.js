@@ -38,6 +38,12 @@ const Painting = ({
     }
   }, []);
 
+  document.title = 'Chargement du tableau...';
+
+  if (painting.id !== undefined && !multiplePaintings) {
+    document.title = painting.title ?? painting.dbName;
+  }
+
   return (
     <div id="painting">
       {loading && <Loader />}
@@ -61,13 +67,13 @@ const Painting = ({
           <ul>
             <span>Catégorie(s)</span> :
             {painting.categories.map((cat) => (
-              <li key={cat.id}><Link to={`/galerie/technique/${stringForUrl(cat.name)}/${cat.id}`}>{cat.name}</Link></li>
+              <li key={cat.id}><Link to={`/galerie/categorie/${stringForUrl(cat.name)}`}>{cat.name}</Link></li>
             ))}
           </ul>
           <ul>
             <span>Technique(s)</span> :
             {painting.techniques.map((tec) => (
-              <li key={tec.id}><Link to={`/galerie/technique/${stringForUrl(tec.type)}/${tec.id}`}>{tec.type}</Link></li>
+              <li key={tec.id}><Link to={`/galerie/technique/${stringForUrl(tec.type)}`}>{tec.type}</Link></li>
             ))}
           </ul>
           {painting.information !== null && (
