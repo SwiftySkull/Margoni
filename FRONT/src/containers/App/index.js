@@ -9,7 +9,7 @@ import App from 'src/components/App';
  */
 
 const mapStateToProps = (state) => ({
-  // menu: state.main.menu,
+  loading: false,
 });
 
 /**

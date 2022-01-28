@@ -8,6 +8,9 @@ export const LOAD_PAINTING_BY_NAME = 'LOAD_PAINTING_BY_NAME';
 export const MODAL_STATUS = 'MODAL_STATUS';
 export const SELECT_PAGE = 'SELECT_PAGE';
 export const PAINTING_OF_PAGE = 'PAINTING_OF_PAGE';
+export const LOADER_ON = 'LOADER_ON';
+export const LOADER_OFF = 'LOADER_OFF';
+export const CLEAR_PAINTING = 'CLEAR_PAINTING';
 
 // ACTIONS CREATORS
 
@@ -49,4 +52,16 @@ export const paintingOfPage = (page, choice, select, selectId) => ({
   choice,
   select,
   selectId,
+});
+
+export const loaderOn = () => ({
+  type: LOADER_ON,
+});
+
+export const loaderOff = () => ({
+  type: LOADER_OFF,
+});
+
+export const clearPainting = () => ({
+  type: CLEAR_PAINTING,
 });

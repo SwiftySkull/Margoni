@@ -2,6 +2,9 @@ import {
   SAVE_PAINTING,
   MODAL_STATUS,
   SELECT_PAGE,
+  LOADER_ON,
+  LOADER_OFF,
+  CLEAR_PAINTING,
 } from 'src/actions/mainActions';
 
 import {
@@ -23,6 +26,7 @@ const initialState = {
   searchingType: 0,
   painting: {},
   actualPage: 1,
+  loading: false,
 };
 
 /**
@@ -48,10 +52,18 @@ function mainReducer(state = initialState, action) {
         searchingType: 3,
       };
 
+    case CLEAR_PAINTING:
+      return {
+        ...state,
+        painting: {},
+        loading: true,
+      };
+
     case SAVE_PAINTING:
       return {
         ...state,
         painting: action.painting,
+        loading: false,
       };
 
     case MODAL_STATUS:
@@ -64,6 +76,18 @@ function mainReducer(state = initialState, action) {
       return {
         ...state,
         actualPage: action.page,
+      };
+
+    case LOADER_ON:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case LOADER_OFF:
+      return {
+        ...state,
+        loading: false,
       };
 
     default:

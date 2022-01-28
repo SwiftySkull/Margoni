@@ -4,6 +4,7 @@ import {
   loadPainting,
   loadPaintingByName,
   displayModal,
+  clearPainting,
 } from 'src/actions/mainActions';
 
 import Painting from 'src/components/Painting';
@@ -15,6 +16,7 @@ import Painting from 'src/components/Painting';
 const mapStateToProps = (state) => ({
   painting: state.main.painting,
   modalStatus: state.main.modalStatus,
+  loading: state.main.loading,
 });
 
 /**
@@ -22,10 +24,12 @@ const mapStateToProps = (state) => ({
  */
 const mapDispatchToProps = (dispatch) => ({
   loadPainting: (id) => {
+    dispatch(clearPainting());
     dispatch(loadPainting(id));
   },
 
   loadPaintingByName: (paintingName) => {
+    dispatch(clearPainting());
     dispatch(loadPaintingByName(paintingName));
   },
 

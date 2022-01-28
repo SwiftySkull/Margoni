@@ -7,17 +7,18 @@ import PropTypes from 'prop-types';
 // == Import
 import { stringForUrl } from 'src/utils/utils';
 
+import Loader from 'src/components/Loader';
 import Navigation from './Navigation';
 
 import './paintingList.scss';
 
 // == Composant
 const PaintingList = ({
-  loadPaintingsOfCategory,
+  // loadPaintingsOfCategory,
   loadPaintingsByCategoryName,
-  loadPaintingsOfTechnique,
+  // loadPaintingsOfTechnique,
   loadPaintingsByTechniqueType,
-  loadPaintingsOfSize,
+  // loadPaintingsOfSize,
   loadPaintingsBySizeFormat,
   searchChosen,
   results,
@@ -28,6 +29,8 @@ const PaintingList = ({
   specDate,
   paintingOfPage,
   paintingOfNewPage,
+  loading,
+  loaderOn,
 }) => {
   const {
     choice,
@@ -43,6 +46,7 @@ const PaintingList = ({
   }
 
   useEffect(() => {
+    loaderOn();
     if (choice === 'categorie') {
       if (id === undefined) {
         loadPaintingsByCategoryName(select);
@@ -105,11 +109,17 @@ const PaintingList = ({
 
   return (
     <div id="paintingList">
-      <h2>{searchChosen}</h2>
-      <h3 className="subtitle">Nombre de peintures trouvées : {results}</h3>
+      {loading && <Loader />}
+      {!loading && (
+        <>
+          <h2>{searchChosen}</h2>
+          <h3 className="subtitle">Nombre de peintures trouvées : {results}</h3>
+        </>
+      )}
       {specDate.length > 0 && (
         <h4>Tableaux peints entre {specDate[0]} et {specDate[1]}</h4>
       )}
+      {!loading && (
       <div className="list">
         {paintings.map((paint) => {
           const endUrl = paint.title ? stringForUrl(paint.title) : stringForUrl(paint.dbName);
@@ -127,6 +137,7 @@ const PaintingList = ({
           );
         })}
       </div>
+      )}
       {numberOfPages > 1 && (
         <nav className="navigation">
           <Link to={`/galerie/${choice}/${select}/${id}/page/${actualPage - 1}`} className="previous-button">
@@ -174,11 +185,11 @@ const PaintingList = ({
 };
 
 PaintingList.propTypes = {
-  loadPaintingsOfCategory: PropTypes.func.isRequired,
+  // loadPaintingsOfCategory: PropTypes.func.isRequired,
   loadPaintingsByCategoryName: PropTypes.func.isRequired,
-  loadPaintingsOfTechnique: PropTypes.func.isRequired,
+  // loadPaintingsOfTechnique: PropTypes.func.isRequired,
   loadPaintingsByTechniqueType: PropTypes.func.isRequired,
-  loadPaintingsOfSize: PropTypes.func.isRequired,
+  // loadPaintingsOfSize: PropTypes.func.isRequired,
   loadPaintingsBySizeFormat: PropTypes.func.isRequired,
   searchChosen: PropTypes.string.isRequired,
   results: PropTypes.string.isRequired,
@@ -189,6 +200,8 @@ PaintingList.propTypes = {
   specDate: PropTypes.array.isRequired,
   paintingOfPage: PropTypes.func.isRequired,
   paintingOfNewPage: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  loaderOn: PropTypes.func.isRequired,
 };
 
 // == Export

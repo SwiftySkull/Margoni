@@ -13,6 +13,7 @@ import {
 
 import {
   PAINTING_OF_PAGE,
+  loaderOff,
 } from 'src/actions/mainActions';
 
 // URL for the Axios requests
@@ -47,6 +48,7 @@ const techniqueMiddleware = (store) => (next) => (action) => {
             window.location = `/galerie/technique/${stringForUrl(response.data[0].type)}/${response.data[0].id}`;
           }
           else {
+            store.dispatch(loaderOff());
             store.dispatch(savePaintingsOfTechnique(response.data[0], response.data[1]['total results'], response.data[2]));
           }
         })
@@ -67,6 +69,7 @@ const techniqueMiddleware = (store) => (next) => (action) => {
               window.location = `/galerie/technique/${stringForUrl(response.data[0].type)}/${response.data[0].id}/page/${action.page}`;
             }
             else {
+              store.dispatch(loaderOff());
               store.dispatch(savePaintingsOfTechnique(response.data[0], response.data[1]['total results'], response.data[2]));
             }
           })

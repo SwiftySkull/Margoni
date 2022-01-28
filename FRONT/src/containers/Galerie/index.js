@@ -36,6 +36,7 @@ const mapStateToProps = (state) => {
     techniques: techniques.map((tech) => [tech.id, tech.type]),
     sizes: state.size.sizes,
     sizeChosen: state.size.sizeChosen,
+    loading: state.main.loading,
   };
 };
 

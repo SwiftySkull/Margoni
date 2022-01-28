@@ -5,6 +5,7 @@ import { useParams, Link } from 'react-router-dom';
 
 // == Import
 import SideBar from 'src/containers/SideBar';
+import Loader from 'src/components/Loader';
 
 import { stringForUrl } from 'src/utils/utils';
 
@@ -17,6 +18,7 @@ const Painting = ({
   loadPaintingByName,
   displayModal,
   modalStatus,
+  loading,
 }) => {
   const { id, name } = useParams();
 
@@ -36,6 +38,7 @@ const Painting = ({
 
   return (
     <div id="painting">
+      {loading && <Loader />}
       {painting.id !== undefined && (
       <div className="tableau">
         <h2>{painting.title ?? painting.dbName}</h2>
@@ -99,6 +102,7 @@ Painting.propTypes = {
   loadPaintingByName: PropTypes.func.isRequired,
   displayModal: PropTypes.func.isRequired,
   modalStatus: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 // == Export

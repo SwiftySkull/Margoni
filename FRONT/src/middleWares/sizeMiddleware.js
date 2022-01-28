@@ -11,6 +11,7 @@ import {
 
 import {
   PAINTING_OF_PAGE,
+  loaderOff,
 } from 'src/actions/mainActions';
 
 // URL for the Axios requests
@@ -32,6 +33,7 @@ const sizeMiddleware = (store) => (next) => (action) => {
             window.location = `/galerie/format/${stringForUrl(response.data[0].format)}/${response.data[0].id}`;
           }
           else {
+            store.dispatch(loaderOff());
             store.dispatch(savePaintingsOfSize(response.data[0], response.data[1]['total results'], response.data[2]));
           }
         })
@@ -52,6 +54,7 @@ const sizeMiddleware = (store) => (next) => (action) => {
               window.location = `/galerie/format/${stringForUrl(response.data[0].format)}/${response.data[0].id}/page/${action.page}`;
             }
             else {
+              store.dispatch(loaderOff());
               store.dispatch(savePaintingsOfSize(response.data[0], response.data[1]['total results'], response.data[2]));
             }
           })

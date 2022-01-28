@@ -18,6 +18,7 @@ import {
 import {
   selectPage,
   paintingOfPage,
+  loaderOn,
 } from 'src/actions/mainActions';
 
 import PaintingList from 'src/components/PaintingList';
@@ -84,6 +85,7 @@ const mapStateToProps = (state) => {
     paintings,
     actualPage: state.main.actualPage,
     numberOfPages: Math.ceil(results / 12),
+    loading: state.main.loading,
   };
 };
 
@@ -91,31 +93,37 @@ const mapStateToProps = (state) => {
  * To dispatch function in the component
  */
 const mapDispatchToProps = (dispatch) => ({
-  loadPaintingsOfCategory: (id, select) => {
-    dispatch(loadPaintingsOfCategory(id, select));
+  loaderOn: () => {
+    dispatch(loaderOn());
   },
+
+  // loadPaintingsOfCategory: (id, select) => {
+  //   dispatch(loadPaintingsOfCategory(id, select));
+  // },
 
   loadPaintingsByCategoryName: (select) => {
     dispatch(loadPaintingsByCategoryName(select));
   },
 
-  loadPaintingsOfTechnique: (id, select) => {
-    dispatch(loadPaintingsOfTechnique(id, select));
-  },
+  // loadPaintingsOfTechnique: (id, select) => {
+  //   dispatch(loadPaintingsOfTechnique(id, select));
+  // },
 
   loadPaintingsByTechniqueType: (select) => {
     dispatch(loadPaintingsByTechniqueType(select));
   },
 
-  loadPaintingsOfSize: (id, select) => {
-    dispatch(loadPaintingsOfSize(id, select));
-  },
+  // loadPaintingsOfSize: (id, select) => {
+  //   dispatch(loadPaintingsOfSize(id, select));
+  // },
 
   loadPaintingsBySizeFormat: (select) => {
     dispatch(loadPaintingsBySizeFormat(select));
   },
 
   selectPage: (page, max) => {
+    dispatch(loaderOn());
+
     let nextPage = page;
 
     if (page === 0) {
@@ -129,6 +137,8 @@ const mapDispatchToProps = (dispatch) => ({
   },
 
   paintingOfPage: (page, max, choice, select, selectId) => {
+    dispatch(loaderOn());
+
     let nextPage = page;
 
     if (page >= max) {
@@ -143,6 +153,8 @@ const mapDispatchToProps = (dispatch) => ({
   },
 
   paintingOfNewPage: (page, choice, select, selectId) => {
+    dispatch(loaderOn());
+
     let nextPage = page;
     if (page <= 0) {
       nextPage = 1;

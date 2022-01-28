@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // == Import
+import Loader from 'src/components/Loader';
+
 import { stringForUrl } from 'src/utils/utils';
 import Choosing from './Choosing';
 
@@ -19,6 +21,7 @@ const Galerie = ({
   sizes,
   sizeChoice,
   sizeChosen,
+  loading,
 }) => (
   <div id="galerie">
     <h2>Galerie</h2>
@@ -27,6 +30,7 @@ const Galerie = ({
       <button type="button" onClick={() => chooseGalerie(2)}><p className="select-big">Sélection par technique</p><p className="select-small">Technique</p></button>
       <button type="button" onClick={() => chooseGalerie(3)}><p className="select-big">Sélection par format</p><p className="select-small">Format</p></button>
     </div>
+    {loading && <Loader />}
     {galeryChoice === 3 && (
     <div className="size-div">
       <select onChange={(e) => sizeChoice(e.target.value)}>
@@ -62,6 +66,7 @@ Galerie.propTypes = {
   sizes: PropTypes.array.isRequired,
   sizeChoice: PropTypes.func.isRequired,
   sizeChosen: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 // == Export
