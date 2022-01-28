@@ -65,10 +65,9 @@ class AddEditController extends AbstractController
                     $painting->setDbName($newDbTitle);                
                 }    
             }
-            
             // Automatic modification of the size and format
             $painting = $formatConversion->setSizes($painting);
-            
+
             // Setting warning is there is a size error
             $painting = $formatConversion->setWarningSizeMessage($painting);
 
@@ -140,7 +139,6 @@ class AddEditController extends AbstractController
 
             // Automatic modification of the size and format
             $painting = $formatConversion->setSizes($painting);
-
             // Setting warning is there is a size error
             $painting = $formatConversion->setWarningSizeMessage($painting);
 

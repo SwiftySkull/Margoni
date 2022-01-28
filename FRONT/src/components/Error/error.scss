@@ -23,32 +23,26 @@
       flex-direction: column;
       background-color: white;
       min-height: 200px;
-      position: relative;
       overflow: hidden;
+      text-align: center;
+      padding: 1rem;
 
-      @media (min-width: vars.$medium) {
-        flex-direction: initial;
-      }
 
       @media (min-width: 900px) {
         height: 100%;
       }
 
       img {
-        height: 100%;
-        width: 100%;
-        transform: scale(1.7);
+        align-self: center;
       }
 
       h2 {
-        position: absolute;
-        font-size: 3rem;
+        font-size: 1.5rem;
         font-weight: bold;
-        color: vars.$secondaryColor;
-        text-shadow: 2px 2px 2px black;
         left: 1rem;
 
         @media (min-width: vars.$small) {
+          font-size: 2rem;
           top: 20%;
         }
 

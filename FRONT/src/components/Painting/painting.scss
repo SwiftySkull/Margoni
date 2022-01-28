@@ -165,7 +165,9 @@
         position: absolute;
         right: 0;
         top: 0;
-        padding: 0.15rem 1.8rem 0;
+        padding: 0 1rem 1rem;
+        border: 1px solid black;
+        text-align: center;
 
         @media (min-width: vars.$big) {
           right: 2rem;
@@ -175,23 +177,22 @@
         >p:first-child {
           font-size: 2rem;
           transform: rotate(45deg);
-
+          
           @media (min-width: vars.$big) {
             font-size: 3rem;
           }
         }
 
         >p:last-child {
-          display: none;
+          color: black;
         }
 
         &:hover {
-          border: 1px solid vars.$mainColor;
-          padding: 0 1rem 1rem;
           cursor: pointer;
+          border: 1px solid vars.$mainColor;
 
           >p:last-child {
-            display: inline;
+            color: vars.$mainColor;
           }
         }
       }

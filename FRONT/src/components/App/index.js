@@ -18,14 +18,12 @@ import PaintingList from 'src/containers/PaintingList';
 import Painting from 'src/containers/Painting';
 import Footer from 'src/containers/Footer';
 import Error from 'src/components/Error';
-import Loader from 'src/components/Loader';
 
 import './app.scss';
 
 // == Composant
 const App = ({
   loadElements,
-  loading,
 }) => {
   useEffect(() => {
     loadElements();

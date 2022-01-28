@@ -267,6 +267,10 @@ class FormatConversion
         // Get the number of the format
         $sizeNumber = substr($format, 0, strlen($format) - 1);
 
+        // if ('Sans format' === $format) {
+        //     return [];
+        // }
+
         $reference = $this->formatType[$sizeLetter];
 
         $sizes = $reference[$sizeNumber];
@@ -332,6 +336,10 @@ class FormatConversion
      */
     public function checkWidthHeightAndFormat(string $size, int $height, int $width): bool
     {
+        if ('Sans format' === $size) {
+            return true;
+        }
+
         $sizes = $this->getWidthHeightFromFormat($size);
 
         if ($sizes['height'] == $height && $sizes['width'] == $width) {
@@ -394,6 +402,10 @@ class FormatConversion
                 $painting->setSize($foundSize);
 
             }
+
+            if (false === $format) {
+                $painting->setSize($this->sizeRepository->find(0));
+            }
         }
 
         if ('H' === $picture->getOrientation() && $height > $width) {
@@ -419,6 +431,7 @@ class FormatConversion
     {
         if (null != $painting->getSize()) {
             $comparison = $this->checkWidthHeightAndFormat($painting->getSize()->getFormat(), $painting->getHeight(), $painting->getWidth());
+
             if (!$comparison) {
                 $painting->setInformation('Attention ! Il y a une différence entre les dimensions et le format mentionné ! '.$painting->getInformation());
             }

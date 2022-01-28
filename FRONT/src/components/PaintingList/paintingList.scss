@@ -58,19 +58,29 @@
         flex-direction: column;
         justify-content: space-between;
         transition: 0.5s;
-        overflow: hidden;
 
         &:hover {
-          border: orange solid 4px;
-          border-radius: vars.$boxBorderRadius;
-          box-shadow: 3px 3px 3px black;
-          transition: 0.5s 0.5s;
+          div >img {
+            box-shadow: 3.5px 3.5px 3.5px vars.$secondaryColor;
+            transition: 0.5s 0.5s;
+          }
+
+          >h4 {
+            color: vars.$textHoverColor;
+            transition: 0.5s 0.5s;
+          }
         }
 
         &:active {
-          box-shadow: 5px 5px 5px vars.$secondaryColor;
-          color: vars.$secondaryColor;
-          background-color: vars.$clickBackgroundColor;
+          div >img {
+            box-shadow: 2px 2px 2px vars.$secondaryColor;
+            transition: 0s 0s;
+          }
+
+          >h4 {
+            color: vars.$secondaryColor;
+            transition: 0s 0s;
+          }
         }
 
         div {
@@ -181,7 +191,6 @@
         width: 100px;
 
         @media (min-width: vars.$big) {
-          width: 100px;
           font-weight: bold;
         }
 

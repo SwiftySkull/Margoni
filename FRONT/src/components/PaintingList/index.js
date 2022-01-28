@@ -12,6 +12,25 @@ import Loader from 'src/components/Loader';
 import './paintingList.scss';
 
 // == Composant
+/**
+ * Component which display the list of paintings of a category/technique/size
+ *
+ * @param {function} loadPaintingsByCategoryName 
+ * @param {function} loadPaintingsByTechniqueType 
+ * @param {function} loadPaintingsBySizeFormat 
+ * @param {string} searchChosen 
+ * @param {string} results 
+ * @param {array} paintings 
+ * @param {number} actualPage 
+ * @param {function} selectPage 
+ * @param {number} numberOfPages 
+ * @param {array} specDate 
+ * @param {*} paintingOfPage 
+ * @param {*} paintingOfNewPage 
+ * @param {*} loading 
+ * @param {*} loaderOn 
+ * @returns 
+ */
 const PaintingList = ({
   loadPaintingsByCategoryName,
   loadPaintingsByTechniqueType,
@@ -34,7 +53,7 @@ const PaintingList = ({
     id,
   } = useParams();
   let { page } = useParams();
-
+console.log(numberOfPages);
   const choicePossibilities = ['categorie', 'technique', 'format'];
 
   if (!choicePossibilities.includes(choice)) {
@@ -133,8 +152,21 @@ const PaintingList = ({
       </div>
       )}
       {!loading && numberOfPages > 1 && (
-        <nav className="navigation">
-          <Link to={`/galerie/${choice}/${select}/${id}/page/${actualPage - 1}`} className="previous-button">
+        <nav
+          className="navigation"
+          style={{
+            flexWrap: numberOfPages > 5 ? 'wrap' : 'nowrap',
+            justifyContent: numberOfPages > 5 ? 'space-around' : 'space-between',
+            width: numberOfPages > 5 ? '60%' : '80%',
+          }}
+        >
+          <Link
+            to={`/galerie/${choice}/${select}/${id}/page/${actualPage - 1}`}
+            className="previous-button"
+            style={{
+              order: numberOfPages > 5 ? '-2' : '0',
+            }}
+          >
             <button
               type="button"
               onClick={() => {
@@ -144,10 +176,20 @@ const PaintingList = ({
             >Précédent
             </button>
           </Link>
-          <div>
+          <div
+            style={{
+              flexWrap: numberOfPages > 5 ? 'wrap' : 'nowrap',
+              margin: numberOfPages > 5 ? '0.5rem 0' : 'unset',
+              width: numberOfPages > 5 ? '100%' : '70%',
+            }}
+          >
             {rows.map((raw) => (raw))}
           </div>
-          <Link to={`/galerie/${choice}/${select}/${id}/page/${actualPage + 1}`} className="next-button">
+          <Link
+            to={`/galerie/${choice}/${select}/${id}/page/${actualPage + 1}`}
+            className="next-button"
+            style={{ order: numberOfPages > 5 ? '-1' : '0' }}
+          >
             <button
               type="button"
               onClick={() => {

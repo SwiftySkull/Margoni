@@ -10,6 +10,12 @@ import Vignette from './vignette';
 import './sideBar.scss';
 
 // == Composant
+/**
+ * Component which display the side bar with some navigation and painting categories
+ *
+ * @param {array} categories Array of random categories
+ * @param {array} pictures Array of the paintings of the categories
+ */
 const SideBar = ({
   categories,
   pictures,
@@ -34,7 +40,7 @@ const SideBar = ({
             <Vignette
               key={categ.id}
               name={categ.name}
-              picture={pictureFile} // utiliser filter
+              picture={pictureFile}
               altPicture={`Vignette ${categ.name}`}
               href={`/galerie/categorie/${stringForUrl(categ.name)}`}
             />

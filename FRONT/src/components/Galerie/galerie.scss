@@ -1,7 +1,6 @@
 @use 'src/styles/_vars';
 
 #galerie {
-  color: vars.$mainColor;
   margin-bottom: 1rem;
   border: vars.$boxBorder;
   border-radius: vars.$boxBorderRadius;
@@ -9,6 +8,7 @@
   min-height: 200px;
 
   >h2 {
+    color: vars.$mainColor;
     font-size: 2rem;
     font-style: italic;
     font-weight: bold;
@@ -149,19 +149,29 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        overflow: hidden;
 
         &:hover {
-          border: orange solid 4px;
-          border-radius: vars.$boxBorderRadius;
-          box-shadow: 3px 3px 3px black;
-          transition: 0.5s 0.5s ease-in-out;
+          div >img {
+            box-shadow: 3px 3px 3px vars.$secondaryColor;
+            transition: 0.5s 0.5s;
+          }
+
+          >h3 {
+            transition: 0.5s 0.5s;
+            color: vars.$textHoverColor;
+          }
         }
 
         &:active {
-          box-shadow: 5px 5px 5px vars.$secondaryColor;
-          color: vars.$secondaryColor;
-          background-color: vars.$clickBackgroundColor;
+          div >img {
+            box-shadow: 2px 2px 2px vars.$secondaryColor;
+            transition: 0s 0s;
+          }
+
+          >h3 {
+            color: vars.$secondaryColor;
+            transition: 0s 0s;
+          }
         }
 
         >div {
