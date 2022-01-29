@@ -65,10 +65,9 @@ class AddEditController extends AbstractController
                     $painting->setDbName($newDbTitle);                
                 }    
             }
-            
             // Automatic modification of the size and format
             $painting = $formatConversion->setSizes($painting);
-            
+
             // Setting warning is there is a size error
             $painting = $formatConversion->setWarningSizeMessage($painting);
 
@@ -140,7 +139,6 @@ class AddEditController extends AbstractController
 
             // Automatic modification of the size and format
             $painting = $formatConversion->setSizes($painting);
-
             // Setting warning is there is a size error
             $painting = $formatConversion->setWarningSizeMessage($painting);
 
@@ -170,5 +168,20 @@ class AddEditController extends AbstractController
             'form' => $form->createView(),
             'method' => 'Création',
         ]);
+    }
+
+    /**
+     * @Route(
+     *      "/paint/display-on-website/{id<\d+>}",
+     *      name="display_on_website",
+     *      methods={"POST"},
+     * )
+     */
+    public function displayOnWebsite(Painting $painting = null, $id, EntityManagerInterface $em)
+    {
+        $painting->setWebDisplay(!$painting->getWebDisplay());
+        $em->flush();
+
+        return $this->redirectToRoute('read_paint', ['id' => $id]);
     }
 }

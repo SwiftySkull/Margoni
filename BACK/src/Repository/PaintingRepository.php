@@ -22,6 +22,30 @@ class PaintingRepository extends ServiceEntityRepository
         $this->limitPerPage = $limitPerPage;
     }
 
+    public function getPaintingByTitle($title)
+    {
+        $qb = $this->createQueryBuilder('p')
+        ->orwhere('p.title LIKE :title')
+        ->setParameter('title', '%'.$title.'%');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getOneFromCategory($categ)
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT p, c 
+            FROM App\Entity\Painting p
+            LEFT JOIN p.categories c
+            WHERE c = :categ'
+
+        )->setParameter('categ', $categ);
+
+        return $query->getResult();
+    }
+
     public function findBySearch($search)
     {
         $qb = $this->createQueryBuilder('p')
@@ -220,6 +244,7 @@ class PaintingRepository extends ServiceEntityRepository
             // ->addSelect('c')
             ->where('c = :cat')
             ->setParameter('cat', $category)
+            // ->andWhere('p.webDisplay = 1')
             ->orderBy('p.id')
             ->setFirstResult($offset)
             ->setMaxResults($this->limitPerPage)
@@ -244,6 +269,7 @@ class PaintingRepository extends ServiceEntityRepository
             ->leftJoin('p.categories', 'c')
             ->where('c = :cat')
             ->setParameter('cat', $category)
+            // ->andWhere('p.webDisplay = 1')
             ->orderBy('p.id', 'ASC')
             ->getQuery()
             ->getSingleScalarResult()

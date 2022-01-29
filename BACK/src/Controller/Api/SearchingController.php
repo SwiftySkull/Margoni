@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Service\PagesNavigator;
 use App\Repository\PaintingRepository;
+use App\Repository\PaintingRepositoryWeb;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +21,7 @@ class SearchingController extends AbstractController
     /**
      * @Route("/api/search/{search}", name="api_search", methods={"GET"})
      */
-    public function search($search = null, PaintingRepository $paintingRepository)
+    public function search($search = null, PaintingRepositoryWeb $paintingRepository)
     {
         if (null === $search) {
             $message = [
@@ -57,7 +58,7 @@ class SearchingController extends AbstractController
     /**
      * @Route("/api/search/{search}/page/{page<\d+>}", name="api_paintings_browse_plus", methods={"GET"})
      */
-    public function browsePlus(PaintingRepository $paintingRepository, $search, $page)
+    public function browsePlus(PaintingRepositoryWeb $paintingRepository, $search, $page)
     {
         $totalSearch = $paintingRepository->findBySearch($search);
         $this->pagesNavigator->setAllEntries(count($totalSearch));

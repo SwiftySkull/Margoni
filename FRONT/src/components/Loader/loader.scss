@@ -1,0 +1,33 @@
+@use 'src/styles/_vars';
+
+#loader {
+  margin-right: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;  min-height: 300px;
+  transform: rotate(-20deg);
+
+  @media (max-width: vars.$inter) {
+    width: 100%;
+    margin-right: unset;
+  }
+
+  .cube {
+    animation: animate 2.5s linear infinite;
+  }
+}
+
+@keyframes animate {
+  0% {
+    transform: rotate(0);
+  }
+
+  50% {
+    transform: rotate(25deg);
+  }
+
+  100% {
+    transform: rotate(0);
+  }
+}

@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
 
+import { loadElements } from 'src/actions/mainActions';
+
 import App from 'src/components/App';
 
 /**
@@ -7,14 +9,16 @@ import App from 'src/components/App';
  */
 
 const mapStateToProps = (state) => ({
-  // menu: state.main.menu,
+  loading: false,
 });
 
 /**
  * To dispatch function in the component
  */
 const mapDispatchToProps = (dispatch) => ({
-
+  loadElements: () => {
+    dispatch(loadElements());
+  },
 });
 
 // === Assistant creation for the component

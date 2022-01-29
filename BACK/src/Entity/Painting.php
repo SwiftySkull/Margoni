@@ -24,6 +24,7 @@ class Painting
      * @ORM\Column(type="integer")
      * 
      * @Groups("paintings_browse")
+     * @Groups("one_from_categ")
      */
     private $id;
 
@@ -131,6 +132,11 @@ class Painting
      * @Groups("painting_read")
      */
     private $picture;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $webDisplay;
 
     public function __construct()
     {
@@ -402,6 +408,18 @@ class Painting
     public function removeTechnique(Technique $technique): self
     {
         $this->techniques->removeElement($technique);
+
+        return $this;
+    }
+
+    public function getWebDisplay(): ?bool
+    {
+        return $this->webDisplay;
+    }
+
+    public function setWebDisplay(?bool $webDisplay): self
+    {
+        $this->webDisplay = $webDisplay;
 
         return $this;
     }

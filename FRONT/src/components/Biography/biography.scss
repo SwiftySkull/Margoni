@@ -1,0 +1,129 @@
+@use 'src/styles/_vars';
+
+#biography {
+  display: flex;
+  justify-content: space-between;
+
+  .resume {
+    width: 100%;
+    margin-right: unset;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  
+    @media (min-width: vars.$inter) {
+      margin-right: 1rem;
+      width: 90%;
+    }
+
+    .main {
+      margin-bottom: 1rem;
+    }
+
+    .critiques {
+      border: vars.$boxBorder;
+      border-radius: vars.$boxBorderRadius;
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+
+      @media (min-width: vars.$medium) {
+        position: relative;
+        flex-direction: unset;
+      }
+
+      @media (min-width: 1280px) {
+        justify-content: center;
+      }
+
+      .crit-content {
+        width: 100%;
+        margin: auto;
+        padding: 1rem;
+        line-height: 1.6rem;
+        font-size: 1.1rem;
+
+        p:not(:last-child){
+          margin-bottom: 1.2rem;
+        }
+
+        @media (min-width: vars.$medium) {
+          width: 70%;
+          font-size: 1.3rem;
+        }
+
+        @media (min-width: 1280px) {
+          width: 80%;
+        }
+      }
+
+      a {
+        margin: 1rem auto;
+
+        .wiki {
+          bottom: 1rem;
+          right: 1rem;
+          opacity: 0.5;
+          font-size: 1rem;
+          font-weight: bold;
+          border: vars.$boxBorder;
+          border-radius: vars.$boxBorderRadius;
+          padding: 0.5rem 0.8rem;
+
+          @media (min-width: vars.$medium) {
+            padding: 1rem;
+            font-size: 1.2rem;
+            position: absolute;
+          }
+  
+          @media (min-width: 1350px) {
+            font-size: 1.5rem;
+          }
+
+          &:hover {
+            color: vars.$mainColor;
+            text-decoration: vars.$textHoverDecoration;
+            box-shadow: vars.$boxHoverShadow;
+          }
+
+          &:active {
+            background-color: vars.$clickBackgroundColor;
+            color: vars.$secondaryColor;
+          }
+        }  
+      }
+    }
+
+    .pictures {
+      border: vars.$boxBorder;
+      border-radius: vars.$boxBorderRadius;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-around;
+      flex-direction: column;
+
+      img {
+        height: 100%;
+        align-self: center;
+        border: 5px vars.$mainColor solid;
+
+        &:not(:nth-child(2)) {
+          max-height: 80%;
+        }
+
+        &:not(:last-child) {
+          margin-bottom: 1rem;
+
+          @media (min-width: 550px) {
+            margin-bottom: unset;
+          }  
+        }        
+      }
+
+      @media (min-width: 550px) {
+        flex-direction: unset;
+        padding: 2rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,296 @@
+@use 'src/styles/_vars';
+
+#painting {
+  display: flex;
+  justify-content: space-between;
+  
+  >.tableau {
+    border: vars.$boxBorder;
+    border-radius: vars.$boxBorderRadius;
+    padding: 1rem 1rem;
+    min-height: 200px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @media (min-width: vars.$small) {
+      padding: 1rem 2rem;
+    }
+
+    @media (min-width: vars.$medium) {
+      position: relative;
+    }
+
+    @media (min-width: 900px) {
+      margin-right: 1rem;
+    }
+  
+    h2 {
+      color: vars.$mainColor;
+      font-size: 2rem;
+      font-style: italic;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: 1px 1px 1px black;
+      width: 100%;
+      margin-bottom: 1rem;
+    }  
+
+    .image {
+      width: 100%;
+      text-align: center;
+      background-color: black;
+      padding: 2rem;
+      border-radius: vars.$boxBorderRadius;
+      margin-bottom: 1rem;
+
+      img {
+        max-height: 50vh;
+        max-width: 100%;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    span {
+      font-weight: bold;
+    }
+
+    .painting-infos {
+      height: 100%;
+      line-height: 2rem;
+      
+      @media (min-width: vars.$small) {
+        margin-left: 2rem;
+      }
+
+      @media (min-width: vars.$medium) {
+        font-size: 1.3rem;
+      }
+
+      >p {
+        margin-bottom: 0.5rem;
+      }
+
+      ul {
+        margin-bottom: 0.5rem;
+
+        li {
+          list-style: disc;
+          margin-left: 2rem;
+          color: vars.$mainColor;
+  
+          a {
+            color: black;
+
+            &:hover {
+              text-decoration: vars.$textHoverDecoration;
+              color: vars.$textHoverColor;
+            }
+
+            &:active {
+              text-shadow: 0.5px 0.5px 0.5px black;
+              color: vars.$secondaryColor;
+            }
+          }
+        }  
+      }
+
+      >div {
+        >p:last-child {
+          margin-left: 2rem;
+        }
+      }
+    }
+
+    button {
+      border: vars.$boxBorder;
+      border-radius: vars.$boxBorderRadius;
+      padding: 0.3rem 1.5rem;
+      width: fit-content;
+      margin: 1rem auto 0;
+      background-color: #fff;
+
+      @media (min-width: vars.$medium) {
+        margin-top: 3rem;
+        font-size: 1.2rem;
+      }
+
+      &:hover {
+        color: vars.$textHoverColor;
+        text-decoration: vars.$textHoverDecoration;
+        box-shadow: vars.$boxHoverShadow;
+      }
+
+      &:active {
+        color: vars.$secondaryColor;
+        background-color: vars.$clickBackgroundColor;
+      }
+    }
+
+    .modal-box {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      padding: 3rem;
+      background-color: rgb(0, 0, 0);
+
+      .image-modal {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+  
+        img {
+          max-height: 100%;
+          max-width: 100%;
+          align-self: center;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+
+      .close-modal-button {
+        color: vars.$mainColor;
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 0 1rem 1rem;
+        border: 1px solid transparent;
+        text-align: center;
+
+        @media (min-width: vars.$big) {
+          right: 2rem;
+          top: 2rem;
+        }
+
+        >p:first-child {
+          font-size: 2rem;
+          transform: rotate(45deg);
+          
+          @media (min-width: vars.$big) {
+            font-size: 3rem;
+          }
+        }
+
+        >p:last-child {
+          color: transparent;
+        }
+
+        &:hover {
+          cursor: pointer;
+          border: 1px solid vars.$mainColor;
+
+          >p:last-child {
+            color: vars.$mainColor;
+          }
+        }
+      }
+    }
+  }
+
+  >.multiple-paintings {
+    border: vars.$boxBorder;
+    border-radius: vars.$boxBorderRadius;
+    padding: 1rem 1rem;
+    min-height: 200px;
+    width: 100%;
+    
+    @media (min-width: vars.$small) {
+      padding: 1rem 2rem;
+    }
+
+    @media (min-width: vars.$medium) {
+      position: relative;
+    }
+
+    @media (min-width: 900px) {
+      margin-right: 1rem;
+    }
+
+    h2 {
+      color: vars.$mainColor;
+      font-size: 2rem;
+      font-style: italic;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: 1px 1px 1px black;
+      width: 100%;
+      margin-bottom: 2rem;
+    }  
+
+    .multiple-paintings-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+
+      .tableau {
+        width: 100%;
+        max-height: 500px;
+        margin-bottom: 2rem;
+
+        display: flex;
+
+        @media (min-width: vars.$medium) {
+          width: 45%;
+        }
+
+        @media (min-width: vars.$big) {
+          width: 28%;
+        }
+      
+        .card {
+          height: 100%;
+          margin: 0 auto;
+          width: 65%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          transition: 0.5s;
+          overflow: hidden;
+
+          &:hover {
+            cursor: pointer;
+          }
+
+          &:hover {
+            border: orange solid 4px;
+            border-radius: vars.$boxBorderRadius;
+            box-shadow: 3px 3px 3px black;
+            transition: 0.5s 0.5s;
+          }
+
+          &:active {
+            box-shadow: 5px 5px 5px vars.$secondaryColor;
+            color: vars.$secondaryColor;
+            background-color: vars.$clickBackgroundColor;
+          }
+
+          div {
+            margin: auto 0;
+
+            >img {
+              max-width: 100%;
+              max-height: 380px;
+              border: black 4px solid;
+            }
+          }
+
+          >h4 {
+            font-weight: bold;
+            text-align: center;
+            margin: 1.5rem 0 0.5rem;
+          }  
+        }
+      }
+    }
+    
+  }
+}

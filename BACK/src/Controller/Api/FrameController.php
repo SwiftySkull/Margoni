@@ -6,6 +6,7 @@ use App\Entity\Frame;
 use App\Service\PagesNavigator;
 use App\Repository\FrameRepository;
 use App\Repository\PaintingRepository;
+use App\Repository\PaintingRepositoryWeb;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,18 +23,26 @@ class FrameController extends AbstractController
     /**
      * @Route("/api/frames", name="api_frames_browse", methods={"GET"})
      */
-    public function browse(FrameRepository $frameRepository): Response
+    public function browse(FrameRepository $frameRepository, PaintingRepositoryWeb $prw): Response
     {
         $frames = $frameRepository->findAll();
 
-        return $this->json($frames, 200, [], ['groups' => 'frames_browse']);
+        $sendFrames = [];
+
+        foreach ($frames as $key => $value) {
+            if ([] !== $prw->findByFrame($value)) {
+                $sendFrames[] = $value;
+            }
+        }
+
+        return $this->json($sendFrames, 200, [], ['groups' => 'frames_browse']);
     }
 
     /**
      * @Route("/api/frame/{id<\d+>}", name="api_frame_read_main", methods={"GET"})
      * @Route("/api/frame/{id<\d+>}/page/{page<\d+>}", name="api_frame_read", methods={"GET"})
      */
-    public function read(Frame $frame = null, PaintingRepository $paintingRepository, $page = 0)
+    public function read(Frame $frame = null, PaintingRepositoryWeb $paintingRepository, $page = 0)
     {
         if (null === $frame) {
             $message = [
