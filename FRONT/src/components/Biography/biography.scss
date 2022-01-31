@@ -43,6 +43,17 @@
         line-height: 1.6rem;
         font-size: 1.1rem;
 
+        >h2 {
+          color: vars.$mainColor;
+          font-size: 2rem;
+          font-style: italic;
+          font-weight: bold;
+          text-align: center;
+          text-shadow: 1px 1px 1px black;
+          width: 100%;
+          margin-bottom: 1rem;
+        }
+      
         p:not(:last-child){
           margin-bottom: 1.2rem;
         }
@@ -80,10 +91,22 @@
             font-size: 1.5rem;
           }
 
+          em {
+            font-size: 0.8rem;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+            display: none;
+          }
+
           &:hover {
             color: vars.$mainColor;
             text-decoration: vars.$textHoverDecoration;
             box-shadow: vars.$boxHoverShadow;
+
+            em {
+              display: inline;
+            }
           }
 
           &:active {

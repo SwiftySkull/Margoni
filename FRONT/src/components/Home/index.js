@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 // == Import
-import Avis from 'src/containers/Avis';
+import UniqueAvis from 'src/components/Avis/UniqueAvis';
 import Expositions from 'src/containers/Expositions';
 import SideBar from 'src/containers/SideBar';
 
@@ -35,7 +35,7 @@ const Home = () => {
             </ul>
           </div>
         </div>
-        <Avis />
+        <UniqueAvis />
         <Expositions />
       </div>
       <SideBar />

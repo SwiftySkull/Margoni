@@ -20,6 +20,7 @@ const Biography = () => {
       <div className="resume">
         <div className="main critiques">
           <div className="crit-content">
+            <h2>Biographie</h2>
             <div>
               <p>Denise Margoni naît à Paris le 8 mars 1911.</p>
               <p>Elle intègre en 1927 l’École des Arts Appliqués.</p>
@@ -47,7 +48,7 @@ const Biography = () => {
               <p>Elle nous laisse une œuvre sensible et singulière de plus de quatre cents huiles et gouaches.</p>
             </div>
           </div>
-          <a href="http://fr.wikipedia.org/wiki/Denise_Margoni"><button className="wiki" type="button">Wikipedia</button></a>
+          <a href="http://fr.wikipedia.org/wiki/Denise_Margoni" target="_blank" rel="noreferrer"><button className="wiki" type="button">Wikipedia<em>↗️</em></button></a>
         </div>
         <div className="main pictures">
           <img src={Denise1} alt="Portrait Denise Margoni sépia" />

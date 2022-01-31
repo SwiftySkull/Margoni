@@ -22,6 +22,10 @@
   }
 
   a {
+    width: fit-content;
+    margin: 0 auto;
+    position: relative;
+    
     @media (max-width: vars.$medium) {
       &:not(:last-child) {
         margin-bottom: 1rem;
@@ -31,11 +35,22 @@
     &:hover {
       color: vars.$textHoverColor;
       text-decoration: vars.$textHoverDecoration;
+
+      em {
+        display: inline;
+      }
     }
 
     &:active {
       text-shadow: 0.5px 0.5px 0.5px black;
       color: vars.$secondaryColor;
+    }
+
+    em {
+      display: none;
+      position: absolute;
+      right: -1.5rem;
+      font-size: 0.8rem;
     }
   }
 }

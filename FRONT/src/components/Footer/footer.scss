@@ -12,63 +12,79 @@
     text-align: center;
 
     @media (min-width: vars.$medium) {
-      flex-direction: row;
+      flex-direction: unset;
+      flex-wrap: wrap;
+    }
+
+    @media (min-width: vars.$inter) {
+      flex-wrap: unset;
       justify-content: space-evenly;
     }
 
-    a {
-      margin: 1rem 0;
+    p {
+      width: fit-content;
+      margin: 1rem auto;
 
       @media (min-width: vars.$medium) {
-        margin: 0;
-        padding: 0.3rem 0;
+        width: 50%;
+
+        &.fb {
+          width: 100%;
+        }
       }
 
-      &:first-child {
-        margin-top: 0;
-      }
-
-      &:nth-child(2) {
-        border: vars.$boxBorder;
-        border-radius: vars.$boxBorderRadius;
-        padding: 0.3rem 1.5rem;
+      @media (min-width: vars.$inter) {
         width: fit-content;
-        margin: 0 auto;
 
-        @media (min-width: vars.$medium) {
-          margin: 0;
+        &.fb {
+          width: fit-content;
+        }
+      }
+
+      a {
+        position: relative;
+
+        em {
+          display: none;
+          position: absolute;
+          margin-left: 0.5rem;
+
+          &.mail {
+            font-size: 1rem;
+          }
         }
 
         &:hover {
-          color: vars.$textHoverColor;
           text-decoration: vars.$textHoverDecoration;
-          box-shadow: vars.$boxHoverShadow;
+          color: vars.$textHoverColor;
+  
+          em {
+            display: inline;
+          }
         }
 
         &:active {
-          background-color: vars.$clickBackgroundColor;
+          text-decoration: vars.$textHoverDecoration;
+          color: vars.$secondaryColor;
+  
+          em {
+            display: inline;
+          }
+        }
+      }
+
+      &.cred {
+        &:hover {
+          cursor: pointer;
+          text-decoration: vars.$textHoverDecoration;
+          color: vars.$textHoverColor;
+        }
+
+        &:active {
+          cursor: pointer;
+          text-decoration: vars.$textHoverDecoration;
           color: vars.$secondaryColor;
         }
-      }
-
-      &:nth-child(4) {
-        display: flex;
-        width: fit-content;
-        margin: 0 auto;
-
-        @media (min-width: vars.$medium) {
-          margin: 0;
-        }
-      }
-
-      &:hover {
-        text-decoration: vars.$textHoverDecoration;
-        color: vars.$textHoverColor;
-      }
-
-      &:active {
-        text-shadow: 0.5px 0.5px 0.5px black;
-        color: vars.$secondaryColor;
       }
     }
   }
@@ -76,5 +92,6 @@
   .fb-logo {
     height: 1rem;
     margin-right: 5px;
+    margin-top: -2px;
   }
 }

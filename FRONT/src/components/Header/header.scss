@@ -8,11 +8,12 @@
   height: fit-content;
   padding: 0.5rem 3rem;
 
-  nav {
-    display: flex;
-    flex-wrap: wrap;
+  .nav-big {
+    display: none;
 
     @media (min-width: vars.$medium) {
+      display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
     }
 
@@ -61,6 +62,148 @@
       &:active {
         text-shadow: 0.5px 0.5px 0.5px black;
         color: vars.$secondaryColor;
+      }
+    }
+  }
+
+  .navigation-menu {
+    @media (min-width: vars.$medium) {
+      display: none;
+    }
+
+    .nav-small {
+      display: flex;
+      flex-wrap: wrap;
+  
+      h1 {
+        font-size: 1.5rem;
+        font-style: italic;
+        font-weight: bold;
+        text-align: center;
+        text-shadow: 1px 1px 1px black;
+        width: 100%;
+        margin-bottom: 1rem;
+    
+        &:hover {
+          text-shadow: 3px 3px 3px black;
+        }
+  
+        &:active {
+          text-shadow: 2px 2px 2px black;
+          color: vars.$secondaryColor;
+        }
+      }
+  
+      p {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+
+        &:hover {
+          text-decoration: vars.$textHoverDecoration;
+          text-shadow: 1px 1px 1px black;
+        }
+  
+        &:active {
+          text-shadow: 0.5px 0.5px 0.5px black;
+          color: vars.$secondaryColor;
+        }
+      }
+    }
+
+    div {
+      .closeMenu {
+        display: block;
+        width: fit-content;
+        height: 40px;
+        margin: 0 auto;
+
+        &:hover {
+          cursor: pointer;
+
+          p {
+            background-color: vars.$secondaryColor;
+          }
+        }
+
+        &:active {
+          p {
+            background-color: vars.$mainColor;
+          }
+        }
+
+        p {
+          height: 5px;
+          width: 30px;
+          background-color: vars.$mainColor;
+          margin: 0 0 1rem 0;
+
+          &:first-child {
+            transform: rotate(45deg) translate(15px, 15px);
+          }
+  
+          &:last-child {
+            transform: rotate(-45deg);
+          }
+        }
+      }
+    }
+
+    >h1 {
+      font-size: 1.5rem;
+      font-style: italic;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: 1px 1px 1px black;
+      width: 100%;
+      margin-bottom: 1rem;
+
+      @media (min-width: vars.$medium) {
+        font-size: 2rem;
+        width: initial;
+        margin: initial;
+      }
+
+      &:hover {
+        text-shadow: 3px 3px 3px black;
+      }
+
+      &:active {
+        text-shadow: 2px 2px 2px black;
+        color: vars.$secondaryColor;
+      }
+    }
+  
+    div {
+      .openMenu {
+        display: block;
+        width: fit-content;
+        height: 40px;
+        margin: 0 auto;
+
+        &:hover {
+          cursor: pointer;
+
+          p {
+            background-color: vars.$secondaryColor;
+            box-shadow: 2px 2px 2px black;
+          }
+        }
+
+        &:active {
+          p {
+            background-color: vars.$mainColor;
+            box-shadow: 1px 1px 1px black;
+          }
+        }
+
+        p {
+          height: 5px;
+          width: 50px;
+          background-color: vars.$mainColor;
+          margin: 0 0 0.5rem 0;
+        }
       }
     }
   }

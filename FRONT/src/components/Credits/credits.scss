@@ -1,0 +1,75 @@
+@use 'src/styles/_vars';
+
+#credits {
+  display: flex;
+  justify-content: space-between;
+
+  .credits {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border: vars.$boxBorder;
+    border-radius: vars.$boxBorderRadius;
+
+    @media (min-width: vars.$inter) {
+      margin-right: 1rem;
+      width: 90%;
+      padding: 1rem 2rem;
+    }
+
+    @media (min-width: 1280px) {
+      justify-content: center;
+    }
+
+    >h2 {
+      color: vars.$mainColor;
+      font-size: 2rem;
+      font-style: italic;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: 1px 1px 1px black;
+      width: 100%;
+      margin-bottom: 2rem;
+      height: fit-content;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 1.8rem;
+
+      &:nth-child(2) {
+        font-weight: bold;
+        font-size: 1.5rem;
+      }
+
+      span {
+        font-weight: bold;
+      }
+
+      a {
+        position: relative;
+
+        em {
+          font-size: 0.8rem;
+          display: none;
+          position: absolute;
+          right: -1.5rem;
+
+          &.mail {
+            font-size: 1rem;
+          }
+        }
+  
+        &:hover {
+          text-decoration: underline;
+          color: vars.$secondaryColor;
+                
+          em {
+            display: inline;
+          }
+        }
+      }
+    }
+  }
+}

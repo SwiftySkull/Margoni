@@ -1,4 +1,5 @@
 import {
+  DISPLAY_MENU,
   SAVE_PAINTING,
   MODAL_STATUS,
   SELECT_PAGE,
@@ -22,6 +23,7 @@ import {
 
 const initialState = {
   modalStatus: false,
+  menuStatus: false,
   totalPaintings: 0,
   paintings: [],
   searchingType: 0,
@@ -37,6 +39,12 @@ const initialState = {
  */
 function mainReducer(state = initialState, action) {
   switch (action.type) {
+    case DISPLAY_MENU:
+      return {
+        ...state,
+        menuStatus: !state.menuStatus,
+      };
+
     case SAVE_PAINTINGS_OF_CATEGORY:
       return {
         ...state,
