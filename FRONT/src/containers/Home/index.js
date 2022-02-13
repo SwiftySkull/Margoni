@@ -7,7 +7,7 @@ import Home from 'src/components/Home';
  */
 
 const mapStateToProps = (state) => ({
-
+  avis: state.avis.avis,
 });
 
 /**

@@ -54,7 +54,7 @@ const mapStateToProps = (state) => {
     paintings = categoryPaintings;
     results = categoryResults;
     searchName = `Catégorie : ${categoryChosen.name}`;
-    searchChosen = `Tableaux de la catégorie : ${searchName}`;
+    searchChosen = `Tableaux de la catégorie : ${categoryChosen.name}`;
 
     // if (categoryChosen.name === 'Animaux') {
     //   specDate = [1950, 1975];
@@ -65,14 +65,14 @@ const mapStateToProps = (state) => {
     paintings = techniquePaintings;
     results = techniqueResults;
     searchName = `Technique : ${techniqueChosen.type}`;
-    searchChosen = `Tableaux de la technique : ${searchName}`;
+    searchChosen = `Tableaux de la technique : ${techniqueChosen.type}`;
   }
 
   if (searchingType === 3) {
     paintings = sizePaintings;
     results = sizeResults;
     searchName = `Format : ${sizeChosen.format}`;
-    searchChosen = `Tableaux au format : ${searchName}`;
+    searchChosen = `Tableaux au format : ${sizeChosen.format}`;
 
     if (sizeChosen.id === 0) {
       searchChosen = 'Tableaux sans format particulier';

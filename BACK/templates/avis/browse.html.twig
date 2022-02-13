@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Affichage des avis{% endblock %}
+
+{% block avisActive %}active{% endblock %}
+
+{% block body %}
+
+<h1>Affichage des avis</h1>
+
+<h2>Liste des avis</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Auteur</th>
+      <th scope="col">Avis</th>
+      <th scope="col">Date</th>
+      <th scope="col">Actions</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for avis in allAvis %}
+
+        <tr>
+            <th scope="row">{{ avis.id }}</th>
+            <td>{{ avis.author }}</td>
+            <td><a href="{{ path('avis_read', {id:avis.id}) }}">{{ avis.content|u.truncate(50, '[...]', false) }}</a></td>
+            <td>{{ avis.date|date('d/m/Y') }}</td>
+            {% if avis.homeAvis %}
+            <td>
+                <p class="btn btn-success">Actuellement en page d'accueil</p>
+            </td>
+            {% else %}
+            <td>
+                <form action="{{ path('avis_set_home_page', {id:avis.id}) }}" method="POST">
+                <input type="hidden" name="token" value="{{ csrf_token('add-edit-avis') }}"/>
+                <button class="btn btn-primary">Mettre en page d'accueil</button>
+                </form>
+            </td>
+            {% endif %}
+            <td>
+                <form action="{{ path('avis_edit', {id:avis.id}) }}" method="POST">
+                <input type="hidden" name="token" value="{{ csrf_token('add-edit-avis') }}"/>
+                <button class="btn btn-warning">Modifier</button>
+                </form>
+            </td>
+            <td>
+                <form action="{{ path('avis_delete', {id:avis.id}) }}" onsubmit="return confirm('Supprimer l\'avis de {{ avis.author }} ?')" method="POST">
+                <input type="hidden" name="token" value="{{ csrf_token('delete-avis') }}"/>
+                <input type="hidden" name="_method" value="DELETE"/>
+                <button class="btn btn-danger">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+
+    {% endfor %}
+  </tbody>
+</table>
+<form action="{{ path('avis_add') }}" method="POST">
+  <input type="hidden" name="token" value="{{ csrf_token('add-edit-avis') }}"/>
+  <button class="btn btn-success">Ajouter un nouvel avis</button>
+</form>
+
+{% endblock %}

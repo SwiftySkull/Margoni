@@ -21,8 +21,14 @@ import {
   saveSizes,
 } from 'src/actions/sizeActions';
 
+import {
+  GET_AVIS,
+  saveAllAvis,
+  saveAvis,
+} from '../actions/avisActions';
+
 // URL for the Axios requests
-const URL = 'http://localhost:8888/api';
+export const URL = 'http://localhost:8888/api';
 
 /**
  * MiddleWare for the main and authentification area.
@@ -51,6 +57,26 @@ const mainMiddleware = (store) => (next) => (action) => {
       axios.get(`${URL}/sizes`)
         .then((response) => {
           store.dispatch(saveSizes(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      axios.get(`${URL}/avis/home`)
+        .then((response) => {
+          store.dispatch(saveAvis(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      next(action);
+      break;
+
+    case GET_AVIS:
+      axios.get(`${URL}/avis/browse`)
+        .then((response) => {
+          store.dispatch(saveAllAvis(response.data));
         })
         .catch((error) => {
           console.log(error);

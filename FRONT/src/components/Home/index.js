@@ -1,6 +1,7 @@
 // == Import npm
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // == Import
 import UniqueAvis from 'src/components/Avis/UniqueAvis';
@@ -12,7 +13,9 @@ import Autoportrait from 'src/assets/images/denise_margoni_autoportrait.jpg';
 import './home.scss';
 
 // == Composant
-const Home = () => {
+const Home = ({
+  avis,
+}) => {
   document.title = 'Denise Margoni';
 
   return (
@@ -35,12 +38,16 @@ const Home = () => {
             </ul>
           </div>
         </div>
-        <UniqueAvis />
+        <UniqueAvis avis={avis} />
         <Expositions />
       </div>
       <SideBar />
     </div>
   );
+};
+
+Home.propTypes = {
+  avis: PropTypes.object.isRequired,
 };
 
 // == Export

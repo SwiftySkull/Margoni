@@ -13,8 +13,11 @@ import {
   loaderOff,
 } from 'src/actions/mainActions';
 
+import {
+  URL,
+} from 'src/middleWares/mainMiddleware';
+
 // URL for the Axios requests
-const URL = 'http://localhost:8888/api';
 
 /**
  * MiddleWare for the main and authentification area.

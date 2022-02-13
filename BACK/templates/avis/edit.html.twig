@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Avis de XXX{% endblock %}
+
+{% block avisActive %}active{% endblock %}
+
+{% block body %}
+
+<h1>Avis de XXX</h1>
+
+{{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+    {# Génère tous les champs du form #}
+    {{ form_widget(form) }}
+
+    <input type="hidden" name="token" value="{{ csrf_token('add-edit-avis') }}"/>
+    <button type="submit" class="btn btn-success">Enregistrer</button>
+
+{{ form_end(form) }}
+
+{% endblock %}

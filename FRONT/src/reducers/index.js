@@ -5,6 +5,7 @@ import categoryReducer from './categoryReducer';
 import techniqueReducer from './techniqueReducer';
 import galerieReducer from './galerieReducer';
 import sizeReducer from './sizeReducer';
+import avisReducer from './avisReducer';
 
 /**
  * Combine all reducers.
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   galerie: galerieReducer,
   technique: techniqueReducer,
   size: sizeReducer,
+  avis: avisReducer,
 });
 
 export default rootReducer;

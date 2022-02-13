@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Avis de {{ avis.author }}{% endblock %}
+
+{% block avisActive %}active{% endblock %}
+
+{% block body %}
+
+<h1>Avis de {{ avis.author }}</h1>
+
+<div>
+    <p>ID de l'avis : {{ avis.id }}</p>
+    <p>Auteur : {{ avis.author }}</p>
+    <p>Métier : {{ avis.job }}</p>
+    <p>Date de l'avis : {{ avis.date|date('d/m/Y') }}</p>
+    <p>Avis : "{{ avis.content }}"</p>
+</div>
+<form action="{{ path('avis_edit', {id:avis.id}) }}" method="POST">
+    <input type="hidden" name="token" value="{{ csrf_token('add-edit-avis') }}"/>
+    <button class="btn btn-sm btn-warning">Modifier</button>
+</form>
+<form action="{{ path('avis_delete', {id:avis.id}) }}" onsubmit="return confirm('Supprimer l\'avis de {{ avis.author }} ?')" method="POST">
+    <input type="hidden" name="token" value="{{ csrf_token('delete-avis') }}"/>
+    <input type="hidden" name="_method" value="DELETE"/>
+    <button class="btn btn-danger">Supprimer</button>
+</form>
+{% endblock %}
