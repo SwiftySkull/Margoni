@@ -23,7 +23,6 @@
       display: flex;
       padding: 2rem;
       flex-direction: column;
-      background-color: white;
 
       @media (min-width: vars.$medium) {
         flex-direction: initial;
@@ -32,7 +31,8 @@
       .biographie {
         text-align: center;
         margin-bottom: 1.5rem;
-
+        font-size: 1.2rem;
+        
         @media (min-width: vars.$medium) {
           width: 30%;
           padding: 0.5rem;
@@ -52,14 +52,15 @@
           font-style: italic;
         }        
 
-        &:hover {
+        &:hover, &:focus {
           a:last-child {
             color: vars.$textHoverColor;
-            text-decoration: vars.$textHoverDecoration;
           }
+        }
 
-          .bio-img {
-            box-shadow: 3px 3px 3px 3px vars.$secondaryColor;
+        &:active {
+          a:last-child {
+            text-decoration: vars.$textHoverDecoration;
           }
         }
       }
@@ -91,7 +92,9 @@
           font-weight: bold;
 
           @media (max-width: vars.$medium) {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+            margin-top: 1rem;
+            margin-bottom: 3rem;  
           }
         }
 
@@ -101,13 +104,14 @@
 
           li {
             margin: 0 1rem;
-
-            &:not(:first-child) {
-              list-style: disc;
-            }
+            width: 100px;
+            font-size: 1.2rem;
 
             a:hover {
               color: vars.$textHoverColor;
+            }
+
+            a:active {
               text-decoration: vars.$textHoverDecoration;
             }
           }

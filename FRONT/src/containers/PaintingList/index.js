@@ -47,45 +47,35 @@ const mapStateToProps = (state) => {
   let paintings = [];
   let results = '0';
   let searchName = 'Chargement en cours';
-  let searchChosen = 'Aucune recherche en cours';
-  let specDate = [];
+  const specDate = [];
 
   if (searchingType === 1) {
     paintings = categoryPaintings;
     results = categoryResults;
     searchName = `Catégorie : ${categoryChosen.name}`;
-    searchChosen = `Tableaux de la catégorie : ${categoryChosen.name}`;
-
-    // if (categoryChosen.name === 'Animaux') {
-    //   specDate = [1950, 1975];
-    // }
   }
 
   if (searchingType === 2) {
     paintings = techniquePaintings;
     results = techniqueResults;
     searchName = `Technique : ${techniqueChosen.type}`;
-    searchChosen = `Tableaux de la technique : ${techniqueChosen.type}`;
   }
 
   if (searchingType === 3) {
     paintings = sizePaintings;
     results = sizeResults;
     searchName = `Format : ${sizeChosen.format}`;
-    searchChosen = `Tableaux au format : ${sizeChosen.format}`;
 
     if (sizeChosen.id === 0) {
-      searchChosen = 'Tableaux sans format particulier';
+      searchName = 'Tableaux sans format particulier';
     }
   }
 
   return {
     specDate,
     searchName,
-    searchChosen,
     results,
     paintings,
-    actualPage: state.main.actualPage,
     numberOfPages: Math.ceil(results / 12),
     loading: state.main.loading,
   };

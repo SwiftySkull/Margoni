@@ -3,13 +3,14 @@ import React from 'react';
 
 // == Import
 import './loader.scss';
-import pinceau from 'src/assets/images/pinceau.png';
+
+import loader from 'src/assets/images/loader.gif';
 
 // == Composant
 const Loader = () => (
   <div id="loader">
-    <div className="cube">
-      <img src={pinceau} alt="" />
+    <div>
+      <img src={loader} alt="" />
     </div>
   </div>
 );

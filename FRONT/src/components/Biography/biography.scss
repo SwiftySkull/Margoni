@@ -26,10 +26,10 @@
       height: fit-content;
       display: flex;
       flex-direction: column;
+      padding: 1rem;
 
       @media (min-width: vars.$medium) {
-        position: relative;
-        flex-direction: unset;
+        padding: unset;
       }
 
       @media (min-width: 1280px) {
@@ -39,7 +39,7 @@
       .crit-content {
         width: 100%;
         margin: auto;
-        padding: 1rem;
+        padding: 0 1rem 1rem;
         line-height: 1.6rem;
         font-size: 1.1rem;
 
@@ -52,6 +52,12 @@
           text-shadow: 1px 1px 1px black;
           width: 100%;
           margin-bottom: 1rem;
+          margin-top: 1rem;
+      
+          @media (min-width: vars.$medium) {
+            margin-bottom: 2rem;
+            margin-top: 2rem;
+          }
         }
       
         p:not(:last-child){
@@ -59,12 +65,8 @@
         }
 
         @media (min-width: vars.$medium) {
-          width: 70%;
+          width: 90%;
           font-size: 1.3rem;
-        }
-
-        @media (min-width: 1280px) {
-          width: 80%;
         }
       }
 
@@ -72,46 +74,45 @@
         margin: 1rem auto;
 
         .wiki {
-          bottom: 1rem;
-          right: 1rem;
-          opacity: 0.5;
           font-size: 1rem;
           font-weight: bold;
           border: vars.$boxBorder;
           border-radius: vars.$boxBorderRadius;
-          padding: 0.5rem 0.8rem;
+          padding: 0.8rem 1rem;
+          background-color: #fff;
+          position: relative;
 
           @media (min-width: vars.$medium) {
-            padding: 1rem;
-            font-size: 1.2rem;
-            position: absolute;
+            font-size: 1.1rem;
           }
   
           @media (min-width: 1350px) {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
           }
 
           em {
-            font-size: 0.8rem;
-            position: absolute;
-            right: 4px;
-            top: 4px;
             display: none;
+            position: absolute;
+            right: -1.5rem;
+            bottom: 2rem;
+            font-size: 1rem;
           }
 
-          &:hover {
-            color: vars.$mainColor;
-            text-decoration: vars.$textHoverDecoration;
-            box-shadow: vars.$boxHoverShadow;
+          &:hover, &:focus {
+            color: vars.$textHoverColor;
 
             em {
               display: inline;
             }
           }
-
+  
           &:active {
-            background-color: vars.$clickBackgroundColor;
-            color: vars.$secondaryColor;
+            color: black;
+            background-color: vars.$thirdColor;
+
+            em {
+              display: inline;
+            }
           }
         }  
       }

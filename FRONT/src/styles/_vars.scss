@@ -5,12 +5,13 @@ $inter: 900px; // vars.$inter;
 $big: 1080px; // vars.$big;
 
 // == Colors
-$mainColor: rgb(255, 136, 0); // vars.$mainColor;
+$mainColor: rgb(255, 150, 0); // vars.$mainColor;
 $secondaryColor: rgb(201, 74, 0); // vars.$secondaryColor;
 $thirdColor: rgba(255, 136, 0, 0.233); // vars.$thirdColor
+
 // == Box
 $boxBorder: solid 1px $mainColor; // vars.$boxBorder;
-$boxBorderRadius: 20px; // vars.$boxBorderRadius;
+$boxBorderRadius: 10px; // vars.$boxBorderRadius;
 
 // == Hover & Shadows
 $textHoverColor: $mainColor; // vars.$textHoverColor;

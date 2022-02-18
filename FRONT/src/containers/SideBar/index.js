@@ -10,13 +10,14 @@ import SideBar from 'src/components/SideBar';
  */
 const mapStateToProps = (state) => {
   const { categories, shuffledPictures } = state.category;
-  const shuffledCategories = shuffleCategories(categories, 3);
+  const shuffledCategories = shuffleCategories(categories, 4);
 
   const limitedPictures = getPictureFromCategory(shuffledPictures, shuffledCategories);
 
   return {
     categories: shuffledCategories,
     pictures: limitedPictures !== undefined ? limitedPictures : [],
+    loading: state.main.sideLoading,
   };
 };
 

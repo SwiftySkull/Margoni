@@ -24,9 +24,11 @@
     p {
       width: fit-content;
       margin: 1rem auto;
+      font-size: 1.2rem;
 
       @media (min-width: vars.$medium) {
         width: 50%;
+        font-size: 1.1rem;
 
         &.fb {
           width: 100%;
@@ -35,6 +37,7 @@
 
       @media (min-width: vars.$inter) {
         width: fit-content;
+        font-size: 1rem;
 
         &.fb {
           width: fit-content;
@@ -48,16 +51,16 @@
           display: none;
           position: absolute;
           margin-left: 0.5rem;
+          font-size: 0.8rem;
 
           &.mail {
             font-size: 1rem;
           }
         }
 
-        &:hover {
-          text-decoration: vars.$textHoverDecoration;
+        &:hover, &:focus {
           color: vars.$textHoverColor;
-  
+
           em {
             display: inline;
           }
@@ -65,7 +68,6 @@
 
         &:active {
           text-decoration: vars.$textHoverDecoration;
-          color: vars.$secondaryColor;
   
           em {
             display: inline;
@@ -74,16 +76,14 @@
       }
 
       &.cred {
-        &:hover {
+        &:hover, &:focus {
           cursor: pointer;
-          text-decoration: vars.$textHoverDecoration;
           color: vars.$textHoverColor;
         }
 
         &:active {
           cursor: pointer;
           text-decoration: vars.$textHoverDecoration;
-          color: vars.$secondaryColor;
         }
       }
     }

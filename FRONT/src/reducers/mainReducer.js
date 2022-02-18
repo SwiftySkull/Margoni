@@ -11,6 +11,7 @@ import {
 
 import {
   SAVE_PAINTINGS_OF_CATEGORY,
+  SAVE_CATEGORY_SHUFFLED_PICTURES,
 } from 'src/actions/categoryActions';
 
 import {
@@ -30,6 +31,7 @@ const initialState = {
   painting: {},
   actualPage: 1,
   loading: false,
+  sideLoading: true,
   multiplePaintings: false,
   multiplePaintingsName: [],
 };
@@ -99,6 +101,12 @@ function mainReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
+      };
+
+    case SAVE_CATEGORY_SHUFFLED_PICTURES:
+      return {
+        ...state,
+        sideLoading: false,
       };
 
     case SAVE_MULTIPLE_PAINTINGS:

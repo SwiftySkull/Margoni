@@ -48,10 +48,10 @@ const techniqueMiddleware = (store) => (next) => (action) => {
               window.location = `/galerie/technique/${stringForUrl(response.data[0].type)}/${response.data[0].id}/page/${action.page}`;
             }
             else {
-              setTimeout(() => {
-                store.dispatch(loaderOff());
+              // setTimeout(() => {
                 store.dispatch(savePaintingsOfTechnique(response.data[0], response.data[1]['total results'], response.data[2]));
-              }, 1000);
+                store.dispatch(loaderOff());
+              // }, 1000);
             }
           })
           .catch((error) => {

@@ -40,9 +40,27 @@ const Galerie = ({
     <div id="galerie">
       <h2>Galerie</h2>
       <div className="select-choice">
-        <button type="button" onClick={() => chooseGalerie(1)}><p className="select-big">Sélection par catégorie</p><p className="select-small">Catégorie</p></button>
-        <button type="button" onClick={() => chooseGalerie(2)}><p className="select-big">Sélection par technique</p><p className="select-small">Technique</p></button>
-        <button type="button" onClick={() => chooseGalerie(3)}><p className="select-big">Sélection par format</p><p className="select-small">Format</p></button>
+        <button
+          type="button"
+          onClick={() => chooseGalerie(1)}
+          className={galeryChoice === 1 ? 'select-chosen' : ''}
+        >
+          <p className="select">Catégorie</p>
+        </button>
+        <button
+          type="button"
+          onClick={() => chooseGalerie(2)}
+          className={galeryChoice === 2 ? 'select-chosen' : ''}
+        >
+          <p className="select">Technique</p>
+        </button>
+        <button
+          type="button"
+          onClick={() => chooseGalerie(3)}
+          className={galeryChoice === 3 ? 'select-chosen' : ''}
+        >
+          <p className="select">Format</p>
+        </button>
       </div>
       {loading && <Loader />}
       {galeryChoice === 3 && (

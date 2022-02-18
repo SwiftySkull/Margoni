@@ -34,22 +34,24 @@
       text-align: center;
       text-shadow: 1px 1px 1px black;
       width: 100%;
+      margin-top: 1rem;
       margin-bottom: 1rem;
     }  
 
     .image {
       width: 100%;
       text-align: center;
-      background-color: black;
-      padding: 2rem;
+      padding: 1rem;
       border-radius: vars.$boxBorderRadius;
-      margin-bottom: 1rem;
+      margin: 1rem auto 2rem;
 
       img {
+        border: 8px solid white;
+        box-shadow: 2px 2px 2px 2px black;
         max-height: 50vh;
         max-width: 100%;
 
-        &:hover {
+        &:hover, &:focus {
           cursor: pointer;
         }
       }
@@ -86,14 +88,12 @@
           a {
             color: black;
 
-            &:hover {
-              text-decoration: vars.$textHoverDecoration;
+            &:hover, &:focus {
               color: vars.$textHoverColor;
             }
 
             &:active {
-              text-shadow: 0.5px 0.5px 0.5px black;
-              color: vars.$secondaryColor;
+              text-decoration: vars.$textHoverDecoration;
             }
           }
         }  
@@ -107,32 +107,34 @@
     }
 
     button {
+      background-color: white;
       border: vars.$boxBorder;
       border-radius: vars.$boxBorderRadius;
-      padding: 0.3rem 1.5rem;
-      width: fit-content;
-      margin: 1rem auto 0;
-      background-color: #fff;
+      padding: 1rem 2rem;
+      margin: 2rem auto 1rem;
+      font-size: 1.1rem;
 
-      @media (min-width: vars.$medium) {
-        margin-top: 3rem;
+      @media (min-width: vars.$inter) {
         font-size: 1.2rem;
       }
 
-      &:hover {
+      @media (min-width: vars.$big) {
+        font-size: 1.5rem;
+      }
+
+      &:hover, &:focus {
         color: vars.$textHoverColor;
-        text-decoration: vars.$textHoverDecoration;
-        box-shadow: vars.$boxHoverShadow;
       }
 
       &:active {
-        color: vars.$secondaryColor;
-        background-color: vars.$clickBackgroundColor;
+        color: black;
+        background-color: vars.$thirdColor;
       }
     }
 
     .modal-box {
       position: fixed;
+      z-index: 1;
       top: 0;
       left: 0;
       height: 100%;
@@ -151,7 +153,7 @@
           max-width: 100%;
           align-self: center;
 
-          &:hover {
+          &:hover, &:focus {
             cursor: pointer;
           }
         }
@@ -184,7 +186,7 @@
           color: transparent;
         }
 
-        &:hover {
+        &:hover, &:focus {
           cursor: pointer;
           border: 1px solid vars.$mainColor;
 
@@ -256,11 +258,11 @@
           transition: 0.5s;
           overflow: hidden;
 
-          &:hover {
+          &:hover, &:focus {
             cursor: pointer;
           }
 
-          &:hover {
+          &:hover, &:focus {
             border: orange solid 4px;
             border-radius: vars.$boxBorderRadius;
             box-shadow: 3px 3px 3px black;
@@ -291,6 +293,5 @@
         }
       }
     }
-    
   }
 }

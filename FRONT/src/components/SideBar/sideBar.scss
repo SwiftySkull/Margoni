@@ -5,34 +5,18 @@
   border-radius: vars.$boxBorderRadius;
   padding: 2rem;
   display: none;
-  flex-direction: column;
-  justify-content: space-around;
+  max-width: 220px;
   
   @media (min-width: vars.$inter) {
     display: flex;
   }
 
-  >a {
-    border: vars.$boxBorder;
-    border-radius: vars.$boxBorderRadius;
-    padding: 0.3rem 1.5rem;
-    margin: 0 auto;
-    width: fit-content;
-
-    &:not(:nth-child(3)) {
-      margin-bottom: 1rem;
-    }
-
-    &:hover {
-      color: vars.$textHoverColor;
-      text-decoration: vars.$textHoverDecoration;
-      box-shadow: vars.$boxHoverShadow;
-    }
-
-    &:active {
-      background-color: vars.$clickBackgroundColor;
-      color: vars.$secondaryColor;
-    }
+  .sideLoading {
+    align-self: center;
+    color: vars.$mainColor;
+    font-weight: bold;
+    width: 220px;
+    text-align: center;
   }
 
   ul {
@@ -40,10 +24,11 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    height: 100%;
 
     li {
-      margin: 2rem 0;
+      margin: 1rem 0;
 
       a {
         img {
@@ -52,27 +37,18 @@
           margin: 0 auto;
           box-shadow: vars.$imageShadow;
           border: solid 3px white;
-          margin-bottom: 0.2rem;
+          margin-bottom: 1rem;
         }
         
-        &:hover {
+        &:hover, &:focus {
           p {
             color: vars.$textHoverColor;
-            text-decoration: vars.$textHoverDecoration;
-          }
-
-          img {
-            box-shadow: 3px 3px 3px vars.$secondaryColor;
           }
         }
 
         &:active {
           p {
-            color: vars.$secondaryColor;
-          }
-
-          img {
-            box-shadow: 1.5px 1.5px 1.5px vars.$secondaryColor;
+            text-decoration: vars.$textHoverDecoration;
           }
         }  
       }

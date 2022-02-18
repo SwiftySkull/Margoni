@@ -9,11 +9,7 @@
     margin-right: unset;
     border: vars.$boxBorder;
     border-radius: vars.$boxBorderRadius;
-    padding: 1rem;
-  
-    @media (min-width: vars.$medium) {
-      padding: 1rem 2rem;
-    }
+    padding: 0 2rem 1rem;
 
     @media (min-width: vars.$inter) {
       margin-right: 1rem;
@@ -29,9 +25,11 @@
       text-shadow: 1px 1px 1px black;
       width: 100%;
       margin-bottom: 1rem;
-
+      margin-top: 1rem;
+  
       @media (min-width: vars.$medium) {
         margin-bottom: 2rem;
+        margin-top: 2rem;
       }
     }
 

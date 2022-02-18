@@ -48,10 +48,8 @@ const categoryMiddleware = (store) => (next) => (action) => {
               window.location = `/galerie/categorie/${stringForUrl(response.data[0].name)}/${response.data[0].id}/page/${action.page}`;
             }
             else {
-              setTimeout(() => {
-                store.dispatch(savePaintingsOfCategory(response.data[0], response.data[1]['total results'], response.data[2]));
-                store.dispatch(loaderOff());
-              }, 1000);
+              store.dispatch(savePaintingsOfCategory(response.data[0], response.data[1]['total results'], response.data[2]));
+              store.dispatch(loaderOff());
             }
           })
           .catch((error) => {

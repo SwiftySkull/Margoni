@@ -36,10 +36,8 @@ const PaintingList = ({
   loadPaintingsByTechniqueType,
   loadPaintingsBySizeFormat,
   searchName,
-  searchChosen,
   results,
   paintings,
-  actualPage,
   selectPage,
   numberOfPages,
   specDate,
@@ -54,6 +52,12 @@ const PaintingList = ({
     id,
   } = useParams();
   let { page } = useParams();
+
+  let actualPage = Number(page);
+
+  if (page === undefined) {
+    actualPage = 1;
+  }
 
   document.title = searchName;
 
@@ -128,8 +132,8 @@ const PaintingList = ({
       {loading && <Loader />}
       {!loading && (
         <>
-          <h2>{searchChosen}</h2>
-          <h3 className="subtitle">Nombre de peintures trouvées : {results}</h3>
+          <h2>{searchName}</h2>
+          <h3 className="subtitle">Peintures trouvées : {results}</h3>
         </>
       )}
       {specDate.length > 0 && (
@@ -159,8 +163,6 @@ const PaintingList = ({
           className="navigation"
           style={{
             flexWrap: numberOfPages > 5 ? 'wrap' : 'nowrap',
-            justifyContent: numberOfPages > 5 ? 'space-around' : 'space-between',
-            width: numberOfPages > 5 ? '60%' : '80%',
           }}
         >
           <Link
@@ -216,10 +218,8 @@ PaintingList.propTypes = {
   loadPaintingsByTechniqueType: PropTypes.func.isRequired,
   loadPaintingsBySizeFormat: PropTypes.func.isRequired,
   searchName: PropTypes.string.isRequired,
-  searchChosen: PropTypes.string.isRequired,
   results: PropTypes.string.isRequired,
   paintings: PropTypes.array.isRequired,
-  actualPage: PropTypes.number.isRequired,
   selectPage: PropTypes.func.isRequired,
   numberOfPages: PropTypes.number.isRequired,
   specDate: PropTypes.array.isRequired,

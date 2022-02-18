@@ -32,9 +32,8 @@ const Home = ({
             <h2>Denise Margoni</h2>
             <h3>Peintures</h3>
             <ul>
-              <li><a href="/galerie/technique/peinture-a-l-huile/2">Huiles</a></li>
-              <li><a href="/galerie/technique/gouache/1">Gouaches</a></li>
-              <li><a href="/galerie/technique/isorel/5">Isorel</a></li>
+              <li><Link to="/galerie/technique/peinture-a-l-huile/2">Huiles</Link></li>
+              <li><Link to="/galerie/technique/gouache/1">Gouaches</Link></li>
             </ul>
           </div>
         </div>

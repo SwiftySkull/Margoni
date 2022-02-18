@@ -40,19 +40,15 @@
         margin-left: 2rem;
         color: vars.$mainColor;
   
-        &:hover {
-          color: vars.$secondaryColor;
+        &:hover, &:focus {         
           a {
-            text-decoration: underline;
-            color: vars.$secondaryColor;
+            color: vars.$mainColor;
           }
         }
 
         &:active {       
           a {
-            text-decoration: underline;
-            color: vars.$mainColor;
-            text-shadow: 1px 1px 1px black;
+            text-decoration: vars.$textHoverDecoration;
           }
         }
 

@@ -34,10 +34,8 @@ const sizeMiddleware = (store) => (next) => (action) => {
               window.location = `/galerie/format/${stringForUrl(response.data[0].format)}/${response.data[0].id}/page/${action.page}`;
             }
             else {
-              setTimeout(() => {
-                store.dispatch(loaderOff());
-                store.dispatch(savePaintingsOfSize(response.data[0], response.data[1]['total results'], response.data[2]));
-              }, 1000);
+              store.dispatch(savePaintingsOfSize(response.data[0], response.data[1]['total results'], response.data[2]));
+              store.dispatch(loaderOff());
             }
           })
           .catch((error) => {

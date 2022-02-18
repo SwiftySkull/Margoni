@@ -32,9 +32,8 @@
       }
     }
 
-    &:hover {
+    &:hover, &:focus {
       color: vars.$textHoverColor;
-      text-decoration: vars.$textHoverDecoration;
 
       em {
         display: inline;
@@ -42,8 +41,7 @@
     }
 
     &:active {
-      text-shadow: 0.5px 0.5px 0.5px black;
-      color: vars.$secondaryColor;
+      text-decoration: vars.$textHoverDecoration;
     }
 
     em {

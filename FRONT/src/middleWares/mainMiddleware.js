@@ -28,6 +28,7 @@ import {
 } from '../actions/avisActions';
 
 // URL for the Axios requests
+// export const URL = 'http://back.denise-margoni.fr/api';
 export const URL = 'http://localhost:8888/api';
 
 /**
@@ -88,9 +89,7 @@ const mainMiddleware = (store) => (next) => (action) => {
     case LOAD_PAINTING:
       axios.get(`${URL}/painting/id/${action.id}`)
         .then((response) => {
-          setTimeout(() => {
-            store.dispatch(savePainting(response.data));
-          }, 1000);
+          store.dispatch(savePainting(response.data));
         })
         .catch((error) => {
           console.log(error);
@@ -103,14 +102,10 @@ const mainMiddleware = (store) => (next) => (action) => {
       axios.get(`${URL}/painting/title/${action.paintingName}`)
         .then((response) => {
           if (response.data.length > 1) {
-            setTimeout(() => {
-              store.dispatch(saveMultiplePaintings(response.data));
-            }, 1000);
+            store.dispatch(saveMultiplePaintings(response.data));
           }
           else {
-            setTimeout(() => {
-              store.dispatch(savePainting(response.data[0]));
-            }, 1000);
+            store.dispatch(savePainting(response.data[0]));
           }
         })
         .catch((error) => {
