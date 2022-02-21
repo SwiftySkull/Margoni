@@ -48,6 +48,19 @@ class PaintingRepositoryWeb extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function getOneIdFromCategory($categ)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.id')
+            ->leftJoin('p.categories', 'c')
+            ->where('c = :categ')
+            ->setParameter('categ', $categ)
+            ->andWhere('p.webDisplay = 1')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function getOneFromTechnique($tech)
     {
         $entityManager = $this->getEntityManager();

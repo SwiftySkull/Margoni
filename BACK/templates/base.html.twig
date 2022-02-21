@@ -22,6 +22,9 @@
                         <a class="nav-link {% block homeActive %}{% endblock %}" aria-current="page" href="{{ path('home') }}">Accueil</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {% block allActive %}{% endblock %}" aria-current="page" href="{{ path('all_paintings', {page:1}) }}">Toutes les peintures</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {% block frameActive %}{% endblock %}" aria-current="page" href="{{ path('frame_browse') }}">Encadrements</a>
                     </li>
                     <li class="nav-item">

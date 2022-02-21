@@ -22,6 +22,21 @@ class PaintingRepository extends ServiceEntityRepository
         $this->limitPerPage = $limitPerPage;
     }
 
+    public function findHundred($offset = null)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->join('p.picture', 'pic')
+            ->addSelect('pic')
+            ->orderBy('p.id')
+            ->setMaxResults(50)
+            ->setFirstResult($offset)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $qb;
+    }
+
     public function getPaintingByTitle($title)
     {
         $qb = $this->createQueryBuilder('p')

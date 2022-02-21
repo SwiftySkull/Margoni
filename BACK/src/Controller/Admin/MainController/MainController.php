@@ -120,4 +120,43 @@ class MainController extends AbstractController
 
         return $this->redirectToRoute('home');
     }
+
+    /**
+     * @Route("/all-paintings/page/{page}", name="all_paintings", methods={"GET", "POST"})
+     */
+    public function allPaintings(PaintingRepository $pr, $page)
+    {
+        $this->pagesNavigator->setAllEntries($pr->countAll());
+
+        $pageId = $this->pagesNavigator->getPageId($page);
+        $slice = $this->pagesNavigator->getSlice($pageId);
+
+        $paintings = $pr->findHundred($slice);
+
+        $totalPages = $this->pagesNavigator->getTotalPages();
+        $pages = $this->pagesNavigator->getMinMax($pageId);
+        $previousPage = $this->pagesNavigator->getPreviousPage($pageId);
+        $nextPage = $this->pagesNavigator->getNextPage($pageId);
+
+        return $this->render('all/all.html.twig', [
+            'paintings' => $paintings,
+            'page' => $page,
+            'pages' => $pages,
+            'totalPages' => $totalPages,
+            'previousPage' => $previousPage,
+            'nextPage' => $nextPage,
+            'count' => $pr->countAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/all-paintings-edit/{id}/page/{page}", name="all_paintings_edit", methods={"GET", "POST"})
+     */
+    public function FunctionName(Painting $painting = null, EntityManagerInterface $em, $page)
+    {
+        $painting->setWebDisplay(!$painting->getWebDisplay());
+        $em->flush();
+
+        return $this->redirectToRoute('all_paintings', ['page' => $page]);
+    }
 }

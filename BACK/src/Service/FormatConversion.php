@@ -285,10 +285,10 @@ class FormatConversion
      *
      * @param integer $height   Height of the painting
      * @param integer $width    Width of the painting
-     * @return array|false      Returns false if the format doesn't exist, otherwise
+     * @return                  Returns false if the format doesn't exist, otherwise
      *                          returns the orientation and the size/format
      */
-    public function getFormatFromtWidthHeight(int $height, int $width): array|false
+    public function getFormatFromtWidthHeight(int $height, int $width)
     {
         $heightExists = in_array($height, self::MEASUREMENTS);
         $widthExists = in_array($width, self::MEASUREMENTS);
@@ -383,7 +383,11 @@ class FormatConversion
         $height = $painting->getHeight();
         $width = $painting->getWidth();
 
-        if (null != $painting->getSize() && (null === $height || null === $width)) {
+        if (null === $height && null === $width  && 0 === $painting->getSize()->getId() ) {
+            return $painting;
+        }
+
+        if (0 !== $painting->getSize()->getId() && (null === $height || null === $width)) {
             $sizes = $this->getWidthHeightFromFormat($painting->getSize()->getFormat());
 
             if ('V' === $picture->getOrientation() || null === $picture->getOrientation()) {
@@ -395,7 +399,7 @@ class FormatConversion
             }
         }
 
-        if (null === $painting->getSize() && null != $height && null != $width) {
+        if (0 === $painting->getSize()->getId() && null != $height && null != $width) {
             $format = $this->getFormatFromtWidthHeight($height, $width);
             if (false != $format) {
                 $foundSize = $this->sizeRepository->findOneBy(['format' => $format['format']]);     
@@ -429,7 +433,7 @@ class FormatConversion
      */
     public function setWarningSizeMessage(object $painting): object
     {
-        if (null != $painting->getSize()) {
+        if (0 !== $painting->getSize()->getId()) {
             $comparison = $this->checkWidthHeightAndFormat($painting->getSize()->getFormat(), $painting->getHeight(), $painting->getWidth());
 
             if (!$comparison) {

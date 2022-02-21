@@ -68,10 +68,10 @@ class AddEditController extends AbstractController
             // Automatic modification of the size and format
             $painting = $formatConversion->setSizes($painting);
 
-            // Setting warning is there is a size error
-            $painting = $formatConversion->setWarningSizeMessage($painting);
+            if (0 !== $painting->getSize()->getId()) {
+                // Setting warning is there is a size error
+                $painting = $formatConversion->setWarningSizeMessage($painting);
 
-            if (null != $painting->getSize()) {
                 $checkingConversion = $formatConversion->checkWidthHeightAndFormat($painting->getSize()->getFormat(), $painting->getHeight(), $painting->getWidth());
 
                 if (!$checkingConversion) {
@@ -101,7 +101,7 @@ class AddEditController extends AbstractController
     /**
      * @Route("/paint/add", name="paint_add", methods={"POST", "GET"})
      */
-    public function add(EntityManagerInterface $em, Request $request, FormatConversion $formatConversion, CheckingExistingPainting $checkingExistingPainting)
+    public function add(EntityManagerInterface $em, Request $request, FormatConversion $formatConversion, CheckingExistingPainting $checkingExistingPainting, FrameRepository $fr, SituationRepository $sitr, SizeRepository $sr)
     {
         $submittedToken = $request->request->get('token');
         if (!$this->isCsrfTokenValid('add-edit-item', $submittedToken)) {
@@ -136,13 +136,23 @@ class AddEditController extends AbstractController
 
             $painting->setPicture($picture);
             // End of picture
+            if (null === $painting->getFrame()) {
+                $painting->setFrame($fr->find(1));
+            }
+            if (null === $painting->getSituation()) {
+                $painting->setSituation($sitr->find(1));
+            }
+            if (null === $painting->getSize()) {
+                $painting->setSize($sr->find(0));
+            }
+            $painting->setWebDisplay(0);
 
             // Automatic modification of the size and format
             $painting = $formatConversion->setSizes($painting);
             // Setting warning is there is a size error
             $painting = $formatConversion->setWarningSizeMessage($painting);
 
-            if (null != $painting->getSize()) {
+            if (0 !== $painting->getSize()->getId()) {
                 $checkingConversion = $formatConversion->checkWidthHeightAndFormat($painting->getSize()->getFormat(), $painting->getHeight(), $painting->getWidth());
 
                 if (!$checkingConversion) {
@@ -150,7 +160,7 @@ class AddEditController extends AbstractController
                 }    
             }
             // End of the size and format
-            
+
             $existingPainting = $checkingExistingPainting->checkPainting($painting);
             if ($existingPainting['check']) {
                 $this->addFlash('warning', $existingPainting['message']);

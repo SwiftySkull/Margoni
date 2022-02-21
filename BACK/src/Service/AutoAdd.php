@@ -79,7 +79,8 @@ class AutoAdd
             $painting->setSituation($this->SituationRepository->find(2));
         }
 
-        $painting->addCategory($this->CategoryRepository->find(19));
+        $painting->addCategory($this->CategoryRepository->find(4));
+        $painting->addCategory($this->CategoryRepository->find(25));
         $painting->addTechnique($this->TechniqueRepository->find(1));
 
         // $painting->setInformation('DM');
