@@ -17,7 +17,8 @@ const Header = ({
       <p><Link to="/">Accueil</Link></p>
       <p><Link to="/biographie">Biographie</Link></p>
       <p><Link to="/galerie">Galerie</Link></p>
-      <p><Link to="/avis">Avis</Link></p>
+      {/* <p><Link to="/avis">Avis</Link></p> */}
+      <p><Link to="/expositions">Expositions</Link></p>
     </nav>
     <div className="navigation-menu">
       {menuStatus && (

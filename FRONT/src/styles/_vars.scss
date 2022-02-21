@@ -5,16 +5,25 @@ $inter: 900px; // vars.$inter;
 $big: 1080px; // vars.$big;
 
 // == Colors
-$mainColor: rgb(255, 150, 0); // vars.$mainColor;
-$secondaryColor: rgb(201, 74, 0); // vars.$secondaryColor;
-$thirdColor: rgba(255, 136, 0, 0.233); // vars.$thirdColor
+// $mainColor: rgb(255, 150, 0); // vars.$mainColor;
+// $secondaryColor: rgb(201, 74, 0); // vars.$secondaryColor;
+// $thirdColor: rgba(255, 136, 0, 0.233); // vars.$thirdColor
+
+// $mainColor: rgb(204, 204, 204); // vars.$mainColor;
+// $secondaryColor: rgb(153, 153, 153); // vars.$secondaryColor;
+// $thirdColor: rgba(102, 102, 102, 0.233); // vars.$thirdColor
+// $thirdColorOpaque: rgba(102, 102, 102); // vars.$thirdColorOpaque
+
+$mainColor: rgb(102, 102, 102); // vars.$mainColor;
+$secondaryColor: rgb(153, 153, 153); // vars.$secondaryColor;
+$thirdColor: rgba(204, 204, 204); // vars.$thirdColor
 
 // == Box
 $boxBorder: solid 1px $mainColor; // vars.$boxBorder;
 $boxBorderRadius: 10px; // vars.$boxBorderRadius;
 
 // == Hover & Shadows
-$textHoverColor: $mainColor; // vars.$textHoverColor;
+$textHoverColor: $secondaryColor; // vars.$textHoverColor;
 $textHoverDecoration: underline; // vars.$textHoverDecoration;
 $boxHoverShadow: 2px 2px 2px 2px $secondaryColor; // vars.$boxHoverShadow;
 $imageShadow: 1px 1px 1px 1px black; // vars.$imageShadow;

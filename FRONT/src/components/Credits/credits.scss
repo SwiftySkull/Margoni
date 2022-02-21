@@ -24,7 +24,7 @@
       font-style: italic;
       font-weight: bold;
       text-align: center;
-      text-shadow: 1px 1px 1px black;
+      text-shadow: 0.5px 0.5px 1px black;
       width: 100%;
       height: fit-content;
 
@@ -67,8 +67,7 @@
         }
   
         &:hover, &:focus {
-          text-decoration: underline;
-          // color: vars.$mainColor;
+          color: vars.$secondaryColor;
                 
           em {
             display: inline;
@@ -76,8 +75,7 @@
         }
 
         &:active {
-          // color: vars.$secondaryColor;
-          color: vars.$mainColor;
+          text-decoration: underline;
         }
       }
     }

@@ -61,9 +61,11 @@ const Painting = ({
           {painting.date !== null && (
             <p><span>Date</span> : {painting.date !== null ? painting.date : 'non renseignée'}</p>
           )}
-          <p>
-            <span>Dimension</span> : {painting.height}x{painting.width} {painting.size.format !== 'Sans format' ? ` (${painting.size.format})` : ''}
-          </p>
+          {painting.size.format !== 'Sans format' && (
+            <p>
+              <span>Dimension</span> : {painting.height}x{painting.width} {painting.size.format !== 'Sans format' ? ` (${painting.size.format})` : ''}
+            </p>
+          )}
           <ul>
             <span>Catégorie(s)</span> :
             {painting.categories.map((cat) => (

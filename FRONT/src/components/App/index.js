@@ -13,7 +13,7 @@ import Header from 'src/containers/Header';
 // import GalerieHeader from 'src/components/Header/galerieHeader';
 import Home from 'src/containers/Home';
 import Biography from 'src/containers/Biography';
-import Avis from 'src/containers/Avis';
+// import Avis from 'src/containers/Avis';
 import Galerie from 'src/containers/Galerie';
 import PaintingList from 'src/containers/PaintingList';
 import Painting from 'src/containers/Painting';
@@ -21,6 +21,7 @@ import Footer from 'src/containers/Footer';
 import Credits from 'src/components/Credits';
 import SiteMap from 'src/components/SiteMap';
 import Error from 'src/components/Error';
+import Expos from 'src/components/Expos';
 
 import './app.scss';
 
@@ -45,7 +46,8 @@ const App = ({
         <Route path="/galerie/:choice/:select/:id" element={<PaintingList />} />
         <Route path="/galerie/:choice/:select" element={<PaintingList />} />
         <Route path="/galerie/*" element={<Galerie />} />
-        <Route path="/avis" element={<Avis />} />
+        {/* <Route path="/avis" element={<Avis />} /> */}
+        <Route path="/expositions" element={<Expos />} />
         <Route path="/credits" element={<Credits />} />
         <Route path="/contact" element={<Credits />} />
         <Route path="/plan-du-site" element={<SiteMap />} />

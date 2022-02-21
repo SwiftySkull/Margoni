@@ -1,11 +1,12 @@
+/* eslint-disable max-len */
 // == Import npm
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 // == Import
-import UniqueAvis from 'src/components/Avis/UniqueAvis';
-import Expositions from 'src/containers/Expositions';
+// import UniqueAvis from 'src/components/Avis/UniqueAvis';
+// import Expositions from 'src/containers/Expositions';
 import SideBar from 'src/containers/SideBar';
 
 import Autoportrait from 'src/assets/images/denise_margoni_autoportrait.jpg';
@@ -13,9 +14,7 @@ import Autoportrait from 'src/assets/images/denise_margoni_autoportrait.jpg';
 import './home.scss';
 
 // == Composant
-const Home = ({
-  avis,
-}) => {
+const Home = () => {
   document.title = 'Denise Margoni';
 
   return (
@@ -23,22 +22,32 @@ const Home = ({
       <div className="resume">
         <div className="entete">
           <div className="biographie">
-            <Link to="/biographie">
-              <img src={Autoportrait} alt="" className="bio-img" />
-              <p>Biographie</p>
-            </Link>
+            <img src={Autoportrait} alt="" className="bio-img" />
           </div>
           <div className="oeuvres">
-            <h2>Denise Margoni</h2>
-            <h3>Peintures</h3>
-            <ul>
-              <li><Link to="/galerie/technique/peinture-a-l-huile/2">Huiles</Link></li>
-              <li><Link to="/galerie/technique/gouache/1">Gouaches</Link></li>
-            </ul>
+            <h2>Margoni</h2>
+            <h3>1911 - 1987</h3>
+            <p><Link to="/galerie/technique/peinture-a-l-huile/2">Huiles</Link> & <Link to="/galerie/technique/gouache/1">Gouaches</Link></p>
           </div>
         </div>
-        <UniqueAvis avis={avis} />
-        <Expositions />
+        {/* <UniqueAvis avis={avis} />
+        <Expositions /> */}
+        <div className="news">
+          <h2>Rétrospective Denise Margoni</h2>
+          <h3>Halle de Paimpol</h3>
+          <h3>du 8 Avril au 9 Mai 2022</h3>
+          <p>
+            Mise en place par le service culturel de la Ville de Paimpol, l'association Arts Vivants-Armor, en partenariat avec l'association Pierres, Paroles et Musiques.
+          </p>
+          <div>
+            <p>
+              Au sein de cette exopsition, vous pourrez découvrir ses oeuvres : en Bretagne et plus particulièrement à Beauport (Paimpol), à Saint-Cloud et en Charente Maritime, son amour de la nature et de la mer, mais aussi sa vision décalée et pleine d'humour des machines agricoles.
+            </p>
+            <p>
+              Une partie de l'exposition est aussi consacrée à son travail d'artiste textile.
+            </p>
+          </div>
+        </div>
       </div>
       <SideBar />
     </div>
@@ -46,7 +55,7 @@ const Home = ({
 };
 
 Home.propTypes = {
-  avis: PropTypes.object.isRequired,
+  // avis: PropTypes.object.isRequired,
 };
 
 // == Export

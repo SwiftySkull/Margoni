@@ -32,7 +32,7 @@
       font-style: italic;
       font-weight: bold;
       text-align: center;
-      text-shadow: 1px 1px 1px black;
+      text-shadow: 0.5px 0.5px 1px black;
       width: 100%;
       margin-top: 1rem;
       margin-bottom: 1rem;
@@ -160,7 +160,7 @@
       }
 
       .close-modal-button {
-        color: vars.$mainColor;
+        color: white;
         position: absolute;
         right: 0;
         top: 0;
@@ -188,10 +188,10 @@
 
         &:hover, &:focus {
           cursor: pointer;
-          border: 1px solid vars.$mainColor;
+          border: 1px solid white;
 
           >p:last-child {
-            color: vars.$mainColor;
+            color: white;
           }
         }
       }

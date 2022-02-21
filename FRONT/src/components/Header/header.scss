@@ -25,18 +25,17 @@
       font-style: italic;
       font-weight: bold;
       text-align: center;
-      text-shadow: 1px 1px 1px black;
+      text-shadow: 0.5px 0.5px 1px black;
       width: 100%;
       margin-bottom: 1rem;
 
-      @media (min-width: vars.$inter) {
-        width: initial;
+      @media (min-width: vars.$big) {
+        width: 50%;
         margin: initial;
-        width: 45%;
         text-align: left;
       }
 
-      @media (min-width: vars.$big) {
+      @media (min-width: 1400px) {
         width: 60%;
       }
 

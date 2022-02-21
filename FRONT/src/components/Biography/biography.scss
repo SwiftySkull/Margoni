@@ -39,9 +39,10 @@
       .crit-content {
         width: 100%;
         margin: auto;
+        margin-bottom: 1rem;
         padding: 0 1rem 1rem;
         line-height: 1.6rem;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
 
         >h2 {
           color: vars.$mainColor;
@@ -49,72 +50,36 @@
           font-style: italic;
           font-weight: bold;
           text-align: center;
-          text-shadow: 1px 1px 1px black;
+          text-shadow: 0.5px 0.5px 1px black;
           width: 100%;
-          margin-bottom: 1rem;
+          margin-bottom: 2rem;
           margin-top: 1rem;
-      
+
           @media (min-width: vars.$medium) {
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
             margin-top: 2rem;
           }
         }
       
-        p:not(:last-child){
-          margin-bottom: 1.2rem;
+        p {
+          &::first-letter {
+            text-transform: uppercase;
+          }
+
+          &:not(:last-child){
+            margin-bottom: 1.5rem;
+          }
+
+          em {
+            font-style: italic;
+          }
         }
 
         @media (min-width: vars.$medium) {
           width: 90%;
           font-size: 1.3rem;
+          padding: 0 2rem 1rem 1rem;
         }
-      }
-
-      a {
-        margin: 1rem auto;
-
-        .wiki {
-          font-size: 1rem;
-          font-weight: bold;
-          border: vars.$boxBorder;
-          border-radius: vars.$boxBorderRadius;
-          padding: 0.8rem 1rem;
-          background-color: #fff;
-          position: relative;
-
-          @media (min-width: vars.$medium) {
-            font-size: 1.1rem;
-          }
-  
-          @media (min-width: 1350px) {
-            font-size: 1.3rem;
-          }
-
-          em {
-            display: none;
-            position: absolute;
-            right: -1.5rem;
-            bottom: 2rem;
-            font-size: 1rem;
-          }
-
-          &:hover, &:focus {
-            color: vars.$textHoverColor;
-
-            em {
-              display: inline;
-            }
-          }
-  
-          &:active {
-            color: black;
-            background-color: vars.$thirdColor;
-
-            em {
-              display: inline;
-            }
-          }
-        }  
       }
     }
 
