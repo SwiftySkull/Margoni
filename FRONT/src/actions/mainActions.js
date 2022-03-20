@@ -13,6 +13,10 @@ export const LOADER_OFF = 'LOADER_OFF';
 export const CLEAR_PAINTING = 'CLEAR_PAINTING';
 export const SAVE_MULTIPLE_PAINTINGS = 'SAVE_MULTIPLE_PAINTINGS';
 export const DISPLAY_MENU = 'DISPLAY_MENU';
+export const SUBMIT_ACCEPTED = 'SUBMIT_ACCEPTED';
+export const CLOSE_CONTAC_MODAL = 'CLOSE_CONTAC_MODAL';
+export const SEND_REQUEST = 'SEND_REQUEST';
+export const UPDATE_FIELD_VALUE = 'UPDATE_FIELD_VALUE';
 
 // ACTIONS CREATORS
 
@@ -75,4 +79,22 @@ export const saveMultiplePaintings = (paintings) => ({
 
 export const displayMenu = () => ({
   type: DISPLAY_MENU,
+});
+
+export const submitAccepted = () => ({
+  type: SUBMIT_ACCEPTED,
+});
+
+export const updateFieldValue = (val, field) => ({
+  type: UPDATE_FIELD_VALUE,
+  val,
+  field,
+});
+
+export const sendRequest = () => ({
+  type: SEND_REQUEST,
+});
+
+export const closeContactModal = () => ({
+  type: CLOSE_CONTAC_MODAL,
 });

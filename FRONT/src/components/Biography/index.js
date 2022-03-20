@@ -55,9 +55,9 @@ const Biography = () => {
           </div>
         </div>
         <div className="main pictures">
-          <img src={Denise1} alt="Portrait Denise Margoni sépia" />
-          <img src={Denise2} alt="Portrait Denise Margoni noir et blanc" />
-          <img src={Denise3} alt="Portrait Denise Margoni couleur" />
+          <img src={Denise1} alt="Portrait Denise Margoni sépia" draggable="false" />
+          <img src={Denise2} alt="Portrait Denise Margoni noir et blanc" draggable="false" />
+          <img src={Denise3} alt="Portrait Denise Margoni couleur" draggable="false" />
         </div>
         <Expositions />
       </div>

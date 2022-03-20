@@ -31,7 +31,7 @@ const SideBar = ({
         let pictureFile = '';
         pictures.filter((pic) => {
           if (pic.id === categ.id) {
-            pictureFile = pic.painting.picture.file;
+            pictureFile = pic.painting.picture.pathname;
           }
         });
 

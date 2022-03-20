@@ -6,6 +6,8 @@ import {
   marine as M,
 } from './formatConversion';
 
+export const imageUrl = 'https://back.denise-margoni.fr/';
+
 /**
  * Shuffles an array and returns an amount of entry specified or all the array shuffled
  *

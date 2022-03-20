@@ -28,7 +28,10 @@ class Picture
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Groups("paintings_browse")
+     * @Groups("paintings_read")
      */
     private $pathname;
 
@@ -37,7 +40,7 @@ class Picture
      * 
      * @Groups("paintings_browse")
      */
-    private $file;
+    // private $file;
 
     /**
      * @ORM\Column(type="string", length=1, nullable=true)
@@ -90,17 +93,17 @@ class Picture
         return $this;
     }
 
-    public function getFile(): ?string
-    {
-        return $this->file;
-    }
+    // public function getFile(): ?string
+    // {
+    //     return $this->file;
+    // }
 
-    public function setFile(string $file): self
-    {
-        $this->file = $file;
+    // public function setFile(string $file): self
+    // {
+    //     $this->file = $file;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {

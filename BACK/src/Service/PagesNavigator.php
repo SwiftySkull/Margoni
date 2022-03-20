@@ -53,9 +53,13 @@ class PagesNavigator
      *
      * @return integer
      */
-    public function getTotalPages(): int
+    public function getTotalPages($limit = null): int
     {
         $this->totalPages = round($this->allEntries/$this->limitPerPage) + 1;
+
+        if (null !== $limit) {
+            $this->totalPages = ceil($this->allEntries/$limit);
+        }
 
         return $this->totalPages;
     }
@@ -152,14 +156,19 @@ class PagesNavigator
      * @param integer $id Current page ID
      * @return integer
      */
-    public function getSlice(int $id = null): int
+    public function getSlice(int $id = null, $limit = null): int
     {
         if (1 >= $id || null == $id) {
             return 0;
         }
     
         $page = $id - 1;
+
         $slice = $page * $this->limitPerPage;
+
+        if (null !== $limit) {
+            $slice = $page * $limit;
+        }
 
         return $slice;
     }

@@ -18,7 +18,7 @@ import Galerie from 'src/containers/Galerie';
 import PaintingList from 'src/containers/PaintingList';
 import Painting from 'src/containers/Painting';
 import Footer from 'src/containers/Footer';
-import Credits from 'src/components/Credits';
+import Credits from 'src/containers/Credits';
 import SiteMap from 'src/components/SiteMap';
 import Error from 'src/components/Error';
 import Expos from 'src/components/Expos';

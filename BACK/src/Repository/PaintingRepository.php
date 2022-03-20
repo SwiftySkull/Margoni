@@ -22,6 +22,36 @@ class PaintingRepository extends ServiceEntityRepository
         $this->limitPerPage = $limitPerPage;
     }
 
+    public function findNext($painting)
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT p
+            FROM App\Entity\Painting p
+            WHERE p.id > :painting'
+
+        )->setParameter('painting', $painting)
+        ->setMaxResults(1);
+
+        return $query->getOneOrNullResult();
+    }
+
+    public function findPrevious($painting)
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT p
+            FROM App\Entity\Painting p
+            WHERE p.id < :painting'
+
+        )->setParameter('painting', $painting)
+        ->setMaxResults(1);
+
+        return $query->getOneOrNullResult();
+    }
+
     public function findHundred($offset = null)
     {
         $qb = $this->createQueryBuilder('p')

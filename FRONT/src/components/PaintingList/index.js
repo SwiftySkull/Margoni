@@ -5,7 +5,7 @@ import { useParams } from 'react-router';
 import PropTypes from 'prop-types';
 
 // == Import
-import { stringForUrl } from 'src/utils/utils';
+import { stringForUrl, imageUrl } from 'src/utils/utils';
 
 import Loader from 'src/components/Loader';
 
@@ -149,7 +149,7 @@ const PaintingList = ({
             <div className="tableau" key={paint.id}>
               <Link className="card" to={url}>
                 <div>
-                  <img src={`data:image/jpeg;base64,${paint.picture.file}`} alt="" />
+                  <img src={imageUrl + paint.picture.pathname} alt="" draggable="false" />
                 </div>
                 <h4>{paint.title ?? paint.dbName}</h4>
               </Link>
@@ -162,17 +162,14 @@ const PaintingList = ({
         <nav
           className="navigation"
           style={{
-            flexWrap: numberOfPages > 5 ? 'wrap' : 'nowrap',
           }}
         >
           <Link
             to={`/galerie/${choice}/${select}/${id}/page/${actualPage - 1}`}
             className="previous-button"
-            style={{
-              order: numberOfPages > 5 ? '-2' : '0',
-            }}
           >
             <button
+              className="previous-page-button"
               type="button"
               onClick={() => {
                 selectPage(actualPage - 1, numberOfPages);
@@ -182,20 +179,15 @@ const PaintingList = ({
             </button>
           </Link>
           <div
-            style={{
-              flexWrap: numberOfPages > 5 ? 'wrap' : 'nowrap',
-              margin: numberOfPages > 5 ? '0.5rem 0' : 'unset',
-              width: numberOfPages > 5 ? '100%' : '70%',
-            }}
           >
             {rows.map((raw) => (raw))}
           </div>
           <Link
             to={`/galerie/${choice}/${select}/${id}/page/${actualPage + 1}`}
             className="next-button"
-            style={{ order: numberOfPages > 5 ? '-1' : '0' }}
           >
             <button
+              className="next-page-button"
               type="button"
               onClick={() => {
                 selectPage(actualPage + 1, numberOfPages);

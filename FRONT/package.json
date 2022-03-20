@@ -55,11 +55,13 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
+    "@emailjs/browser": "^3.4.0",
     "axios": "^0.24.0",
     "prop-types": "^15.7.2",
     "proptypes": "^1.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-google-recaptcha": "^2.1.0",
     "react-redux": "^7.2.6",
     "react-router": "^6.2.1",
     "react-router-dom": "^6.2.1",

@@ -2,25 +2,36 @@
 
 namespace App\Controller\Admin\MainController;
 
-use App\Entity\Painting;
 use App\Entity\Picture;
+use App\Entity\Painting;
 use App\Form\PaintingType;
-use App\Repository\FrameRepository;
-use App\Repository\PaintingRepository;
-use App\Repository\PictureRepository;
-use App\Repository\SituationRepository;
-use App\Repository\SizeRepository;
-use App\Service\CheckingExistingPainting;
-use App\Service\FormatConversion;
 use App\Service\PagesNavigator;
+use App\Service\FormatConversion;
+use App\Repository\SizeRepository;
+use App\Repository\FrameRepository;
+use App\Repository\PictureRepository;
+use App\Repository\PaintingRepository;
+use App\Repository\SituationRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Service\CheckingExistingPainting;
+use App\Service\MovePictures;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class AddEditController extends AbstractController
 {
+    private $directoryAttachment;
+
+    public function __construct($directoryAttachment)
+    {
+        $this->directoryAttachment = $directoryAttachment;
+    }
+
     /**
      * Form to edit the informations of a painting
      * 
@@ -30,7 +41,7 @@ class AddEditController extends AbstractController
      *      methods={"GET", "POST"},
      * )
      */
-    public function edit(Painting $painting = null, $id, Request $request, EntityManagerInterface $em, PictureRepository $pictureRepository, FormatConversion $formatConversion, CheckingExistingPainting $checkingExistingPainting)
+    public function edit(Painting $painting = null, $id, Request $request, EntityManagerInterface $em, PictureRepository $pictureRepository, FormatConversion $formatConversion, CheckingExistingPainting $checkingExistingPainting, MovePictures $mp)
     {
         $submittedToken = $request->request->get('token');
         if (!$this->isCsrfTokenValid('add-edit-item', $submittedToken)) {
@@ -48,22 +59,17 @@ class AddEditController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             if (null != $request->files->get('painting')['picture']) {
-                $actualPicture = $pictureRepository->find($painting->getPicture());
-                $pictureTitle = preg_filter('/.(jpg|JPG|PNG|png|JPEG|jpeg)/', '', $request->files->get('painting')['picture']->getClientOriginalName());
-                $actualPicture->setTitle($pictureTitle);
-                $actualPicture->setPathname($request->files->get('painting')['picture']->getClientOriginalName());
-                $actualPicture->setFile(base64_encode(file_get_contents($request->files->get('painting')['picture'])));
-                
-                $frenchOrientation = $formatConversion->getPictureOrientation($request->files->get('painting')['picture']);
-                $actualPicture->setOrientation($frenchOrientation ? 'V' : 'H');
-    
-                $painting->setPicture($actualPicture);
+                $picture = $pictureRepository->find($painting->getPicture());
 
-                $newDbTitle = str_replace(['-', '_'], ' ', $pictureTitle);
+                $picture = $mp->moveThePicture($picture, $request->files->get('painting')['picture']);
+    
+                $painting->setPicture($picture);
+
+                $newDbTitle = str_replace(['-', '_'], ' ', $picture->getTitle());
 
                 if ($newDbTitle != $painting->getDbName()) {
                     $painting->setDbName($newDbTitle);                
-                }    
+                }
             }
             // Automatic modification of the size and format
             $painting = $formatConversion->setSizes($painting);
@@ -101,7 +107,7 @@ class AddEditController extends AbstractController
     /**
      * @Route("/paint/add", name="paint_add", methods={"POST", "GET"})
      */
-    public function add(EntityManagerInterface $em, Request $request, FormatConversion $formatConversion, CheckingExistingPainting $checkingExistingPainting, FrameRepository $fr, SituationRepository $sitr, SizeRepository $sr)
+    public function add(EntityManagerInterface $em, Request $request, FormatConversion $formatConversion, CheckingExistingPainting $checkingExistingPainting, FrameRepository $fr, SituationRepository $sitr, SizeRepository $sr, SluggerInterface $slugger, MovePictures $mp)
     {
         $submittedToken = $request->request->get('token');
         if (!$this->isCsrfTokenValid('add-edit-item', $submittedToken)) {
@@ -118,19 +124,12 @@ class AddEditController extends AbstractController
             // Insertion of the picture
             $picture = new Picture();
 
-
-            $pictureTitle = preg_filter('/.(jpg|JPG|PNG|png|JPEG|jpeg)/', '', $request->files->get('painting')['picture']->getClientOriginalName());
-            $picture->setTitle($pictureTitle);
-            $picture->setPathname($request->files->get('painting')['picture']->getClientOriginalName());
-            $picture->setFile(base64_encode(file_get_contents($request->files->get('painting')['picture'])));
-
-            $frenchOrientation = $formatConversion->getPictureOrientation($request->files->get('painting')['picture']);
-            $picture->setOrientation($frenchOrientation ? 'V' : 'H');
+            $picture = $mp->moveThePicture($picture, $request->files->get('painting')['picture']);
 
             $em->persist($picture);
 
             if (null == $painting->getDbName()) {
-                $dbName = str_replace(['-', '_'], ' ', $pictureTitle);
+                $dbName = str_replace(['-', '_'], ' ', $picture->getTitle());
                 $painting->setDbName($dbName);                
             }
 

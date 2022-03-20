@@ -9,7 +9,7 @@
 
   >h2 {
     color: vars.$mainColor;
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-style: italic;
     font-weight: bold;
     text-align: center;
@@ -53,16 +53,16 @@
       }
 
       @media (min-width: vars.$big) {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
       }
 
       &:hover, &:focus {
-        color: vars.$textHoverColor;
+        background-color: vars.$thirdColor;
       }
 
       &:active {
-        color: black;
-        background-color: vars.$thirdColor;
+        color: vars.$textHoverColor;
+        background-color: black;
       }
 
       &.select-chosen {
@@ -89,22 +89,22 @@
     >select {
       border: vars.$boxBorder;
       border-radius: vars.$boxBorderRadius;
-      padding: 1rem 0.5rem;
-      font-size: 1rem;
+      padding: 0.8rem 0.5rem;
+      font-size: 1.1rem;
       margin: -1rem auto 1rem;
 
       @media (min-width: vars.$medium) {
-        padding: 1rem 2rem;
-        font-size: 1.2rem;
+        padding: 0.8rem;
+        font-size: 1rem;
       }
 
-      @media (min-width: vars.$inter) {
-        font-size: 1.3rem;
-      }
+      // @media (min-width: vars.$inter) {
+      //   font-size: 1rem;
+      // }
 
-      @media (min-width: vars.$big) {
-        font-size: 1.5rem;
-      }
+      // @media (min-width: vars.$big) {
+      //   font-size: 1rem;
+      // }
     }
 
     >div {
@@ -128,7 +128,7 @@
         }
   
         @media (min-width: vars.$big) {
-          font-size: 1.5rem;
+          font-size: 1.4rem;
         }
 
         &:hover, &:focus {

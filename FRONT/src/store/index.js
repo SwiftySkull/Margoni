@@ -5,6 +5,7 @@ import mainMiddleware from 'src/middleWares/mainMiddleware';
 import sizeMiddleware from 'src/middleWares/sizeMiddleware';
 import categoryMiddleware from 'src/middleWares/categoryMiddleware';
 import techniqueMiddleware from 'src/middleWares/techniqueMiddleware';
+import contactMiddleware from 'src/middleWares/contactMiddleware';
 
 import reducer from 'src/reducers';
 
@@ -17,6 +18,7 @@ const enhancers = composeWithDevTools(
     sizeMiddleware,
     categoryMiddleware,
     techniqueMiddleware,
+    contactMiddleware,
   ),
 );
 

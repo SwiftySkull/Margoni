@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // == Import
-import { stringForUrl } from 'src/utils/utils';
+import { stringForUrl, imageUrl } from 'src/utils/utils';
 
 import './galerie.scss';
 
@@ -21,7 +21,7 @@ const Choosing = ({
 
       pictures.filter((pic) => {
         if (pic.id === itera[0]) {
-          pictureFile = pic.painting.picture.file;
+          pictureFile = pic.painting.picture.pathname;
         }
       });
 
@@ -30,7 +30,7 @@ const Choosing = ({
           <Link to={`/galerie/${urlRefer}/${stringForUrl(itera[1])}/${itera[0]}/page/1`} className="tableau" key={itera[0]}>
             <div className="card">
               <div>
-                <img src={`data:image/jpeg;base64,${pictureFile}`} alt={`Peinture aléatoire de la ${altType} ${itera[1]}`} />
+                <img src={imageUrl + pictureFile} alt={`Peinture aléatoire de la ${altType} ${itera[1]}`} />
               </div>
               <h3>{itera[1]}</h3>
             </div>

@@ -13,10 +13,10 @@
         margin: 5rem 0;
     }
 
-    .one-painting:hover {
+    {# .one-painting:hover {
         transform: scale(2.5);
         z-index: 1;
-    }
+    } #}
 
     .little-button-choice {
         background-color: transparent;
@@ -26,6 +26,18 @@
     .little-button-choice:hover {
         cursor: pointer;
     }
+
+    .info {
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: white;
+        border: 2px solid white;
+        box-shadow: 1px 1px 1px black;
+        border-radius: 100%;
+        padding: 2px 5px;
+        text-shadow: 1px 1px 1px black;
+    }
 </style>
 
 <h1>Affichage des peintures sur le site ou non</h1>
@@ -34,11 +46,12 @@
 
 <div class="all-paintings">
     {% for painting in paintings %}
-        <div style="width: 10%; margin: 1rem; position: relative" class="one-painting">
-            <img src="data:image/jpeg;base64,{{ painting.picture.file }}" style="max-width: 100%"/>
+        <div style="width: 12%; margin: 0 2rem 2rem 0; position: relative" class="one-painting">
+            <img src="{{ asset(painting.picture.pathname) }}" style="max-width: 100%"/>
             <form action="/all-paintings-edit/{{ painting.id }}/page/{{ page }}" method="POST">
                 <button type="submit" class="little-button-choice" style="position: absolute; right: 0; top: 0;">{{ painting.webDisplay ? '✅' : '❌'}}</button>
             </form>
+            <a class="info" href="{{ path('read_paint', {id:painting.id}) }}">i</a>
         </div>
     {% endfor %}
 </div>

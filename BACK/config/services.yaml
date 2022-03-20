@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     app.limit_per_page: '%env(int:LIMIT_PER_PAGE)%'
+    app.directory_attachment: '%env(string:DIRECTORY_ATTACHMENT)%'
+    paintings_directory: '%kernel.project_dir%/public/uploads/paintings'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -27,9 +29,16 @@ services:
     App\Service\PagesNavigator:
         arguments:
             $limitPerPage: '%app.limit_per_page%'
+    App\Service\MovePictures:
+        arguments:
+            $directory: '%paintings_directory%'
+            $directoryAttachment: '%app.directory_attachment%'
     App\Repository\PaintingRepository:
         arguments:
             $limitPerPage: '%app.limit_per_page%'
     App\Repository\PaintingRepositoryWeb:
         arguments:
             $limitPerPage: '%app.limit_per_page%'
+    App\Controller\Admin\MainController\AddEditController:
+        arguments:
+            $directoryAttachment: '%app.directory_attachment%'

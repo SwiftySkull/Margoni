@@ -7,7 +7,7 @@ import { useParams, Link } from 'react-router-dom';
 import SideBar from 'src/containers/SideBar';
 import Loader from 'src/components/Loader';
 
-import { stringForUrl, urlToString } from 'src/utils/utils';
+import { stringForUrl, urlToString, imageUrl } from 'src/utils/utils';
 
 import './painting.scss';
 
@@ -52,9 +52,10 @@ const Painting = ({
         <h2>{painting.title ?? painting.dbName}</h2>
         <div className="image">
           <img
-            src={`data:image/jpeg;base64,${painting.picture.file}`}
+            src={imageUrl + painting.picture.pathname}
             alt={painting.title ?? painting.dbName}
             onClick={displayModal}
+            draggable="false"
           />
         </div>
         <div className="painting-infos">
@@ -78,20 +79,21 @@ const Painting = ({
               <li key={tec.id}><Link to={`/galerie/technique/${stringForUrl(tec.type)}`}>{tec.type}</Link></li>
             ))}
           </ul>
-          {painting.information !== null && (
+          {/* {painting.information !== null && (
             <div>
               <p><span>Informations complémentaires</span> :</p>
               <p>{painting.information}</p>
             </div>
-          )}
+          )} */}
         </div>
         <button type="button" onClick={() => window.history.back()}>Retour</button>
         <div className="modal-box" style={{ display: modalStatus ? 'block' : 'none' }}>
           <div className="image-modal">
             <img
-              src={`data:image/jpeg;base64,${painting.picture.file}`}
+              src={imageUrl + painting.picture.pathname}
               alt={painting.title ?? painting.dbName}
               onClick={displayModal}
+              draggable="false"
             />
           </div>
           <div className="close-modal-button" onClick={displayModal}>
@@ -117,7 +119,7 @@ const Painting = ({
               <div className="tableau" key={paint.id}>
                 <div className="card" onClick={() => redirectTo()}>
                   <div>
-                    <img src={`data:image/jpeg;base64,${paint.picture.file}`} alt="" />
+                    <img src={imageUrl + paint.picture.pathname} alt="" draggable="false" />
                   </div>
                   <h4>{paint.title ?? paint.dbName}</h4>
                 </div>

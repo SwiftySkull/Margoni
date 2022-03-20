@@ -36,7 +36,7 @@ class MainController extends AbstractController
      *      methods={"GET"},
      * )
      */
-    public function home(PaintingRepository $paintingRepository): Response
+    public function home(PaintingRepository $paintingRepository)
     {
         $this->pagesNavigator->setAllEntries($paintingRepository->countAll());
 
@@ -90,14 +90,19 @@ class MainController extends AbstractController
      *      methods={"GET"},
      * )
      */
-    public function read(Painting $painting = null)
+    public function read(Painting $painting = null, PaintingRepository $pr)
     {
         if (null === $painting) {
             throw $this->createNotFoundException('Oups ! Tableau non trouvé.'); 
         }
 
+        $next = $pr->findNext($painting->getId());
+        $previous = $pr->findPrevious($painting->getId());
+
         return $this->render('main/read.html.twig', [
             'painting' => $painting,
+            'next' => $next,
+            'previous' => $previous,
         ]);
     }
 
@@ -129,15 +134,15 @@ class MainController extends AbstractController
         $this->pagesNavigator->setAllEntries($pr->countAll());
 
         $pageId = $this->pagesNavigator->getPageId($page);
-        $slice = $this->pagesNavigator->getSlice($pageId);
+        $slice = $this->pagesNavigator->getSlice($pageId, 50);
 
         $paintings = $pr->findHundred($slice);
 
-        $totalPages = $this->pagesNavigator->getTotalPages();
+        $totalPages = $this->pagesNavigator->getTotalPages(50);
         $pages = $this->pagesNavigator->getMinMax($pageId);
         $previousPage = $this->pagesNavigator->getPreviousPage($pageId);
         $nextPage = $this->pagesNavigator->getNextPage($pageId);
-
+        // dd($totalPages);
         return $this->render('all/all.html.twig', [
             'paintings' => $paintings,
             'page' => $page,
@@ -152,11 +157,26 @@ class MainController extends AbstractController
     /**
      * @Route("/all-paintings-edit/{id}/page/{page}", name="all_paintings_edit", methods={"GET", "POST"})
      */
-    public function FunctionName(Painting $painting = null, EntityManagerInterface $em, $page)
+    public function displayPaintingOnAll(Painting $painting = null, EntityManagerInterface $em, $page)
     {
         $painting->setWebDisplay(!$painting->getWebDisplay());
         $em->flush();
 
         return $this->redirectToRoute('all_paintings', ['page' => $page]);
     }
+
+    // /**
+    //  * @Route("/reset", name="reset", methods={"GET", "POST"})
+    //  */
+    // public function resetPictures(EntityManagerInterface $em, PictureRepository $pr)
+    // {
+    //     $pictures = $pr->resetPictures();
+
+    //     foreach ($pictures as $key => $value) {
+    //         $value->setPathname('uploads/HuileSurToile/'.$value->getPathname());
+    //     }
+    //     $em->flush();
+
+    //     return $this->redirectToRoute('home');
+    // }
 }

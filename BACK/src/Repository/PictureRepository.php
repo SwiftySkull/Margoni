@@ -19,6 +19,19 @@ class PictureRepository extends ServiceEntityRepository
         parent::__construct($registry, Picture::class);
     }
 
+    // public function resetPictures()
+    // {
+    //     $entityManager = $this->getEntityManager();
+        
+    //     $query = $entityManager->createQuery(
+    //         'SELECT p
+    //         FROM App\Entity\Picture p
+    //         WHERE p.id BETWEEN 18 AND 94'
+    //     );
+
+    //     return $query->getResult();
+    // }
+
     // /**
     //  * @return Picture[] Returns an array of Picture objects
     //  */

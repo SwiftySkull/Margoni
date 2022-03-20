@@ -149,7 +149,7 @@
       }
 
       h2 {
-        font-size: 2rem;
+        font-size: 1.8rem;
         font-style: italic;
         font-weight: bold;
         margin-bottom: 2rem;
@@ -158,9 +158,8 @@
       }
 
       h3 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         margin-bottom: 2rem;
-        // text-transform: uppercase;
       }
 
       p {
@@ -179,6 +178,44 @@
 
         p:not(:last-child) {
           margin-bottom: 1rem;
+        }
+      }
+
+      .affiche {
+        width: 100%;
+        margin-bottom: 2rem;
+
+        @media (min-width: vars.$big) {
+          width: unset;
+          max-height: 1000px;
+        }
+      }
+
+      .download-affiche {
+        .download-affiche-button {
+          background-color: white;
+          border: vars.$boxBorder;
+          border-radius: vars.$boxBorderRadius;
+          padding: 1rem 2rem;
+          margin: 2rem auto 1rem;
+          font-size: 1.1rem;
+
+          @media (min-width: vars.$medium) {
+            font-size: 1.2rem;
+          }
+
+          @media (min-width: vars.$inter) {
+            font-size: 1.3rem;
+          }
+
+          &:hover, &:focus {
+            background-color: vars.$thirdColor;
+          }
+
+          &:active {
+            color: vars.$textHoverColor;
+            background-color: black;
+          }
         }
       }
     }
