@@ -16,7 +16,7 @@ const Footer = () => (
         <Link to="/plan-du-site">Plan du site</Link>
       </p>
       <p>
-        <a href="mailto:margoandco@margoandco.free.fr">
+        <a href="mailto:elisabeth-margoni@denise-margoni.fr">
           Infos @ Mail<em className="mail">✉</em>
         </a>
       </p>
@@ -30,6 +30,9 @@ const Footer = () => (
         <Link to="/contact">Contact</Link>
         /
         <Link to="/credits">Crédits</Link>
+      </p>
+      <p>
+        <Link to="/mentions-legal">Mentions Légales</Link>
       </p>
       <p>©️ 2022 Saint-Brieuc</p>
     </nav>

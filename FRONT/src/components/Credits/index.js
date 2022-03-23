@@ -108,7 +108,7 @@ const Credits = ({
           </div>
         </div>
         )}
-        <p>Vous pouvez aussi envoyer directement un email à l'adresse suivante : <a href="mailto:elisabeth-margoni@denise-margoni.com">elisabeth-margoni@denise-margoni.com<em className="mail">✉</em></a></p>
+        <p>Vous pouvez aussi envoyer directement un email à l'adresse suivante : <a href="mailto:elisabeth-margoni@denise-margoni.fr">elisabeth-margoni@denise-margoni.fr<em className="mail">✉</em></a></p>
         <h2>Credits</h2>
         <p>Création et maintenance : Association "<span>Arts Vivants-Armor</span>" (AVA).</p>
         <p>Création Web & Photos : <a href="https://www.linkedin.com/in/aurelien-b" target="_blank" rel="noreferrer">Aurélien Beneyton<em>↗️</em></a>.</p>

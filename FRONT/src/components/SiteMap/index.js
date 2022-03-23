@@ -35,6 +35,9 @@ const SiteMap = () => {
           <li>
             <Link to="/credits">Crédits</Link>
           </li>
+          <li>
+            <Link to="/mentions-legal">Mentions Légales</Link>
+          </li>
         </ul>
       </div>
       <SideBar />

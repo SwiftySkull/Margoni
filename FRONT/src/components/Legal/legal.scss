@@ -1,0 +1,67 @@
+@use 'src/styles/_vars';
+
+#legal {
+  display: flex;
+  justify-content: space-between;
+
+  .legal {
+    width: 100%;
+    padding: 1rem;
+    border: vars.$boxBorder;
+    border-radius: vars.$boxBorderRadius;
+
+    @media (min-width: vars.$inter) {
+      margin-right: 1rem;
+      width: 90%;
+      padding: 1rem 2rem;
+    }
+
+    @media (min-width: 1280px) {
+      justify-content: center;
+    }
+
+    >h2 {
+      color: vars.$mainColor;
+      font-size: 1.8rem;
+      font-style: italic;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: 0.5px 0.5px 1px black;
+      width: 100%;
+      margin-bottom: 2rem;
+      height: fit-content;
+    }
+
+    >p {
+      margin: 2rem 0;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.5rem;
+    }
+
+    div {
+      margin-bottom: 2rem;
+
+      h3 {
+        color: vars.$mainColor;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+
+      a {
+        font-weight: bold;
+
+        &:hover, &:focus {
+          color: vars.$textHoverColor;
+        }
+
+        &:active {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

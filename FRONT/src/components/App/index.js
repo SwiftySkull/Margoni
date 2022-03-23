@@ -20,6 +20,7 @@ import Painting from 'src/containers/Painting';
 import Footer from 'src/containers/Footer';
 import Credits from 'src/containers/Credits';
 import SiteMap from 'src/components/SiteMap';
+import Legal from 'src/components/Legal';
 import Error from 'src/components/Error';
 import Expos from 'src/components/Expos';
 
@@ -50,6 +51,7 @@ const App = ({
         <Route path="/expositions" element={<Expos />} />
         <Route path="/credits" element={<Credits />} />
         <Route path="/contact" element={<Credits />} />
+        <Route path="/mentions-legal" element={<Legal />} />
         <Route path="/plan-du-site" element={<SiteMap />} />
         <Route path="/" element={<Home />} />
         <Route path="*" element={<Error />} />
