@@ -22,7 +22,7 @@ const Legal = () => {
           <p>Arts Vivants-Armor</p>
           <p>9 hent ar Ty Gward</p>
           <p>22620 Ploubazlanec</p>
-          <p>Email : <a href="mailto:aurelien.beneyton@gmail.com">aurelien.beneyton@gmail.com</a></p>
+          <p>Email : <a href="mailto:avarmor22@gmail.com">avarmor22@gmail.com</a></p>
         </div>
         <div>
           <h3>Hébergement :</h3>
@@ -37,7 +37,6 @@ const Legal = () => {
           <p>Aurélien Beneyton</p>
           <p>5 rue Camille Guérin</p>
           <p>22000 Saint Brieuc</p>
-          <p>Téléphone : 06.12.28.31.93</p>
           <p>Email : <a href="mailto:aurelien.beneyton@developoulpe.fr">aurelien.beneyton@developoulpe.fr</a></p>
           <p>Site Web : <a href="https://www.developoulpe.fr/" target="_blank" rel="noreferrer noopener">https://www.developoulpe.fr</a></p>
         </div>

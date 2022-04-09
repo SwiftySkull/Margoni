@@ -13,6 +13,8 @@ import Autoportrait from 'src/assets/images/denise_margoni_autoportrait.jpg';
 import Affiche from 'src/assets/images/Affiche-Denise-Margoni.jpg';
 // import AffichePDF from 'src/assets/pdf/Affiche-Denise-Margoni.pdf';
 
+import signature from 'src/assets/images/signature.png';
+
 import './home.scss';
 
 // == Composant
@@ -27,7 +29,7 @@ const Home = () => {
             <img src={Autoportrait} alt="" className="bio-img" />
           </div>
           <div className="oeuvres">
-            <h2>Margoni</h2>
+            <h2><img src={signature} alt="Signature" /></h2>
             <h3>1911 - 1987</h3>
             <p><Link to="/galerie/technique/peinture-a-l-huile/2">Huiles</Link> & <Link to="/galerie/technique/gouache/1">Gouaches</Link></p>
           </div>
