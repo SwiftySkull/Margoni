@@ -22,7 +22,6 @@ const Legal = () => {
           <p>Arts Vivants-Armor</p>
           <p>9 hent ar Ty Gward</p>
           <p>22620 Ploubazlanec</p>
-          <p>Téléphone : 06.12.28.31.93</p>
           <p>Email : <a href="mailto:aurelien.beneyton@gmail.com">aurelien.beneyton@gmail.com</a></p>
         </div>
         <div>
@@ -30,13 +29,17 @@ const Legal = () => {
           <p>Hébergeur: SARL o2switch</p>
           <p>222-224 Boulevard Gustave Flaubert</p>
           <p>63000 Clermont-Ferrand</p>
-          <p>Site Web : <a href="https://www.o2switch.fr/" target="_blank" rel="noreferrer noopener">www.o2switch.fr</a></p>
+          <p>Site Web : <a href="https://www.o2switch.fr/" target="_blank" rel="noreferrer noopener">https://www.o2switch.fr</a></p>
         </div>
         <div>
           <h3>Développement :</h3>
+          <p>Developoulpe</p>
           <p>Aurélien Beneyton</p>
           <p>5 rue Camille Guérin</p>
           <p>22000 Saint Brieuc</p>
+          <p>Téléphone : 06.12.28.31.93</p>
+          <p>Email : <a href="mailto:aurelien.beneyton@developoulpe.fr">aurelien.beneyton@developoulpe.fr</a></p>
+          <p>Site Web : <a href="https://www.developoulpe.fr/" target="_blank" rel="noreferrer noopener">https://www.developoulpe.fr</a></p>
         </div>
         <div>
           <h3>Cookies :</h3>

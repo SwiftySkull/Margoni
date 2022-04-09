@@ -57,6 +57,7 @@ const Credits = ({
           <ReCAPTCHA
             sitekey="6LdNtcYeAAAAAHz96KIH6RavkNPPAssjz26-n7EM"
             onChange={submitAccepted}
+            className="captcha"
           />
           <div>
             <button
@@ -90,7 +91,7 @@ const Credits = ({
             <p className="message-modal">Une erreur est survenue lors de l'envoie de la demande !</p>
             <p className="message-modal">Veuillez ré-essayer plus tard...</p>
             <p className="message-modal">Si le problème persiste, merci d'envoyer un mail à</p>
-            <p className="message-modal" style={{ wordBreak: 'break-word' }}>aurelien.beneyton@gmail.com</p>
+            <p className="message-modal" style={{ wordBreak: 'break-word' }}>support@denise-margoni.fr</p>
             <button type="button" className="button-modal" onClick={closeContactModal}>Retour à la navigation</button>
           </div>
         </div>
@@ -103,7 +104,7 @@ const Credits = ({
             </button>
             <p className="message-modal">Une erreur est survenue lors de la validation de la demande !</p>
             <p className="message-modal">Si le problème persiste, merci d'envoyer un mail à</p>
-            <p className="message-modal" style={{ wordBreak: 'break-word' }}>aurelien.beneyton@gmail.com</p>
+            <p className="message-modal" style={{ wordBreak: 'break-word' }}>support@denise-margoni.fr</p>
             <button type="button" className="button-modal" onClick={closeContactModal}>Retour à la navigation</button>
           </div>
         </div>
@@ -111,7 +112,7 @@ const Credits = ({
         <p>Vous pouvez aussi envoyer directement un email à l'adresse suivante : <a href="mailto:elisabeth-margoni@denise-margoni.fr">elisabeth-margoni@denise-margoni.fr<em className="mail">✉</em></a></p>
         <h2>Credits</h2>
         <p>Création et maintenance : Association "<span>Arts Vivants-Armor</span>" (AVA).</p>
-        <p>Création Web & Photos : <a href="https://www.linkedin.com/in/aurelien-b" target="_blank" rel="noreferrer">Aurélien Beneyton<em>↗️</em></a>.</p>
+        <p>Création Web & Photos : <a href="https://www.developoulpe.fr/" target="_blank" rel="noreferrer">Developoulpe<em>↗️</em></a></p>
         <p>Web Design original : <a href="mailto:sondelair@sondelair.free.fr">Sondelair<em className="mail">✉</em></a>.</p>
         <br />
       </div>

@@ -53,13 +53,9 @@
       }
 
       a {
-        position: relative;
-
         em {
           font-size: 0.8rem;
-          display: none;
-          position: absolute;
-          right: -1.5rem;
+          margin-left: 0.5rem;
 
           &.mail {
             font-size: 1rem;
@@ -68,10 +64,6 @@
   
         &:hover, &:focus {
           color: vars.$secondaryColor;
-                
-          em {
-            display: inline;
-          }
         }
 
         &:active {
@@ -152,12 +144,22 @@
       }
     }
 
+    .captcha {
+      margin: 1rem auto;
+      margin-left: 5%;
+      width: 100%;
+
+      @media (min-width: vars.$medium) {
+        margin-left: 0;
+      }
+    }
+
     div {
       margin-left: -10%;
       width: 100%;
       display: flex;
       justify-content: center;
-      
+        
       @media (min-width: vars.$medium) {
         margin: unset;
         width: unset;

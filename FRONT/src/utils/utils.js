@@ -1,6 +1,4 @@
 import {
-  heights,
-  widths,
   figure as F,
   paysage as P,
   marine as M,
