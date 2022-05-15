@@ -48,7 +48,7 @@ class SearchingController extends AbstractController
 
         $totalPages = $this->pagesNavigator->getTotalPages();
 
-        dump($paintings);
+
         return $this->render('main/search.html.twig', [
             'paintings' => $paintings,
             'pages' => $this->pagesNavigator->getMinMax(),

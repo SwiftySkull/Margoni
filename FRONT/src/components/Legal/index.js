@@ -10,7 +10,7 @@ import './legal.scss';
 
 // == Composant
 const Legal = () => {
-  document.title = 'Mentions lelages';
+  document.title = 'Mentions légales';
 
   return (
     <div id="legal">
@@ -51,7 +51,7 @@ const Legal = () => {
           <p>Les risques liés à cette utilisation incombent pleinement à l’internaute, qui doit se conformer à leurs conditions d’utilisation.</p>
         </div>
         <div>
-          <h3>Limitation contractuelles sur les données :</h3>
+          <h3>Limitations contractuelles sur les données :</h3>
           <p>Les informations contenues sur ce site sont aussi précises que possible, mais il peut toutefois contenir des inexactitudes ou des omissions.</p>
           <p>Si vous constatez une lacune, erreur ou ce qui parait être un dysfonctionnement, merci de bien vouloir le signaler par courriel, à l’adresse <a href="mailto:contact@denise-margoni.fr">contact@denise-margoni.fr</a>, en décrivant le problème de la manière la plus précise possible (page posant problème, type d’ordinateur et de navigateur utilisé, …).</p>
         </div>

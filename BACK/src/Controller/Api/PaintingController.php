@@ -93,4 +93,23 @@ class PaintingController extends AbstractController
 
         return $this->json($painting, 200, [], ['groups' => ['paintings_browse', 'painting_read']]);
     }
+
+    /**
+     * @Route("/api/visite-virtuelle/{id}", name="api_visite_virtuelle", methods={"GET"})
+     */
+    public function visiteVirtuelle(Painting $painting = null, PaintingRepositoryWeb $pr, $id)
+    {
+        $painting = $pr->find($id);
+
+        if (null === $painting) {
+            $message = [
+                'status' => Response::HTTP_NOT_FOUND,
+                'error' => 'Tableau non trouvé.',
+            ];
+
+            return $this->json($message, Response::HTTP_NOT_FOUND);
+        }
+
+        return $this->json($painting, 200, [], ['groups' => ['visite']]);
+    }
 }

@@ -25,6 +25,7 @@ class Painting
      * 
      * @Groups("paintings_browse")
      * @Groups("one_from_categ")
+     * @Groups("visite")
      */
     private $id;
 
@@ -32,6 +33,7 @@ class Painting
      * @ORM\Column(type="string", length=50, nullable=true)
      * 
      * @Groups("paintings_browse")
+     * @Groups("visite")
      */
     private $title;
 
@@ -39,6 +41,7 @@ class Painting
      * @ORM\Column(type="string", length=50)
      * 
      * @Groups("paintings_browse")
+     * @Groups("visite")
      */
     private $dbName;
 
@@ -46,6 +49,7 @@ class Painting
      * @ORM\Column(type="integer", length=4, nullable=true)
      * 
      * @Groups("paintings_browse")
+     * @Groups("visite")
      */
     private $date;
 
@@ -53,6 +57,7 @@ class Painting
      * @ORM\Column(type="integer", nullable=true)
      * 
      * @Groups("paintings_browse")
+     * @Groups("visite")
      */
     private $height;
 
@@ -60,6 +65,7 @@ class Painting
      * @ORM\Column(type="integer", nullable=true)
      * 
      * @Groups("paintings_browse")
+     * @Groups("visite")
      */
     private $width;
 
@@ -100,6 +106,7 @@ class Painting
      * @ORM\JoinColumn(onDelete="SET NULL")
      * 
      * @Groups("paintings_browse")
+     * @Groups("visite")
      */
     private $size;
 
@@ -130,6 +137,7 @@ class Painting
      * 
      * @Groups("paintings_browse")
      * @Groups("painting_read")
+     * @Groups("visite")
      */
     private $picture;
 

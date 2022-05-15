@@ -46,7 +46,8 @@
 
 <div class="all-paintings">
     {% for painting in paintings %}
-        <div style="width: 12%; margin: 0 2rem 2rem 0; position: relative" class="one-painting">
+        {# <div style="width: 12%; margin: 0 2rem 2rem 0; position: relative" class="one-painting"> #}
+        <div style="width: 200px; margin: 0 2rem 2rem 0; position: relative;" class="one-painting">
             <img src="{{ asset(painting.picture.pathname) }}" style="max-width: 100%"/>
             <form action="/all-paintings-edit/{{ painting.id }}/page/{{ page }}" method="POST">
                 <button type="submit" class="little-button-choice" style="position: absolute; right: 0; top: 0;">{{ painting.webDisplay ? '✅' : '❌'}}</button>
@@ -56,7 +57,15 @@
     {% endfor %}
 </div>
 
-<nav aria-label="Page navigation">
+<style>
+  @media (max-width: 990px) {
+    .pages-navigation {
+      font-size: 2rem !important;
+    }
+  }
+</style>
+
+<nav class="pages-navigation" aria-label="All paintings page navigation">
   <ul class="pagination justify-content-center">
     <li class="page-item"><a class="page-link" href="{{ path('all_paintings', {page:previousPage}) }}">- 5 Previous</a></li>
     

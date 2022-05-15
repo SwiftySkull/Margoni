@@ -35,6 +35,7 @@ class Size
      * 
      * @Groups("paintings_browse")
      * @Groups("sizes_browse")
+     * @Groups("visite")
      */
     private $format;
 

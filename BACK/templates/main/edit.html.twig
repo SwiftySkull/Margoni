@@ -4,6 +4,30 @@
 
 {% block body %}
 
+<style>
+    @media (max-width: 990px) {
+        form {
+            font-size: 2rem;
+        }
+
+	.form-control {
+	    font-size: 2rem;
+	}
+
+	.form-select {
+	    font-size: 2rem;
+	}
+
+	form .mb-3 {
+	    margin: 2rem 0;
+	}
+
+	form button {
+	    font-size: 2rem !important;
+	}
+    }
+</style>
+
 <h1>{{ method }} d'une peinture</h1>
 
 {% if 'Création' is same as method %}

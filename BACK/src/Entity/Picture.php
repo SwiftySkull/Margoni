@@ -32,6 +32,7 @@ class Picture
      * 
      * @Groups("paintings_browse")
      * @Groups("paintings_read")
+     * @Groups("visite")
      */
     private $pathname;
 

@@ -19,6 +19,8 @@
 /BACK/.phpunit.result.cache
 ###< phpunit/phpunit ###
 
+/BDD_DeniseMargoni_save
+
 /FRONT/node_modules/
 /FRONT/dist/
 

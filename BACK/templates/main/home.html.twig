@@ -6,8 +6,8 @@
 
 {% block body %}
 
-<h1>Hello ! ✅</h1>
-<h2>Liste de toutes ({{ count }}) les peintures</h2>
+<h1>Liste des peintures</h1>
+<h2 style="margin-bottom: 3rem">Total de ({{ count }}) peintures.</h2>
 
 {{ include('sample/_painting_skeleton.html.twig', {'paintings': paintings}) }}
 
