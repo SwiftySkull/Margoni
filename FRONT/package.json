@@ -58,7 +58,7 @@
     "@emailjs/browser": "^3.4.0",
     "axios": "^0.24.0",
     "glob-parent": "5.1.2",
-    "minimist": "1.2.5",
+    "minimist": "1.2.6",
     "node-fetch": "2.6.7",
     "node-forge": "1.3.0",
     "prop-types": "^15.7.2",
