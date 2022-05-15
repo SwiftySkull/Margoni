@@ -41,6 +41,10 @@ const Home = () => {
           <h3>Halle de Paimpol</h3>
           <h3>du 9 Avril au 9 Mai 2022</h3>
           <img className="affiche" src={Affiche} alt="Affiche de le la rétrospective de Denise Margoni" />
+          <p style={{ marginBottom: '0' }}>
+            Vous n'avez pas pu assister à l'exposition, venez profiter de la visite virtuelle pour la parcourir.
+          </p>
+          <a className="download-affiche" target="blank" href="https://retrospective-paimpol-2022.denise-margoni.fr/"><button className="download-affiche-button" style={{ margin: '1rem 0 2rem' }} type="button">Visite Virtuelle</button></a>
           <p>
             Mise en place par le service culturel de la Ville de Paimpol, l'association Arts Vivants-Armor, en partenariat avec l'association Pierres, Paroles et Musiques.
           </p>

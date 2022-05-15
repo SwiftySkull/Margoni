@@ -28,8 +28,8 @@ import {
 } from '../actions/avisActions';
 
 // URL for the Axios requests
-//export const URL = 'https://back.denise-margoni.fr/api';
- export const URL = 'http://localhost:8888/api';
+export const URL = 'https://back.denise-margoni.fr/api';
+// export const URL = 'http://localhost:8888/api';
 
 /**
  * MiddleWare for the main and authentification area.
