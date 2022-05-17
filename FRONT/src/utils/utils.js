@@ -5,6 +5,7 @@ import {
 } from './formatConversion';
 
 export const imageUrl = 'https://back.denise-margoni.fr/';
+export const smallImageUrl = 'https://back.denise-margoni.fr/Small/';
 
 /**
  * Shuffles an array and returns an amount of entry specified or all the array shuffled

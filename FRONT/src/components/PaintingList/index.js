@@ -5,7 +5,7 @@ import { useParams } from 'react-router';
 import PropTypes from 'prop-types';
 
 // == Import
-import { stringForUrl, imageUrl } from 'src/utils/utils';
+import { stringForUrl, smallImageUrl } from 'src/utils/utils';
 
 import Loader from 'src/components/Loader';
 
@@ -149,7 +149,7 @@ const PaintingList = ({
             <div className="tableau" key={paint.id}>
               <Link className="card" to={url}>
                 <div>
-                  <img src={imageUrl + paint.picture.pathname} alt="" draggable="false" />
+                  <img src={smallImageUrl + paint.picture.pathname} alt="" draggable="false" />
                 </div>
                 <h4>{paint.title ?? paint.dbName}</h4>
               </Link>
@@ -178,8 +178,7 @@ const PaintingList = ({
             >Précédent
             </button>
           </Link>
-          <div
-          >
+          <div>
             {rows.map((raw) => (raw))}
           </div>
           <Link

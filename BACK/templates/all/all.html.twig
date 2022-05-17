@@ -48,7 +48,7 @@
     {% for painting in paintings %}
         {# <div style="width: 12%; margin: 0 2rem 2rem 0; position: relative" class="one-painting"> #}
         <div style="width: 200px; margin: 0 2rem 2rem 0; position: relative;" class="one-painting">
-            <img src="{{ asset(painting.picture.pathname) }}" style="max-width: 100%"/>
+            <img src="{{ asset('Small/' ~ painting.picture.pathname) }}" style="max-width: 100%"/>
             <form action="/all-paintings-edit/{{ painting.id }}/page/{{ page }}" method="POST">
                 <button type="submit" class="little-button-choice" style="position: absolute; right: 0; top: 0;">{{ painting.webDisplay ? '✅' : '❌'}}</button>
             </form>

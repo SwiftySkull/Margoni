@@ -19,7 +19,7 @@
 {% for paint in paintings %}
     <div class="paint-big" style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid black">
         <div style="display: flex">
-            <a href="{{ path('read_paint', {id:paint.id}) }}" style="width: 50%; text-align: center; margin-right: 2rem"><img src="{{ asset(paint.picture.pathname) }}" style="max-height: 300px; max-width: 100%"/></a>
+            <a href="{{ path('read_paint', {id:paint.id}) }}" style="width: 50%; text-align: center; margin-right: 2rem"><img src="{{ asset('Small/' ~ paint.picture.pathname) }}" style="max-height: 300px; max-width: 100%"/></a>
             <div style="margin: auto 0">
                 <p><b><a href="{{ path('read_paint', {id:paint.id}) }}">{{ paint.title ?? paint.dbName }}</a></b> peint en {{ paint.date is not same as null ? paint.date : 'Non précisée.' }} ({{ paint.size.format ?? 'Non précisé.' }})
                 {% if paint.height is not same as null and paint.width is not same as null %}

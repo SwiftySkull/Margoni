@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // == Import
-import { imageUrl } from 'src/utils/utils';
+import { smallImageUrl } from 'src/utils/utils';
 
 import './sideBar.scss';
 
@@ -25,7 +25,7 @@ const Vignette = ({
 }) => (
   <li>
     <Link to={href}>
-      <img src={imageUrl + picture} alt={altPicture} draggable="false" />
+      <img src={smallImageUrl + picture} alt={altPicture} draggable="false" />
       <p>{name}</p>
     </Link>
   </li>
