@@ -16,6 +16,7 @@ const initialState = {
  */
 function categoryReducer(state = initialState, action) {
   switch (action.type) {
+    /** Save the categories shuffled from the database */
     case SAVE_CATEGORY_SHUFFLED_PICTURES:
       return {
         ...state,
@@ -23,6 +24,7 @@ function categoryReducer(state = initialState, action) {
         shuffledPictures: action.picture,
       };
 
+    /** Save the paintings of a specific category */
     case SAVE_PAINTINGS_OF_CATEGORY:
       return {
         ...state,

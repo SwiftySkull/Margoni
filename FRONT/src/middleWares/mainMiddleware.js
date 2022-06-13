@@ -21,12 +21,6 @@ import {
   saveSizes,
 } from 'src/actions/sizeActions';
 
-import {
-  GET_AVIS,
-  saveAllAvis,
-  saveAvis,
-} from '../actions/avisActions';
-
 // URL for the Axios requests
 export const URL = 'https://back.denise-margoni.fr/api';
 // export const URL = 'http://localhost:8888/api';
@@ -38,6 +32,9 @@ const mainMiddleware = (store) => (next) => (action) => {
   const state = store.getState();
 
   switch (action.type) {
+    /**
+     * Load the home page elements and the categories
+     */
     case LOAD_ELEMENTS:
       axios.get(`${URL}/categories`)
         .then((response) => {
@@ -63,29 +60,10 @@ const mainMiddleware = (store) => (next) => (action) => {
           console.log(error);
         });
 
-      axios.get(`${URL}/avis/home`)
-        .then((response) => {
-          store.dispatch(saveAvis(response.data));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
       next(action);
       break;
 
-    case GET_AVIS:
-      axios.get(`${URL}/avis/browse`)
-        .then((response) => {
-          store.dispatch(saveAllAvis(response.data));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-      next(action);
-      break;
-
+    /** Load the informations of a specific painting by its ID */
     case LOAD_PAINTING:
       axios.get(`${URL}/painting/id/${action.id}`)
         .then((response) => {
@@ -98,6 +76,7 @@ const mainMiddleware = (store) => (next) => (action) => {
       next(action);
       break;
 
+    /** Load the informations of a specific painting by its name */
     case LOAD_PAINTING_BY_NAME:
       axios.get(`${URL}/painting/title/${action.paintingName}`)
         .then((response) => {
@@ -105,7 +84,9 @@ const mainMiddleware = (store) => (next) => (action) => {
             store.dispatch(saveMultiplePaintings(response.data));
           }
           else {
-            store.dispatch(savePainting(response.data[0]));
+            console.log(response.data);
+
+            store.dispatch(savePainting(response.data));
           }
         })
         .catch((error) => {

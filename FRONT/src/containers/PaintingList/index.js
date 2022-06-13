@@ -47,7 +47,6 @@ const mapStateToProps = (state) => {
   let paintings = [];
   let results = '0';
   let searchName = 'Chargement en cours';
-  const specDate = [];
 
   if (searchingType === 1) {
     paintings = categoryPaintings;
@@ -72,7 +71,6 @@ const mapStateToProps = (state) => {
   }
 
   return {
-    specDate,
     searchName,
     results,
     paintings,
@@ -85,22 +83,44 @@ const mapStateToProps = (state) => {
  * To dispatch function in the component
  */
 const mapDispatchToProps = (dispatch) => ({
+  /** Display the loading page */
   loaderOn: () => {
     dispatch(loaderOn());
   },
 
+  /**
+   * Load the paintings of a category
+   *
+   * @param {string} select The name of the category
+   */
   loadPaintingsByCategoryName: (select) => {
     dispatch(loadPaintingsByCategoryName(select));
   },
 
+  /**
+   * Load the paintings of a technique
+   *
+   * @param {string} select The name of the technique
+   */
   loadPaintingsByTechniqueType: (select) => {
     dispatch(loadPaintingsByTechniqueType(select));
   },
 
+  /**
+   * Load the paintings of a size
+   *
+   * @param {string} select The name of the size
+   */
   loadPaintingsBySizeFormat: (select) => {
     dispatch(loadPaintingsBySizeFormat(select));
   },
 
+  /**
+   * Select the page of the total research
+   *
+   * @param {number} page Actual page
+   * @param {number} max Total of pages
+   */
   selectPage: (page, max) => {
     dispatch(loaderOn());
 
@@ -116,6 +136,15 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(selectPage(nextPage));
   },
 
+  /**
+   * Get the paintings of the selected page
+   *
+   * @param {number} page Actual page
+   * @param {number} max Number of pages
+   * @param {string} choice First research parameter (category/technique/size)
+   * @param {string} select Second research parameter depending on the first one
+   * @param {number} selectId ID of the choice parameter
+   */
   paintingOfPage: (page, max, choice, select, selectId) => {
     dispatch(loaderOn());
 
@@ -132,6 +161,14 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(paintingOfPage(nextPage, choice, select, selectId));
   },
 
+  /**
+   * Get the paintings frome the first page if missing URL arguments
+   *
+   * @param {number} page Actual page
+   * @param {string} choice First research parameter (category/technique/size)
+   * @param {string} select Second research parameter depending on the first one
+   * @param {number} selectId ID of the choice parameter
+   */
   paintingOfNewPage: (page, choice, select, selectId) => {
     dispatch(loaderOn());
 

@@ -44,10 +44,12 @@ const mapStateToProps = (state) => {
  * To dispatch function in the component
  */
 const mapDispatchToProps = (dispatch) => ({
+  /** Select the type of research for the paintings */
   chooseGalerie: (id) => {
     dispatch(chooseGalerie(id));
   },
 
+  /** Select the the size to search the paintings */
   sizeChoice: (id) => {
     dispatch(sizeChoice(id));
   },

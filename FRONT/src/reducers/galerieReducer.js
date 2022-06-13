@@ -11,6 +11,7 @@ const initialState = {
  */
 function galerieReducer(state = initialState, action) {
   switch (action.type) {
+    /** Select the type of research for the paintings */
     case CHOOSE_GALERIE:
       return {
         ...state,

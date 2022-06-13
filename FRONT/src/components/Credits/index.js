@@ -10,6 +10,21 @@ import SideBar from 'src/containers/SideBar';
 import './credits.scss';
 
 // == Composant
+/**
+ * Component for the contact/credit page
+ *
+ * @param {function} sendRequest Send the form request after completing it
+ * @param {function} updateFieldValue Update the value of a field/input
+ * @param {string} contactName Name for the request
+ * @param {string} contactEmail Email for the request
+ * @param {string} contactSubject Subject for the request
+ * @param {string} contactMessage Message for the request
+ * @param {function} submitAccepted Show the submit button when the Captcha is validated
+ * @param {boolean} submitButton Boolean to display/hide the submit button when Captcha is validated
+ * @param {boolean} requestSent Boolean to hide/display the modal message of success
+ * @param {function} closeContactModal Close the modal box message
+ * @param {number} errorStatus Number of the error to display the correct error message
+ */
 const Credits = ({
   sendRequest,
   updateFieldValue,
@@ -17,10 +32,10 @@ const Credits = ({
   contactEmail,
   contactSubject,
   contactMessage,
+  submitAccepted,
   submitButton,
   requestSent,
   closeContactModal,
-  submitAccepted,
   errorStatus,
 }) => {
   document.title = 'Crédits';
@@ -122,16 +137,33 @@ const Credits = ({
 };
 
 Credits.propTypes = {
-  updateFieldValue: PropTypes.func.isRequired,
+  /** Send the form request after completing it */
   sendRequest: PropTypes.func.isRequired,
+
+  /** Update the value of a field/input */
+  updateFieldValue: PropTypes.func.isRequired,
+
+  /** Name for the request */
   contactName: PropTypes.string.isRequired,
+  /** Email for the request */
   contactEmail: PropTypes.string.isRequired,
+  /** Subject for the request */
   contactSubject: PropTypes.string.isRequired,
+  /** Message for the request */
   contactMessage: PropTypes.string.isRequired,
-  requestSent: PropTypes.bool.isRequired,
-  closeContactModal: PropTypes.func.isRequired,
+
+  /** Show the submit button when the Captcha is validated */
   submitAccepted: PropTypes.func.isRequired,
+  /** Boolean to display/hide the submit button when Captcha is validated */
   submitButton: PropTypes.bool.isRequired,
+
+  /** Boolean to hide/display the modal message of success */
+  requestSent: PropTypes.bool.isRequired,
+
+  /** Close the modal box message */
+  closeContactModal: PropTypes.func.isRequired,
+
+  /** Number of the error to display the correct error message */
   errorStatus: PropTypes.number.isRequired,
 };
 

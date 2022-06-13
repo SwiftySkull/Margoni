@@ -28,6 +28,7 @@ const categoryMiddleware = (store) => (next) => (action) => {
   const state = store.getState();
 
   switch (action.type) {
+    /** Load the categories in order shuffled for the sidebar */
     case LOAD_CATEGORY_SHUFFLED_PICTURES:
       axios.get(`${URL}/getone/category`)
         .then((response) => {
@@ -40,6 +41,7 @@ const categoryMiddleware = (store) => (next) => (action) => {
       next(action);
       break;
 
+    /** Get the paintings of the selected page and category */
     case PAINTING_OF_PAGE:
       if (action.choice === 'categorie') {
         axios.get(`${URL}/category/${action.selectId}/page/${action.page}`)
@@ -61,6 +63,7 @@ const categoryMiddleware = (store) => (next) => (action) => {
       next(action);
       break;
 
+    /** Load the paintings of a specific category */
     case LOAD_PAINTINGS_BY_CATEGORY_NAME:
       axios.get(`${URL}/categbyname/${action.select}`)
         .then((response) => {

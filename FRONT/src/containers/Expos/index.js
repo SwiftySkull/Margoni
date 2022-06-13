@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import Footer from 'src/components/Footer';
+import Expos from 'src/components/Expos';
 
 /**
  * To display data in the component
@@ -14,4 +14,4 @@ const mapStateToProps = (state) => ({});
 const mapDispatchToProps = (dispatch) => ({});
 
 // === Assistant creation for the component
-export default connect(mapStateToProps, mapDispatchToProps)(Footer);
+export default connect(mapStateToProps, mapDispatchToProps)(Expos);

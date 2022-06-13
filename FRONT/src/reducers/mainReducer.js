@@ -41,30 +41,35 @@ const initialState = {
  */
 function mainReducer(state = initialState, action) {
   switch (action.type) {
+    /** Display/hide the menu for mobile screen */
     case DISPLAY_MENU:
       return {
         ...state,
         menuStatus: !state.menuStatus,
       };
 
+    /** Select the type of research made for the paintings depending on their category */
     case SAVE_PAINTINGS_OF_CATEGORY:
       return {
         ...state,
         searchingType: 1,
       };
 
+    /** Select the type of research made for the paintings depending on their technique */
     case SAVE_PAINTINGS_OF_TECHNIQUE:
       return {
         ...state,
         searchingType: 2,
       };
 
+    /** Select the type of research made for the paintings depending on their size */
     case SAVE_PAINTINGS_OF_SIZE:
       return {
         ...state,
         searchingType: 3,
       };
 
+    /** Clear the informations of a painting when exiting the page */
     case CLEAR_PAINTING:
       return {
         ...state,
@@ -72,6 +77,7 @@ function mainReducer(state = initialState, action) {
         loading: true,
       };
 
+    /** Save the informations of a specific painting */
     case SAVE_PAINTING:
       return {
         ...state,
@@ -79,36 +85,42 @@ function mainReducer(state = initialState, action) {
         loading: false,
       };
 
+    /** Display/hide the painting in full screen */
     case MODAL_STATUS:
       return {
         ...state,
         modalStatus: !state.modalStatus,
       };
 
+    /** When severals pages in the research, select the actual page */
     case SELECT_PAGE:
       return {
         ...state,
         actualPage: action.page,
       };
 
+    /** Display the loading page */
     case LOADER_ON:
       return {
         ...state,
         loading: true,
       };
 
+    /** Hide the loading page */
     case LOADER_OFF:
       return {
         ...state,
         loading: false,
       };
 
+    /** Save the paintings and category shuffled for the sidebar */
     case SAVE_CATEGORY_SHUFFLED_PICTURES:
       return {
         ...state,
         sideLoading: false,
       };
 
+    /** When there're multiple paintings with the same name when using the URL */
     case SAVE_MULTIPLE_PAINTINGS:
       return {
         ...state,

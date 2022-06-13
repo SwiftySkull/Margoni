@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 
 import { shuffleCategories, getPictureFromCategory } from 'src/utils/utils';
-import { displayPaintings } from 'src/actions/mainActions';
 
 import SideBar from 'src/components/SideBar';
 
@@ -24,11 +23,7 @@ const mapStateToProps = (state) => {
 /**
  * To dispatch function in the component
  */
-const mapDispatchToProps = (dispatch) => ({
-  displayPaintings: () => {
-    dispatch(displayPaintings());
-  },
-});
+const mapDispatchToProps = (dispatch) => ({});
 
 // === Assistant creation for the component
 export default connect(mapStateToProps, mapDispatchToProps)(SideBar);

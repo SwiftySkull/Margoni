@@ -9,6 +9,14 @@ import { stringForUrl, smallImageUrl } from 'src/utils/utils';
 import './galerie.scss';
 
 // == Composant
+/**
+ * Component to display the categories or techniques available in the research
+ *
+ * @param {array} array Array of the categories or techniques available
+ * @param {array} pictures Array of the pictures available
+ * @param {string} altType Text for the alt element of the paintings
+ * @param {string} urlRefer Text to specify the URL
+ */
 const Choosing = ({
   array,
   pictures,
@@ -42,9 +50,16 @@ const Choosing = ({
 );
 
 Choosing.propTypes = {
+  /** Array of the categories or techniques available */
   array: PropTypes.array.isRequired,
+
+  /** Array of the pictures available */
   pictures: PropTypes.array.isRequired,
+
+  /** Text for the alt element of the paintings */
   altType: PropTypes.string.isRequired,
+
+  /** Text to specify the URL */
   urlRefer: PropTypes.string.isRequired,
 };
 

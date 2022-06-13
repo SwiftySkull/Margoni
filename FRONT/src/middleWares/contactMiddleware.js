@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import axios from 'axios';
+// import axios from 'axios';
 import emailjs, { init } from '@emailjs/browser';
 
 import {
@@ -9,9 +9,9 @@ import {
   submitError,
 } from 'src/actions/contactActions';
 
-import {
-  URL,
-} from 'src/middleWares/mainMiddleware';
+// import {
+//   URL,
+// } from 'src/middleWares/mainMiddleware';
 
 // URL for the Axios requests
 
@@ -22,6 +22,7 @@ const contactMiddleware = (store) => (next) => (action) => {
   const state = store.getState();
 
   switch (action.type) {
+    /** Send the contact request if validated */
     case SEND_REQUEST: {
       init('f15s27RrZoXbjheHP');
       const templateParams = {
@@ -48,6 +49,7 @@ const contactMiddleware = (store) => (next) => (action) => {
     }
       next(action);
       break;
+
     // Default action.
     default:
       next(action);

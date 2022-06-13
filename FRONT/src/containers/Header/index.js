@@ -16,6 +16,7 @@ const mapStateToProps = (state) => ({
  * To dispatch function in the component
  */
 const mapDispatchToProps = (dispatch) => ({
+  /** Display/Hide the menu in small screen */
   displayMenu: () => {
     dispatch(displayMenu());
   },

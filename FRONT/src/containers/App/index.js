@@ -16,6 +16,7 @@ const mapStateToProps = (state) => ({
  * To dispatch function in the component
  */
 const mapDispatchToProps = (dispatch) => ({
+  /** Load the home page elements and the categories */
   loadElements: () => {
     dispatch(loadElements());
   },

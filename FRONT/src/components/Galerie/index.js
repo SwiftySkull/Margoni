@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 // == Import npm
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -13,12 +14,25 @@ import Choosing from './Choosing';
 import './galerie.scss';
 
 // == Composant
+/**
+ * Component of the galery when looking for the paintings, choosing a way to look for them and discover them
+ *
+ * @param {array} categories Array of the categories available
+ * @param {array} techniques Array of the techniques available
+ * @param {array} pictures Array of the pictures available depending on the previous choice technique/category
+ * @param {number} galeryChoice Number of the way the paintings are looked for (category/techniques/size)
+ * @param {function} chooseGalerie Select the type of research for the paintings
+ * @param {array} sizes Array of the sizes available
+ * @param {function} sizeChoice Select the the size to search the paintings
+ * @param {array} sizeChosen The selected size
+ * @param {boolean} loading Display/hide the loading screen
+ */
 const Galerie = ({
   categories,
+  techniques,
   pictures,
   galeryChoice,
   chooseGalerie,
-  techniques,
   sizes,
   sizeChoice,
   sizeChosen,
@@ -85,7 +99,8 @@ const Galerie = ({
       </div>
       )}
       <div className="tableaux-list">
-        {galeryChoice === 1 && <Choosing array={categories} pictures={pictures} altType="catégorie" urlRefer="categorie" />}
+        {galeryChoice === 1
+        && <Choosing array={categories} pictures={pictures} altType="catégorie" urlRefer="categorie" />}
         {galeryChoice === 2 && <Choosing array={techniques} pictures={pictures} altType="technique" urlRefer="technique" />}
       </div>
     </div>
@@ -93,14 +108,28 @@ const Galerie = ({
 };
 
 Galerie.propTypes = {
+  /** Array of the categories available */
   categories: PropTypes.array.isRequired,
-  pictures: PropTypes.array.isRequired,
-  galeryChoice: PropTypes.number.isRequired,
-  chooseGalerie: PropTypes.func.isRequired,
+  /** Array of the techniques available */
   techniques: PropTypes.array.isRequired,
+
+  /** Array of the pictures available depending on the previous choice technique/category */
+  pictures: PropTypes.array.isRequired,
+
+  /** Number of the way the paintings are looked for (category/techniques/size) */
+  galeryChoice: PropTypes.number.isRequired,
+
+  /** Select the type of research for the paintings */
+  chooseGalerie: PropTypes.func.isRequired,
+
+  /** Array of the sizes available */
   sizes: PropTypes.array.isRequired,
+  /** Select the the size to search the paintings */
   sizeChoice: PropTypes.func.isRequired,
+  /** The selected size */
   sizeChosen: PropTypes.array.isRequired,
+
+  /** Display/hide the loading screen */
   loading: PropTypes.bool.isRequired,
 };
 

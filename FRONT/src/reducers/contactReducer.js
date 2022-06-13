@@ -22,24 +22,28 @@ const initialState = {
  */
 function contactReducer(state = initialState, action) {
   switch (action.type) {
+    /** Display an error message if the request has not been sent because of network issue */
     case REQUEST_NOT_SENT:
       return {
         ...state,
         errorStatus: 502,
       };
 
+    /** Display an error message if the request is invalid */
     case SUBMIT_ERROR:
       return {
         ...state,
         errorStatus: 400,
       };
 
+    /** Display the submit button after completing Captcha */
     case SUBMIT_ACCEPTED:
       return {
         ...state,
         submitAccepted: true,
       };
 
+    /** Update the value of the field */
     case UPDATE_FIELD_VALUE:
       return {
         ...state,
@@ -49,6 +53,7 @@ function contactReducer(state = initialState, action) {
         contactMessage: action.field === 'contactMessage' ? action.val : state.contactMessage,
       };
 
+    /** When request sent with success, reset the fields and display the success message */
     case REQUEST_SENT:
       return {
         ...state,
@@ -60,12 +65,14 @@ function contactReducer(state = initialState, action) {
         submitAccepted: false,
       };
 
+    /** Close the modal after sending a request */
     case CLOSE_CONTAC_MODAL:
       return {
         ...state,
         requestSent: false,
         errorStatus: 0,
       };
+
     default:
       return state;
   }

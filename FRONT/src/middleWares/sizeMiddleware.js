@@ -26,6 +26,7 @@ const sizeMiddleware = (store) => (next) => (action) => {
   const state = store.getState();
 
   switch (action.type) {
+    /** Get the paintings of the selected page and size */
     case PAINTING_OF_PAGE:
       if (action.choice === 'format') {
         axios.get(`${URL}/size/${action.selectId}/page/${action.page}`)
@@ -46,6 +47,7 @@ const sizeMiddleware = (store) => (next) => (action) => {
       next(action);
       break;
 
+    /** Load the paintings of a specific size */
     case LOAD_PAINTINGS_BY_SIZE_FORMAT:
       axios.get(`${URL}/sizebyformat/${action.select}`)
         .then((response) => {

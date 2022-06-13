@@ -16,6 +16,7 @@ const initialState = {
  */
 function techniqueReducer(state = initialState, action) {
   switch (action.type) {
+    /** Save the paintings of each technique shuffled */
     case SAVE_TECHNIQUE_SHUFFLED_PICTURES:
       return {
         ...state,
@@ -23,6 +24,7 @@ function techniqueReducer(state = initialState, action) {
         shuffledPictures: action.picture,
       };
 
+    /** Save the paintings of a specific technique */
     case SAVE_PAINTINGS_OF_TECHNIQUE:
       return {
         ...state,

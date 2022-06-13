@@ -3,9 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 // == Import
-import fblogo from '../../assets/images/download.png';
+import fblogo from 'src/assets/images/download.png';
 
-// import './footer.scss';
 import './footer.scss';
 
 // == Composant

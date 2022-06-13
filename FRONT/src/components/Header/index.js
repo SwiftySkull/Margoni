@@ -7,6 +7,12 @@ import PropTypes from 'prop-types';
 import './header.scss';
 
 // == Composant
+/**
+ * Header Component
+ *
+ * @param {boolean} menuStatus Status of the menu displayed/hidden
+ * @param {function} displayMenu Display/Hide the menu in small screen
+ */
 const Header = ({
   menuStatus,
   displayMenu,
@@ -54,7 +60,10 @@ const Header = ({
 );
 
 Header.propTypes = {
+  /** Status of the menu displayed/hidden */
   menuStatus: PropTypes.bool.isRequired,
+
+  /** Display/Hide the menu in small screen */
   displayMenu: PropTypes.func.isRequired,
 };
 

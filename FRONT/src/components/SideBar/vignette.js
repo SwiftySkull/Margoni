@@ -32,9 +32,16 @@ const Vignette = ({
 );
 
 Vignette.propTypes = {
+  /** Name of the vignette */
   name: PropTypes.string.isRequired,
+
+  /** Source of the picture */
   picture: PropTypes.string.isRequired,
+
+  /** Alternative text for the picture */
   altPicture: PropTypes.string.isRequired,
+
+  /** Path to access the galery of a kind */
   href: PropTypes.string.isRequired,
 };
 

@@ -5,13 +5,10 @@ import { Link } from 'react-router-dom';
 // import PropTypes from 'prop-types';
 
 // == Import
-// import UniqueAvis from 'src/components/Avis/UniqueAvis';
-// import Expositions from 'src/containers/Expositions';
 import SideBar from 'src/containers/SideBar';
 
 import Autoportrait from 'src/assets/images/denise_margoni_autoportrait.jpg';
 import Affiche from 'src/assets/images/Affiche-Denise-Margoni.jpg';
-// import AffichePDF from 'src/assets/pdf/Affiche-Denise-Margoni.pdf';
 
 import signature from 'src/assets/images/signature.png';
 
@@ -34,8 +31,6 @@ const Home = () => {
             <p><Link to="/galerie/technique/peinture-a-l-huile/2">Huiles</Link> & <Link to="/galerie/technique/gouache/1">Gouaches</Link></p>
           </div>
         </div>
-        {/* <UniqueAvis avis={avis} />
-        <Expositions /> */}
         <div className="news">
           <h2>Rétrospective Denise Margoni</h2>
           <h3>Halle de Paimpol</h3>
@@ -64,9 +59,9 @@ const Home = () => {
   );
 };
 
-Home.propTypes = {
-  // avis: PropTypes.object.isRequired,
-};
+// Home.propTypes = {
+
+// };
 
 // == Export
 export default Home;

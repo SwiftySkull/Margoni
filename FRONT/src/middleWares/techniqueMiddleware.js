@@ -28,6 +28,7 @@ const techniqueMiddleware = (store) => (next) => (action) => {
   const state = store.getState();
 
   switch (action.type) {
+    /** Load the techniques in order shuffled for the sidebar */
     case LOAD_TECHNIQUE_SHUFFLED_PICTURES:
       axios.get(`${URL}/getone/technique`)
         .then((response) => {
@@ -40,6 +41,7 @@ const techniqueMiddleware = (store) => (next) => (action) => {
       next(action);
       break;
 
+    /** Get the paintings of the selected page and technique */
     case PAINTING_OF_PAGE:
       if (action.choice === 'technique') {
         axios.get(`${URL}/technique/${action.selectId}/page/${action.page}`)
@@ -48,10 +50,8 @@ const techniqueMiddleware = (store) => (next) => (action) => {
               window.location = `/galerie/technique/${stringForUrl(response.data[0].type)}/${response.data[0].id}/page/${action.page}`;
             }
             else {
-              // setTimeout(() => {
-                store.dispatch(savePaintingsOfTechnique(response.data[0], response.data[1]['total results'], response.data[2]));
-                store.dispatch(loaderOff());
-              // }, 1000);
+              store.dispatch(savePaintingsOfTechnique(response.data[0], response.data[1]['total results'], response.data[2]));
+              store.dispatch(loaderOff());
             }
           })
           .catch((error) => {
@@ -62,6 +62,7 @@ const techniqueMiddleware = (store) => (next) => (action) => {
       next(action);
       break;
 
+    /** Load the paintings of a specific technique */
     case LOAD_PAINTINGS_BY_TECHNIQUE_TYPE:
       axios.get(`${URL}/techniquebytype/${action.select.replace('-', ' ')}`)
         .then((response) => {

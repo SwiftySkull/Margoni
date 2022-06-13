@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 // == Import npm
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -15,21 +16,18 @@ import './paintingList.scss';
 /**
  * Component which display the list of paintings of a category/technique/size
  *
- * @param {function} loadPaintingsByCategoryName 
- * @param {function} loadPaintingsByTechniqueType 
- * @param {function} loadPaintingsBySizeFormat 
- * @param {string} searchChosen 
- * @param {string} results 
- * @param {array} paintings 
- * @param {number} actualPage 
- * @param {function} selectPage 
- * @param {number} numberOfPages 
- * @param {array} specDate 
- * @param {*} paintingOfPage 
- * @param {*} paintingOfNewPage 
- * @param {*} loading 
- * @param {*} loaderOn 
- * @returns 
+ * @param {function} loadPaintingsByCategoryName Load the paintings of a category
+ * @param {function} loadPaintingsByTechniqueType Load the paintings of a technique
+ * @param {function} loadPaintingsBySizeFormat Load the paintings of a size
+ * @param {string} searchName Text to display as title of the page
+ * @param {string} results Number of results found
+ * @param {array} paintings Array of the paintings found
+ * @param {function} selectPage Select the page of the total research
+ * @param {number} numberOfPages Total number of pages for the research
+ * @param {function} paintingOfPage Get the paintings of the selected page
+ * @param {function} paintingOfNewPage Get the paintings frome the first page if missing URL arguments
+ * @param {boolean} loading Display/hide the loading page
+ * @param {function} loaderOn Display the loading page
  */
 const PaintingList = ({
   loadPaintingsByCategoryName,
@@ -40,7 +38,6 @@ const PaintingList = ({
   paintings,
   selectPage,
   numberOfPages,
-  specDate,
   paintingOfPage,
   paintingOfNewPage,
   loading,
@@ -136,9 +133,6 @@ const PaintingList = ({
           <h3 className="subtitle">Peintures trouvées : {results}</h3>
         </>
       )}
-      {specDate.length > 0 && (
-        <h4>Tableaux peints entre {specDate[0]} et {specDate[1]}</h4>
-      )}
       {!loading && (
       <div className="list">
         {paintings.map((paint) => {
@@ -205,18 +199,34 @@ const PaintingList = ({
 };
 
 PaintingList.propTypes = {
+  /** Load the paintings of a category */
   loadPaintingsByCategoryName: PropTypes.func.isRequired,
+  /** Load the paintings of a technique */
   loadPaintingsByTechniqueType: PropTypes.func.isRequired,
+  /** Load the paintings of a size */
   loadPaintingsBySizeFormat: PropTypes.func.isRequired,
+
+  /** Text to display as title of the page */
   searchName: PropTypes.string.isRequired,
+  /** Number of results found */
   results: PropTypes.string.isRequired,
+
+  /** Array of the paintings found */
   paintings: PropTypes.array.isRequired,
+
+  /** Select the page of the total research */
   selectPage: PropTypes.func.isRequired,
+  /** Total number of pages for the research */
   numberOfPages: PropTypes.number.isRequired,
-  specDate: PropTypes.array.isRequired,
+
+  /** Get the paintings of the selected page */
   paintingOfPage: PropTypes.func.isRequired,
+  /** Get the paintings frome the first page if missing URL arguments */
   paintingOfNewPage: PropTypes.func.isRequired,
+
+  /** Display/hide the loading page */
   loading: PropTypes.bool.isRequired,
+  /** Display the loading page */
   loaderOn: PropTypes.func.isRequired,
 };
 

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 // == Import npm
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
@@ -12,6 +13,18 @@ import { stringForUrl, urlToString, imageUrl } from 'src/utils/utils';
 import './painting.scss';
 
 // == Composant
+/**
+ * Component to display the elements for a painting
+ *
+ * @param {object} painting All the informations of a painting
+ * @param {function} loadPainting Load the painting and its informations from the ID
+ * @param {function} loadPaintingByName Load the painting and its informations from the name
+ * @param {function} displayModal Open the painting in big screen when clicking on it
+ * @param {boolean} modalStatus Display/hide the modal for the painting in full screen
+ * @param {boolean} loading Display/hide the loading page
+ * @param {array} multiplePaintingsName Array of the paintings with the same name selected
+ * @param {boolean} multiplePaintings Indicate if there are multiple paintings with the same name (ID shouldn't be multiple)
+ */
 const Painting = ({
   painting,
   loadPainting,
@@ -28,10 +41,10 @@ const Painting = ({
 
   useEffect(() => {
     if (id === undefined && check === null) {
-      loadPainting(id);
+      window.location = '/error';
     }
     else if (id === undefined && check !== null) {
-      loadPaintingByName(name);
+      window.location = '/error';
     }
     else {
       loadPainting(id);
@@ -135,13 +148,25 @@ const Painting = ({
 };
 
 Painting.propTypes = {
+  /** All the informations of a painting */
   painting: PropTypes.object.isRequired,
+
+  /** Load the painting and its informations from the ID */
   loadPainting: PropTypes.func.isRequired,
+  /** Load the painting and its informations from the name */
   loadPaintingByName: PropTypes.func.isRequired,
+
+  /** Open the painting in big screen when clicking on it */
   displayModal: PropTypes.func.isRequired,
+  /** Display/hide the modal for the painting in full screen */
   modalStatus: PropTypes.bool.isRequired,
+
+  /** Display/hide the loading page */
   loading: PropTypes.bool.isRequired,
+
+  /** Array of the paintings with the same name selected */
   multiplePaintingsName: PropTypes.array.isRequired,
+  /** Indicate if there are multiple paintings with the same name (ID shouldn't be multiple) */
   multiplePaintings: PropTypes.bool.isRequired,
 };
 

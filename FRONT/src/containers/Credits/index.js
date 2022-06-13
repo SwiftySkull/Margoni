@@ -27,18 +27,22 @@ const mapStateToProps = (state) => ({
  * To dispatch function in the component
  */
 const mapDispatchToProps = (dispatch) => ({
+  /** Update the value of a field/input */
   updateFieldValue: (val, field) => {
     dispatch(updateFieldValue(val, field));
   },
 
+  /** Send the form request after completing it */
   sendRequest: () => {
     dispatch(sendRequest());
   },
 
+  /** Close the modal box message */
   closeContactModal: () => {
     dispatch(closeContactModal());
   },
 
+  /** Show the submit button when the Captcha is validated */
   submitAccepted: () => {
     dispatch(submitAccepted());
   },

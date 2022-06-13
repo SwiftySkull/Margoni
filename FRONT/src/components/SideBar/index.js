@@ -15,6 +15,7 @@ import './sideBar.scss';
  *
  * @param {array} categories Array of random categories
  * @param {array} pictures Array of the paintings of the categories
+ * @param {boolean} loading Display/hide the loading screen
  */
 const SideBar = ({
   categories,
@@ -51,8 +52,13 @@ const SideBar = ({
 );
 
 SideBar.propTypes = {
+  /** Array of random categories */
   categories: PropTypes.array.isRequired,
+
+  /** Array of the paintings of the categories */
   pictures: PropTypes.array.isRequired,
+
+  /** Display/hide the loading screen */
   loading: PropTypes.bool.isRequired,
 };
 

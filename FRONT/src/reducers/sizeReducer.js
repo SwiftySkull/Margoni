@@ -16,18 +16,21 @@ const initialState = {
  */
 function sizeReducer(state = initialState, action) {
   switch (action.type) {
+    /** Save all the sizes available */
     case SAVE_SIZES:
       return {
         ...state,
         sizes: action.sizes,
       };
 
+    /** Select a specifi size */
     case SIZE_CHOICE:
       return {
         ...state,
         sizeChosen: action.id,
       };
 
+    /** Save the paintings of a specific size */
     case SAVE_PAINTINGS_OF_SIZE:
       return {
         ...state,

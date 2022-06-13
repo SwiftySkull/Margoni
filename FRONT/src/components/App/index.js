@@ -3,30 +3,28 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Routes } from 'react-router-dom';
 
-// TODO:
-// https://stackoverflow.com/questions/70583862/react-createelement-type-is-invalid-expected-a-string-or-function
-// TODO:
-
 // == Import
-
-import Header from 'src/containers/Header';
-// import GalerieHeader from 'src/components/Header/galerieHeader';
-import Home from 'src/containers/Home';
 import Biography from 'src/containers/Biography';
-// import Avis from 'src/containers/Avis';
+import Credits from 'src/containers/Credits';
+import Error from 'src/components/Error';
+import Expos from 'src/containers/Expos';
+import Footer from 'src/containers/Footer';
 import Galerie from 'src/containers/Galerie';
+import Header from 'src/containers/Header';
+import Home from 'src/containers/Home';
+import Legal from 'src/components/Legal';
 import PaintingList from 'src/containers/PaintingList';
 import Painting from 'src/containers/Painting';
-import Footer from 'src/containers/Footer';
-import Credits from 'src/containers/Credits';
 import SiteMap from 'src/components/SiteMap';
-import Legal from 'src/components/Legal';
-import Error from 'src/components/Error';
-import Expos from 'src/components/Expos';
 
 import './app.scss';
 
 // == Composant
+/**
+ * Main component of the application
+ *
+ * @param {function} loadElements Load the home page elements and the categories
+ */
 const App = ({
   loadElements,
 }) => {
@@ -47,7 +45,6 @@ const App = ({
         <Route path="/galerie/:choice/:select/:id" element={<PaintingList />} />
         <Route path="/galerie/:choice/:select" element={<PaintingList />} />
         <Route path="/galerie/*" element={<Galerie />} />
-        {/* <Route path="/avis" element={<Avis />} /> */}
         <Route path="/expositions" element={<Expos />} />
         <Route path="/credits" element={<Credits />} />
         <Route path="/contact" element={<Credits />} />
@@ -62,6 +59,7 @@ const App = ({
 };
 
 App.propTypes = {
+  /** Load the home page elements and the categories */
   loadElements: PropTypes.func.isRequired,
 };
 
